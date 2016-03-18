@@ -426,16 +426,16 @@ public class OpenWireConnection extends AbstractRemotingConnection implements Se
       }
    }
 
-   public void addConsumerBrokerExchange(ConsumerId id,
+   private void addConsumerBrokerExchange(ConsumerId id,
                                          AMQSession amqSession,
-                                         Map<ActiveMQDestination, AMQConsumer> consumerMap) {
+                                         List<AMQConsumer> consumerList) {
       AMQConsumerBrokerExchange result = consumerExchanges.get(id);
       if (result == null) {
-         if (consumerMap.size() == 1) {
-            result = new AMQSingleConsumerBrokerExchange(amqSession, consumerMap.values().iterator().next());
+         if (consumerList.size() == 1) {
+            result = new AMQSingleConsumerBrokerExchange(amqSession, consumerList.get(0));
          }
          else {
-            result = new AMQCompositeConsumerBrokerExchange(amqSession, consumerMap);
+            result = new AMQCompositeConsumerBrokerExchange(amqSession, consumerList);
          }
          synchronized (consumerExchanges) {
             consumerExchanges.put(id, result);
@@ -717,9 +717,11 @@ public class OpenWireConnection extends AbstractRemotingConnection implements Se
             throw new IllegalStateException("Session not exist! : " + sessionId);
          }
 
-         amqSession.createConsumer(info, amqSession, new SlowConsumerDetection());
+         List<AMQConsumer> consumersList = amqSession.createConsumer(info, amqSession, new SlowConsumerDetection());
 
+         this.addConsumerBrokerExchange(info.getConsumerId(), amqSession, consumersList);
          ss.addConsumer(info);
+         amqSession.start();
       }
    }
 
@@ -729,7 +731,7 @@ public class OpenWireConnection extends AbstractRemotingConnection implements Se
       public void onSlowConsumer(ServerConsumer consumer) {
          if (consumer instanceof AMQServerConsumer) {
             AMQServerConsumer serverConsumer = (AMQServerConsumer)consumer;
-            ActiveMQTopic topic = AdvisorySupport.getSlowConsumerAdvisoryTopic(serverConsumer.getAmqConsumer().getDestination());
+            ActiveMQTopic topic = AdvisorySupport.getSlowConsumerAdvisoryTopic(serverConsumer.getAmqConsumer().getOpenwireDestination());
             ActiveMQMessage advisoryMessage = new ActiveMQMessage();
             try {
                advisoryMessage.setStringProperty(AdvisorySupport.MSG_PROPERTY_CONSUMER_ID, serverConsumer.getAmqConsumer().getId().toString());
@@ -1002,7 +1004,6 @@ public class OpenWireConnection extends AbstractRemotingConnection implements Se
 
       @Override
       public Response processCommitTransactionOnePhase(TransactionInfo info) throws Exception {
-         new Exception("commit").printStackTrace();
          try {
             protocolManager.commitTransactionOnePhase(info);
             TransactionId txId = info.getTransactionId();

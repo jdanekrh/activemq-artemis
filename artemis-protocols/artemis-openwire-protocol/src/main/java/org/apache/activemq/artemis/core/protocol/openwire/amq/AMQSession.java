@@ -18,7 +18,6 @@ package org.apache.activemq.artemis.core.protocol.openwire.amq;
 
 import javax.jms.ResourceAllocationException;
 import javax.transaction.xa.Xid;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +44,8 @@ import org.apache.activemq.artemis.core.transaction.impl.XidImpl;
 import org.apache.activemq.artemis.spi.core.protocol.SessionCallback;
 import org.apache.activemq.artemis.spi.core.remoting.Connection;
 import org.apache.activemq.artemis.spi.core.remoting.ReadyListener;
+import org.apache.activemq.artemis.utils.IDGenerator;
+import org.apache.activemq.artemis.utils.SimpleIDGenerator;
 import org.apache.activemq.command.ActiveMQDestination;
 import org.apache.activemq.command.ConnectionInfo;
 import org.apache.activemq.command.ConsumerId;
@@ -62,6 +63,10 @@ import org.apache.activemq.openwire.OpenWireFormat;
 import org.apache.activemq.wireformat.WireFormat;
 
 public class AMQSession implements SessionCallback {
+
+   // ConsumerID is generated inside the session, 0, 1, 2, ... as many consumers as you have on the session
+   protected final IDGenerator idGenerator = new SimpleIDGenerator(0);
+
    private ConnectionInfo connInfo;
    private AMQServerSession coreSession;
    private SessionInfo sessInfo;
@@ -98,7 +103,7 @@ public class AMQSession implements SessionCallback {
       this.connection = connection;
       this.scheduledPool = scheduledPool;
       this.manager = manager;
-      OpenWireFormat marshaller = (OpenWireFormat)connection.getMarshaller();
+      OpenWireFormat marshaller = (OpenWireFormat) connection.getMarshaller();
 
       this.converter = new OpenWireMessageConverter(marshaller.copy());
    }
@@ -130,7 +135,9 @@ public class AMQSession implements SessionCallback {
 
    }
 
-   public void createConsumer(ConsumerInfo info, AMQSession amqSession, SlowConsumerDetectionListener slowConsumerDetectionListener) throws Exception {
+   public List<AMQConsumer> createConsumer(ConsumerInfo info,
+                              AMQSession amqSession,
+                              SlowConsumerDetectionListener slowConsumerDetectionListener) throws Exception {
       //check destination
       ActiveMQDestination dest = info.getDestination();
       ActiveMQDestination[] dests = null;
@@ -140,25 +147,32 @@ public class AMQSession implements SessionCallback {
       else {
          dests = new ActiveMQDestination[]{dest};
       }
-      Map<ActiveMQDestination, AMQConsumer> consumerMap = new HashMap<>();
-      for (ActiveMQDestination d : dests) {
-         if (d.isQueue()) {
-            SimpleString queueName = OpenWireUtil.toCoreAddress(d);
+//      Map<ActiveMQDestination, AMQConsumer> consumerMap = new HashMap<>();
+      List<AMQConsumer> consumersList = new java.util.LinkedList<>();
+
+      for (ActiveMQDestination openWireDest : dests) {
+         if (openWireDest.isQueue()) {
+            SimpleString queueName = OpenWireUtil.toCoreAddress(openWireDest);
             getCoreServer().getJMSQueueCreator().create(queueName);
          }
-         AMQConsumer consumer = new AMQConsumer(this, d, info, scheduledPool);
+         AMQConsumer consumer = new AMQConsumer(this, openWireDest, info, scheduledPool);
 
-         consumer.init(slowConsumerDetectionListener);
-         consumerMap.put(d, consumer);
+         consumer.init(slowConsumerDetectionListener, idGenerator.generateID());
+         consumersList.add(consumer);
          consumers.put(consumer.getNativeId(), consumer);
       }
-      connection.addConsumerBrokerExchange(info.getConsumerId(), amqSession, consumerMap);
 
-      // TODO: This is wrong. We should only start when the client starts
-      coreSession.start();
-      started.set(true);
+      return consumersList;
    }
 
+   public void start() {
+
+      coreSession.start();
+      started.set(true);
+
+   }
+
+   // rename actualDest to destination
    @Override
    public void afterDelivery() throws Exception {
 
@@ -166,7 +180,7 @@ public class AMQSession implements SessionCallback {
 
    @Override
    public void browserFinished(ServerConsumer consumer) {
-      AMQConsumer theConsumer = ((AMQServerConsumer)consumer).getAmqConsumer();
+      AMQConsumer theConsumer = ((AMQServerConsumer) consumer).getAmqConsumer();
       if (theConsumer != null) {
          theConsumer.browseFinished();
       }
@@ -235,7 +249,6 @@ public class AMQSession implements SessionCallback {
 
    }
 
-
    public void send(final ProducerInfo producerInfo,
                     final Message messageSend,
                     boolean sendProducerAck) throws Exception {
@@ -286,7 +299,7 @@ public class AMQSession implements SessionCallback {
       else {
          final Connection transportConnection = connection.getTransportConnection();
 
-//         new Exception("Setting to false").printStackTrace();
+         //         new Exception("Setting to false").printStackTrace();
 
          if (transportConnection == null) {
             // I don't think this could happen, but just in case, avoiding races
@@ -300,7 +313,6 @@ public class AMQSession implements SessionCallback {
             };
          }
       }
-
 
       internalSend(actualDestinations, originalCoreMsg, runnable);
    }
@@ -339,7 +351,6 @@ public class AMQSession implements SessionCallback {
             throw new ResourceAllocationException("Queue is full");
          }
       }
-
 
       for (int i = 0; i < actualDestinations.length; i++) {
 
