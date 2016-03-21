@@ -77,7 +77,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
    private static boolean firstSend;
    private static int count;
 
-   private static EmbeddedJMS broker;
+   private static volatile EmbeddedJMS broker;
 
    @Before
    public void setUp() throws Exception {
@@ -111,6 +111,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
 
    @Test
    public void testFailoverProducerCloseBeforeTransaction() throws Exception {
+      LOG.info(this + " running test testFailoverProducerCloseBeforeTransaction");
       startCleanBroker();
       ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("failover:(" + url + ")");
       configureConnectionFactory(cf);
@@ -144,6 +145,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
            }
    )
    public void testFailoverCommitReplyLost() throws Exception {
+      LOG.info(this + " running test testFailoverCommitReplyLost");
 
       broker = createBroker();
       startBrokerWithDurableQueue();
@@ -177,7 +179,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
       }.start();
 
       // will be stopped by the plugin
-      brokerStopLatch.await();
+      brokerStopLatch.await(60, TimeUnit.SECONDS);
       doByteman.set(false);
       broker = createBroker();
       broker.start();
@@ -240,7 +242,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
            }
    )
    public void testFailoverSendReplyLost() throws Exception {
-
+      LOG.info(this + " running test testFailoverSendReplyLost");
       broker = createBroker();
       startBrokerWithDurableQueue();
       doByteman.set(true);
@@ -272,7 +274,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
       }.start();
 
       // will be stopped by the plugin
-      brokerStopLatch.await();
+      brokerStopLatch.await(60, TimeUnit.SECONDS);
       doByteman.set(false);
       broker = createBroker();
       LOG.info("restarting....");
@@ -324,7 +326,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
            }
    )
    public void testFailoverConnectionSendReplyLost() throws Exception {
-
+      LOG.info(this + " running test testFailoverConnectionSendReplyLost");
       broker = createBroker();
       proxy = new SocketProxy();
       firstSend = true;
@@ -398,6 +400,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
 
    @Test
    public void testFailoverProducerCloseBeforeTransactionFailWhenDisabled() throws Exception {
+      LOG.info(this + " running test testFailoverProducerCloseBeforeTransactionFailWhenDisabled");
       startCleanBroker();
       ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("failover:(" + url + ")?trackTransactionProducers=false");
       configureConnectionFactory(cf);
@@ -423,6 +426,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
 
    @Test
    public void testFailoverMultipleProducerCloseBeforeTransaction() throws Exception {
+      LOG.info(this + " running test testFailoverMultipleProducerCloseBeforeTransaction");
       startCleanBroker();
       ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("failover:(" + url + ")");
       configureConnectionFactory(cf);
@@ -457,53 +461,59 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
    // https://issues.apache.org/activemq/browse/AMQ-2772
    @Test
    public void testFailoverWithConnectionConsumer() throws Exception {
+      LOG.info(this + " running test testFailoverWithConnectionConsumer");
       startCleanBroker();
       ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("failover:(" + url + ")");
       configureConnectionFactory(cf);
       Connection connection = cf.createConnection();
       connection.start();
-
-      Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-      Queue destination = session.createQueue(QUEUE_NAME);
-
       final CountDownLatch connectionConsumerGotOne = new CountDownLatch(1);
-      final Session poolSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-      connection.createConnectionConsumer(destination, null, new ServerSessionPool() {
-         public ServerSession getServerSession() throws JMSException {
-            return new ServerSession() {
-               public Session getSession() throws JMSException {
-                  return poolSession;
-               }
 
-               public void start() throws JMSException {
-                  connectionConsumerGotOne.countDown();
-                  poolSession.run();
-               }
-            };
+      try {
+         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+         Queue destination = session.createQueue(QUEUE_NAME);
+
+         final Session poolSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+         connection.createConnectionConsumer(destination, null, new ServerSessionPool() {
+            public ServerSession getServerSession() throws JMSException {
+               return new ServerSession() {
+                  public Session getSession() throws JMSException {
+                     return poolSession;
+                  }
+
+                  public void start() throws JMSException {
+                     connectionConsumerGotOne.countDown();
+                     poolSession.run();
+                  }
+               };
+            }
+         }, 1);
+
+         MessageConsumer consumer = session.createConsumer(destination);
+         MessageProducer producer;
+         TextMessage message;
+         final int count = 10;
+         for (int i = 0; i < count; i++) {
+            producer = session.createProducer(destination);
+            message = session.createTextMessage("Test message: " + count);
+            producer.send(message);
+            producer.close();
          }
-      }, 1);
 
-      MessageConsumer consumer = session.createConsumer(destination);
-      MessageProducer producer;
-      TextMessage message;
-      final int count = 10;
-      for (int i = 0; i < count; i++) {
-         producer = session.createProducer(destination);
-         message = session.createTextMessage("Test message: " + count);
-         producer.send(message);
-         producer.close();
+         // restart to force failover and connection state recovery before the commit
+         broker.stop();
+         startBroker();
+
+         session.commit();
+         for (int i = 0; i < count - 1; i++) {
+            Message received = consumer.receive(20000);
+            Assert.assertNotNull("Failed to get message: " + count, received);
+         }
+         session.commit();
       }
-
-      // restart to force failover and connection state recovery before the commit
-      broker.stop();
-      startBroker();
-
-      session.commit();
-      for (int i = 0; i < count - 1; i++) {
-         Assert.assertNotNull("Failed to get message: " + count, consumer.receive(20000));
+      finally {
+         connection.close();
       }
-      session.commit();
-      connection.close();
 
       Assert.assertTrue("connectionconsumer did not get a message", connectionConsumerGotOne.await(10, TimeUnit.SECONDS));
    }
@@ -520,6 +530,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
            }
    )
    public void testFailoverConsumerAckLost() throws Exception {
+      LOG.info(this + " running test testFailoverConsumerAckLost");
       // as failure depends on hash order of state tracker recovery, do a few times
       for (int i = 0; i < 3; i++) {
          try {
@@ -621,7 +632,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
          }.start();
 
          // will be stopped by the plugin
-         brokerStopLatch.await();
+         brokerStopLatch.await(60, TimeUnit.SECONDS);
          broker = createBroker();
          broker.start();
          doByteman.set(false);
@@ -657,7 +668,9 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
       }
 
       // ensure no dangling messages with fresh broker etc
-      broker.stop();
+      if (broker != null) {
+         broker.stop();
+      }
 
       LOG.info("Checking for remaining/hung messages..");
       broker = createBroker();
@@ -667,17 +680,20 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
       cf = new ActiveMQConnectionFactory("failover:(" + url + ")");
       configureConnectionFactory(cf);
       connection = cf.createConnection();
-      connection.start();
-      Session sweeperSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-      MessageConsumer sweeper = sweeperSession.createConsumer(destination);
-      msg = sweeper.receive(1000);
-      if (msg == null) {
-         msg = sweeper.receive(5000);
+      try {
+         connection.start();
+         Session sweeperSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+         MessageConsumer sweeper = sweeperSession.createConsumer(destination);
+         msg = sweeper.receive(1000);
+         if (msg == null) {
+            msg = sweeper.receive(5000);
+         }
+         LOG.info("Sweep received: " + msg);
+         Assert.assertNull("no messges left dangling but got: " + msg, msg);
       }
-      LOG.info("Sweep received: " + msg);
-      Assert.assertNull("no messges left dangling but got: " + msg, msg);
-      connection.close();
-
+      finally {
+         connection.close();
+      }
       broker.stop();
    }
 
@@ -693,6 +709,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
            }
    )
    public void testPoolingNConsumesAfterReconnect() throws Exception {
+      LOG.info(this + " running test testPoolingNConsumesAfterReconnect");
       broker = createBroker();
       startBrokerWithDurableQueue();
 
@@ -785,8 +802,10 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
          LOG.info("calling close to trigger broker stop " + ((ActiveMQMessageConsumer) consumer).getConsumerId());
          consumer.close();
 
+         LOG.info("waiting latch: " + brokerStopLatch.getCount());
          // will be stopped by the plugin
-         brokerStopLatch.await();
+         Assert.assertTrue(brokerStopLatch.await(60, TimeUnit.SECONDS));
+
          doByteman.set(false);
          broker = createBroker();
          broker.start();
@@ -819,45 +838,50 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
 
    @Test
    public void testAutoRollbackWithMissingRedeliveries() throws Exception {
+      LOG.info(this + " running test testAutoRollbackWithMissingRedeliveries");
       broker = createBroker();
       broker.start();
       ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("failover:(" + url + ")");
       configureConnectionFactory(cf);
       Connection connection = cf.createConnection();
-      connection.start();
-      final Session producerSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-      final Queue destination = producerSession.createQueue(QUEUE_NAME + "?consumer.prefetchSize=1");
-      final Session consumerSession = connection.createSession(true, Session.SESSION_TRANSACTED);
-      MessageConsumer consumer = consumerSession.createConsumer(destination);
-
-      produceMessage(producerSession, destination);
-
-      Message msg = consumer.receive(20000);
-      Assert.assertNotNull(msg);
-
-      broker.stop();
-      broker = createBroker();
-      // use empty jdbc store so that default wait(0) for redeliveries will timeout after failover
-      broker.start();
-
       try {
-         consumerSession.commit();
-         Assert.fail("expected transaciton rolledback ex");
-      }
-      catch (TransactionRolledBackException expected) {
-      }
+         connection.start();
+         final Session producerSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+         final Queue destination = producerSession.createQueue(QUEUE_NAME + "?consumer.prefetchSize=1");
+         final Session consumerSession = connection.createSession(true, Session.SESSION_TRANSACTED);
+         MessageConsumer consumer = consumerSession.createConsumer(destination);
 
-      broker.stop();
-      broker = createBroker();
-      broker.start();
+         produceMessage(producerSession, destination);
 
-      Assert.assertNotNull("should get rolledback message from original restarted broker", consumer.receive(20000));
-      connection.close();
+         Message msg = consumer.receive(20000);
+         Assert.assertNotNull(msg);
+
+         broker.stop();
+         broker = createBroker();
+         // use empty jdbc store so that default wait(0) for redeliveries will timeout after failover
+         broker.start();
+
+         try {
+            consumerSession.commit();
+            Assert.fail("expected transaciton rolledback ex");
+         }
+         catch (TransactionRolledBackException expected) {
+         }
+
+         broker.stop();
+         broker = createBroker();
+         broker.start();
+         Assert.assertNotNull("should get rolledback message from original restarted broker", consumer.receive(20000));
+      }
+      finally {
+         connection.close();
+      }
    }
 
    @Test
    public void testWaitForMissingRedeliveries() throws Exception {
-      LOG.info("testWaitForMissingRedeliveries()");
+      LOG.info(this + " running test testWaitForMissingRedeliveries");
+
       broker = createBroker();
       broker.start();
       ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("failover:(" + url + ")?jms.consumerFailoverRedeliveryWaitPeriod=30000");
@@ -906,7 +930,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
 
    @Test
    public void testReDeliveryWhilePending() throws Exception {
-      LOG.info("testReDeliveryWhilePending()");
+      LOG.info(this + " running test testReDeliveryWhilePending");
       broker = createBroker();
       broker.start();
       ActiveMQConnectionFactory cf = new ActiveMQConnectionFactory("failover:(" + url + ")?jms.consumerFailoverRedeliveryWaitPeriod=10000");
@@ -989,6 +1013,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
                LOG.info("Stopping broker post commit...");
                try {
                   broker.stop();
+                  broker = null;
                }
                catch (Exception e) {
                   e.printStackTrace();
@@ -1028,6 +1053,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
                public void run() {
                   try {
                      broker.stop();
+                     broker = null;
                   }
                   catch (Exception e) {
                      e.printStackTrace();

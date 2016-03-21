@@ -74,36 +74,41 @@ public class SoWriteTimeoutClientTest extends OpenwireArtemisBaseTest {
       MessageConsumer consumer = session.createConsumer(dest);
 
       SocketProxy proxy = new SocketProxy();
-      proxy.setTarget(tcpBrokerUri);
-      proxy.open();
+      try {
+         proxy.setTarget(tcpBrokerUri);
+         proxy.open();
 
-      ActiveMQConnectionFactory pFactory = new ActiveMQConnectionFactory("failover:(" + proxy.getUrl() + "?soWriteTimeout=4000&sleep=500)?jms.useAsyncSend=true&trackMessages=true&maxCacheSize=6638400");
-      final Connection pc = pFactory.createConnection();
-      pc.start();
-      proxy.pause();
+         ActiveMQConnectionFactory pFactory = new ActiveMQConnectionFactory("failover:(" + proxy.getUrl() + "?soWriteTimeout=4000&sleep=500)?jms.useAsyncSend=true&trackMessages=true&maxCacheSize=6638400");
+         final Connection pc = pFactory.createConnection();
+         pc.start();
+         proxy.pause();
 
-      final int messageCount = 20;
-      ExecutorService executorService = Executors.newCachedThreadPool();
-      executorService.execute(new Runnable() {
-         @Override
-         public void run() {
-            try {
-               sendMessages(pc, dest, messageCount);
+         final int messageCount = 20;
+         ExecutorService executorService = Executors.newCachedThreadPool();
+         executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+               try {
+                  sendMessages(pc, dest, messageCount);
+               }
+               catch (Exception ignored) {
+                  ignored.printStackTrace();
+               }
             }
-            catch (Exception ignored) {
-               ignored.printStackTrace();
-            }
+         });
+
+         // wait for timeout and reconnect
+         TimeUnit.SECONDS.sleep(8);
+         proxy.goOn();
+         for (int i = 0; i < messageCount; i++) {
+            Assert.assertNotNull("Got message " + i + " after reconnect", consumer.receive(10000));
          }
-      });
 
-      // wait for timeout and reconnect
-      TimeUnit.SECONDS.sleep(8);
-      proxy.goOn();
-      for (int i = 0; i < messageCount; i++) {
-         Assert.assertNotNull("Got message " + i + " after reconnect", consumer.receive(10000));
+         Assert.assertNull(consumer.receive(5000));
       }
-
-      Assert.assertNull(consumer.receive(5000));
+      finally {
+         proxy.close();
+      }
 
    }
 

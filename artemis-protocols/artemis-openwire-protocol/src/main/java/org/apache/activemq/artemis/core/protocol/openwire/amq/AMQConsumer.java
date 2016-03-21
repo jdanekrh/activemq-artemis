@@ -46,7 +46,6 @@ import org.apache.activemq.command.TransactionId;
 import org.apache.activemq.wireformat.WireFormat;
 
 public class AMQConsumer {
-
    private AMQSession session;
    private org.apache.activemq.command.ActiveMQDestination openwireDestination;
    private ConsumerInfo info;
@@ -238,9 +237,16 @@ public class AMQConsumer {
             mi = iter.next();
             if (mi.amqId.equals(lastm)) {
                n++;
-               iter.remove();
-               session.getCoreSession().individualAcknowledge(nativeId, mi.nativeId);
-               session.getCoreSession().commit();
+               if (!isLocalTx) {
+                  iter.remove();
+                  session.getCoreSession().individualAcknowledge(nativeId, mi.nativeId);
+               }
+               else {
+                  mi.setLocalAcked(true);
+               }
+               if (tid == null) {
+                  session.getCoreSession().commit();
+               }
                break;
             }
          }
