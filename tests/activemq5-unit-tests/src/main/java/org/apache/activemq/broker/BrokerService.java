@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.activemq.ActiveMQConnectionMetaData;
@@ -584,8 +585,19 @@ public class BrokerService implements Service {
 
    private int getPseudoRandomPort() {
       int port = RANDOM_PORT_BASE.getAndIncrement();
+      int maxTry = 20;
       while (!checkPort(port)) {
          port = RANDOM_PORT_BASE.getAndIncrement();
+         maxTry--;
+         if (maxTry == 0) {
+            LOG.error("Too many port used");
+            break;
+         }
+         try {
+            TimeUnit.SECONDS.sleep(5);
+         }
+         catch (InterruptedException e) {
+         }
       }
       return port;
    }

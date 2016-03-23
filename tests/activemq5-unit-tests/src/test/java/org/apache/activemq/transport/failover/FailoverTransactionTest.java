@@ -87,6 +87,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
 
    @After
    public void tearDown() throws Exception {
+      doByteman.set(false);
       stopBroker();
    }
 
@@ -665,11 +666,11 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
          for (Connection c : connections) {
             c.close();
          }
-      }
 
-      // ensure no dangling messages with fresh broker etc
-      if (broker != null) {
-         broker.stop();
+         // ensure no dangling messages with fresh broker etc
+         if (broker != null) {
+            broker.stop();
+         }
       }
 
       LOG.info("Checking for remaining/hung messages..");
@@ -693,8 +694,8 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
       }
       finally {
          connection.close();
+         broker.stop();
       }
-      broker.stop();
    }
 
    @Test
@@ -710,6 +711,7 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
    )
    public void testPoolingNConsumesAfterReconnect() throws Exception {
       LOG.info(this + " running test testPoolingNConsumesAfterReconnect");
+      count = 0;
       broker = createBroker();
       startBrokerWithDurableQueue();
 
@@ -1047,13 +1049,16 @@ public class FailoverTransactionTest extends OpenwireArtemisBaseTest {
    }
 
    public static void stopBrokerOnCounter() {
+      LOG.info("in stopBrokerOnCounter, byteman " + doByteman.get() + " count " + count);
       if (doByteman.get()) {
          if (count++ == 1) {
+            LOG.info("ok stop broker...");
             new Thread() {
                public void run() {
                   try {
                      broker.stop();
                      broker = null;
+                     LOG.info("broker stopped.");
                   }
                   catch (Exception e) {
                      e.printStackTrace();
