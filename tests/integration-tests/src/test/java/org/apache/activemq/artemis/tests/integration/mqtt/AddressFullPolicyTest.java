@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class AddressFullPolicyTest extends MQTTTestSupport {
 
    private static final Logger LOG = LoggerFactory.getLogger(AddressFullPolicyTest.class);
-   AddressSettings addressSettings;
+   private AddressSettings addressSettings;
 
    @Override
    protected Configuration createDefaultConfig(boolean netty) throws Exception {
@@ -34,58 +34,64 @@ public class AddressFullPolicyTest extends MQTTTestSupport {
    @Test
    public void drop() throws Exception {
       final int payloadSizeInBytes = 1024;
-      final long payloads = 4;
+      final long payloads = 8;
+      final long expect = 3;  // about half of the messages gets enqueued, so expect less than half
 
       addressSettings = new AddressSettings();
       addressSettings.setMaxSizeBytes(payloads * payloadSizeInBytes);
       addressSettings.setAddressFullMessagePolicy(AddressFullMessagePolicy.DROP);
       super.setUp();
 
+      BlockingConnection blockingConnection = openBlockingConnection();
+
+      QoS qos = QoS.AT_LEAST_ONCE;
+      trySendReceiveMessages(expect, payloads, payloadSizeInBytes, blockingConnection, qos);
+
+      blockingConnection.disconnect();
+   }
+
+   private BlockingConnection openBlockingConnection() throws Exception {
       MQTT mqtt = createMQTTConnection();
       mqtt.setClientId("foo");
       mqtt.setVersion("3.1.1");
 
       BlockingConnection blockingConnection = mqtt.blockingConnection();
       blockingConnection.connect();
-
-      QoS qos = QoS.AT_LEAST_ONCE;
-
-      blockingConnection.subscribe(new Topic[]{
-         new Topic("topic1", qos),
-         new Topic("topic2", qos)});
-
-      trySendReceiveMessages(payloads, payloadSizeInBytes, blockingConnection, qos);
-
-      blockingConnection.disconnect();
+      return blockingConnection;
    }
 
-   private void trySendReceiveMessages(long payloads, int payloadSizeInBytes, BlockingConnection blockingConnection, QoS qos) throws Exception {
+   private void trySendReceiveMessages(long expect, long payloads, int payloadSizeInBytes, BlockingConnection blockingConnection, QoS qos) throws Exception {
+      final int timeout = 100;
+      final boolean retain = false;
       byte[] payload = new byte[payloadSizeInBytes];
 
-      for (int i = 0; i < payloads - 1; i++) {
-         blockingConnection.publish("topic1", payload, qos, true);
-         blockingConnection.publish("topic2", payload, qos, true);
+      blockingConnection.subscribe(new Topic[]{
+         new Topic("topic1", qos)});
+
+      for (int i = 0; i < expect; i++) {
+         blockingConnection.publish("topic1", payload, qos, retain);
       }
 
       // try to put payloads + 1 messages in topic1 in total
-      for (int i = 0; i < 2; i++) {
-         blockingConnection.publish("topic1", payload, qos, true);
+      for (int i = 0; i < payloads - expect + 1; i++) {
+         blockingConnection.publish("topic1", payload, qos, retain);
       }
 
-      // first payloads - 1 must be there
-      for (int i = 0; i < payloads - 1; i++) {
-         Message m = blockingConnection.receive(100, TimeUnit.MILLISECONDS);
+      // first expect messages must be in there
+      for (int i = 0; i < expect; i++) {
+         Message m = blockingConnection.receive(timeout, TimeUnit.MILLISECONDS);
+         System.out.println(m.getTopic());
          assertNotNull(m);
       }
 
-      // at least the payloads + 1 st message was over limit
-      for (int i = 0; i < 2; i++) {
-         Message m = blockingConnection.receive(100, TimeUnit.MILLISECONDS);
+      // at least the payloads + 1st message was over limit
+      for (int i = 0; i < payloads - expect + 1; i++) {
+         Message m = blockingConnection.receive(timeout, TimeUnit.MILLISECONDS);
          if (m == null) {
             return;
          }
       }
 
-      fail("Server enqueued more messages into topic1 than is maxSizeBytes for the topic");
+      fail("Server enqueued more data into topic than is maxSizeBytes for the topic");
    }
 }
