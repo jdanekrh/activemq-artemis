@@ -16,6 +16,7 @@
  */
 package org.apache.activemq.artemis.tests.integration.mqtt;
 
+import junit.framework.AssertionFailedError;
 import org.apache.activemq.artemis.core.config.Configuration;
 import org.apache.activemq.artemis.core.settings.impl.AddressFullMessagePolicy;
 import org.apache.activemq.artemis.core.settings.impl.AddressSettings;
@@ -76,7 +77,43 @@ public class AddressFullPolicyTest extends MQTTTestSupport {
       return blockingConnection;
    }
 
-   private void trySendReceiveMessages(long expect, long payloads, int payloadSizeInBytes, BlockingConnection blockingConnection, QoS qos) throws Exception {
+   @Test
+   public void measureQueueCapacity() throws Exception {
+      final int[] payloads = new int[]{4, 8, 16, 32, 64, 128, 256, 512};
+      final int payloadSizeInBytes = 1024;
+
+      int[] maximalPayload = new int[payloads.length];
+
+      for (int i = 0; i < payloads.length; i++) {
+         int payload = payloads[i];
+         addressSettings = new AddressSettings();
+         addressSettings.setMaxSizeBytes(payload * payloadSizeInBytes);
+         addressSettings.setAddressFullMessagePolicy(AddressFullMessagePolicy.DROP);
+         super.setUp();
+
+         BlockingConnection blockingConnection = openBlockingConnection();
+
+         QoS qos = QoS.AT_LEAST_ONCE;
+
+         int expect = 0;
+         maximalPayload[i] = trySendReceiveMessages(expect, payload, payloadSizeInBytes, blockingConnection, qos);
+
+         blockingConnection.disconnect();
+         super.tearDown();
+      }
+
+      for (int i = 0; i < payloads.length; i++) {
+         System.out.println("capacity: " + payloads[i] + " received: " + maximalPayload[i]);
+      }
+
+      super.setUp(); // to give the tearDown something to work with
+   }
+
+   /**
+    * @return number of messages read from the queue + 1
+    * @throws Exception
+    */
+   private int trySendReceiveMessages(long expect, long payloads, int payloadSizeInBytes, BlockingConnection blockingConnection, QoS qos) throws Exception {
       final int timeout = 100;
       final boolean retain = false;
       byte[] payload = new byte[payloadSizeInBytes];
@@ -101,13 +138,14 @@ public class AddressFullPolicyTest extends MQTTTestSupport {
       }
 
       // at least the payloads + 1st message was over limit
-      for (int i = 0; i < payloads - expect + 1; i++) {
+      for (int i = (int) expect; i < payloads + 1; i++) {
          Message m = blockingConnection.receive(timeout, TimeUnit.MILLISECONDS);
          if (m == null) {
-            return;
+            return i;
          }
       }
 
       fail("Server enqueued more data into topic than is maxSizeBytes for the topic");
+      return -1;
    }
 }
