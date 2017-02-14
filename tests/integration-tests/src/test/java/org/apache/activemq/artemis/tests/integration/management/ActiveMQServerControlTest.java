@@ -374,6 +374,85 @@ public class ActiveMQServerControlTest extends ManagementTestBase {
    }
 
    @Test
+   public void testAddressOfNonDurableQueueIsDeletedOnBrokerRestart() throws Exception {
+      SimpleString address = RandomUtil.randomSimpleString();
+      SimpleString name = RandomUtil.randomSimpleString();
+      final boolean durable = false;
+
+      ActiveMQServerControl serverControl = createManagementControl();
+
+      checkNoResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+      serverControl.createAddress(address.toString(), "ANYCAST");
+      serverControl.createQueue(address.toString(), "ANYCAST", name.toString(), null, durable, -1, false, false);
+
+      checkResource(ObjectNameBuilder.DEFAULT.getAddressObjectName(address));
+      checkResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+
+      restartServer();
+      checkNoResource(ObjectNameBuilder.DEFAULT.getAddressObjectName(address));  // FIXME: FAILS
+      checkNoResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+   }
+
+   @Test
+   public void testDeletedAddressOfNonDurableQueueDoesNotReappearOnBrokerRestart() throws Exception {
+      SimpleString address = RandomUtil.randomSimpleString();
+      SimpleString name = RandomUtil.randomSimpleString();
+      final boolean durable = false;
+
+      ActiveMQServerControl serverControl = createManagementControl();
+
+      checkNoResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+      serverControl.createAddress(address.toString(), "ANYCAST");
+      serverControl.createQueue(address.toString(), "ANYCAST", name.toString(), null, durable, -1, false, false);
+
+      checkResource(ObjectNameBuilder.DEFAULT.getAddressObjectName(address));
+      checkResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+
+      serverControl.destroyQueue(name.toString(), true, true);
+      checkNoResource(ObjectNameBuilder.DEFAULT.getAddressObjectName(address));  // FIXME: FAILS
+      checkNoResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+
+      restartServer();
+      checkNoResource(ObjectNameBuilder.DEFAULT.getAddressObjectName(address));
+      checkNoResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+   }
+
+   @Test
+   public void testDeletingNonemptyQueueFails() throws Exception {
+      SimpleString address = RandomUtil.randomSimpleString();
+      SimpleString name = RandomUtil.randomSimpleString();
+      final boolean durable = false;
+
+      ServerLocator locator = createInVMNonHALocator();
+      ClientSessionFactory csf = createSessionFactory(locator);
+      ClientSession session = csf.createSession();
+      session.start();
+
+      String queue = RandomUtil.randomString();
+      session.createQueue(address.toString(), RoutingType.ANYCAST, name.toString());
+      ClientProducer producer = session.createProducer(address);
+      ClientMessage message = session.createMessage(false);
+      String text = RandomUtil.randomString();
+      producer.send(message);
+
+      ActiveMQServerControl serverControl = createManagementControl();
+
+      serverControl.destroyQueue(name.toString());
+      // TODO: delete this comment
+      // If I do
+      // serverControl.deleteAddress(address.toString());
+      // instead of the line above, I get (correctly) an exception
+      // ActiveMQDeleteAddressException[errorType=DELETE_ADDRESS_ERROR message=AMQ119205: Address cb9d9eaf-2747-47e8-95bd-2064fa89b94f has bindings
+
+      checkNoResource(ObjectNameBuilder.DEFAULT.getAddressObjectName(address));  // FAILS
+      checkNoResource(ObjectNameBuilder.DEFAULT.getQueueObjectName(address, name, RoutingType.ANYCAST));
+
+      session.deleteQueue(queue);
+      session.close();
+      locator.close();
+   }
+
+   @Test
    public void testGetQueueNames() throws Exception {
       SimpleString address = RandomUtil.randomSimpleString();
       SimpleString name = RandomUtil.randomSimpleString();
