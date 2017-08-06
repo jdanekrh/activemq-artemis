@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.activemq.artemis.core.server.Queue;
 import org.apache.activemq.artemis.tests.integration.IntegrationTestLogger;
+import org.apache.activemq.artemis.tests.util.Wait;
 import org.apache.activemq.transport.amqp.client.AmqpClient;
 import org.apache.activemq.transport.amqp.client.AmqpConnection;
 import org.apache.activemq.transport.amqp.client.AmqpMessage;
@@ -147,6 +148,7 @@ public class AmqpReceiverDrainTest extends AmqpClientTestSupport {
       sendMessages(destinationName, MSG_COUNT);
 
       Queue queueView = getProxyToQueue(destinationName);
+      Wait.waitFor(() -> queueView.getMessageCount() == MSG_COUNT, 10000);
       assertEquals(MSG_COUNT, queueView.getMessageCount());
       assertEquals(0, queueView.getDeliveringCount());
 
