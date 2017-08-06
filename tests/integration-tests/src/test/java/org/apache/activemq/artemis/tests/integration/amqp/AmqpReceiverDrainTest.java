@@ -148,6 +148,7 @@ public class AmqpReceiverDrainTest extends AmqpClientTestSupport {
       sendMessages(destinationName, MSG_COUNT);
 
       Queue queueView = getProxyToQueue(destinationName);
+      Wait.waitFor(() -> queueView.getMessageCount() == MSG_COUNT, 10000);
       assertEquals(MSG_COUNT, queueView.getMessageCount());
       assertEquals(0, queueView.getDeliveringCount());
 

@@ -50,6 +50,7 @@ public class AmqpExpiredMessageTest extends AmqpClientTestSupport {
       sender.send(message);
       sender.close();
 
+      Wait.waitFor(() -> queueView.getMessageCount() == 1, 10000);
       assertEquals(1, queueView.getMessageCount());
 
       // Now try and get the message
