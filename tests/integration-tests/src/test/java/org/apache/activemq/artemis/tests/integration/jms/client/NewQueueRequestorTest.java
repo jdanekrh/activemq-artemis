@@ -32,7 +32,10 @@ import javax.jms.TextMessage;
 import org.apache.activemq.artemis.tests.integration.IntegrationTestLogger;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class NewQueueRequestorTest extends JMSTestBase {
 
    private static final IntegrationTestLogger log = IntegrationTestLogger.LOGGER;

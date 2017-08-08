@@ -34,10 +34,13 @@ import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * A CloseConnectionOnGCTest
  */
+@RunWith(value = Parameterized.class)
 public class CloseConnectionOnGCTest extends JMSTestBase {
 
    private ActiveMQConnectionFactory cf;
@@ -47,9 +50,12 @@ public class CloseConnectionOnGCTest extends JMSTestBase {
    public void setUp() throws Exception {
       super.setUp();
 
-      cf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(INVM_CONNECTOR_FACTORY));
-      cf.setBlockOnDurableSend(true);
-      cf.setPreAcknowledge(true);
+      registerConnectionFactory();
+
+//      cf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(INVM_CONNECTOR_FACTORY));
+//      cf.setBlockOnDurableSend(true);
+//      cf.setPreAcknowledge(true);
+
    }
 
    @Test

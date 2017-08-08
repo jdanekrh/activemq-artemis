@@ -30,10 +30,13 @@ import org.apache.activemq.artemis.api.core.client.ClientMessage;
 import org.apache.activemq.artemis.jms.client.ActiveMQMessage;
 import org.apache.activemq.artemis.tests.util.JMSClusteredTestBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.Enumeration;
 import java.util.Set;
 
+@RunWith(value = Parameterized.class)
 public class TopicClusterTest extends JMSClusteredTestBase {
 
    // TODO: required to match cluster-connection

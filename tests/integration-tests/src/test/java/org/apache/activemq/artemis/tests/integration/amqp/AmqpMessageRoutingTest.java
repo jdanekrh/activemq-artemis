@@ -26,9 +26,16 @@ import org.apache.activemq.artemis.api.core.RoutingType;
 import org.apache.activemq.artemis.api.core.SimpleString;
 import org.apache.activemq.artemis.api.core.management.ActiveMQServerControl;
 import org.apache.activemq.artemis.core.server.impl.AddressInfo;
+import org.apache.activemq.artemis.tests.util.Wait;
 import org.apache.activemq.artemis.utils.UUIDGenerator;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+@RunWith(Parameterized.class)
 public class AmqpMessageRoutingTest extends JMSClientTestSupport {
 
    @Override
@@ -75,7 +82,9 @@ public class AmqpMessageRoutingTest extends JMSClientTestSupport {
 
       sendMessages(addressA, 1, RoutingType.ANYCAST);
 
-      assertEquals(1, server.locateQueue(SimpleString.toSimpleString(queueA)).getMessageCount() + server.locateQueue(SimpleString.toSimpleString(queueB)).getMessageCount());
+      Supplier<Long> getMessageCount = () -> server.locateQueue(SimpleString.toSimpleString(queueA)).getMessageCount() + server.locateQueue(SimpleString.toSimpleString(queueB)).getMessageCount();
+      Wait.waitFor(() -> getMessageCount.get() == 1);
+      assertEquals(1, getMessageCount.get().longValue());
       assertEquals(0, server.locateQueue(SimpleString.toSimpleString(queueC)).getMessageCount());
    }
 

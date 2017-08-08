@@ -192,7 +192,7 @@ public class AmqpClientTestSupport extends AmqpTestSupport {
    }
 
    protected String getConfiguredProtocols() {
-      return "AMQP,OPENWIRE";
+      return "AMQP,CORE,OPENWIRE";
    }
 
    protected void configureAddressPolicy(ActiveMQServer server) {

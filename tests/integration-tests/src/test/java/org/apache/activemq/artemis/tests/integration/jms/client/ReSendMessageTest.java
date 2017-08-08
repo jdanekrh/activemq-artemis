@@ -38,10 +38,14 @@ import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Receive Messages and resend them, like the bridge would do
  */
+
+@RunWith(Parameterized.class)
 public class ReSendMessageTest extends JMSTestBase {
 
    // Constants -----------------------------------------------------

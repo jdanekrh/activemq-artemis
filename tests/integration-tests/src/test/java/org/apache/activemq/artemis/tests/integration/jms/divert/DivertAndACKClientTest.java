@@ -32,12 +32,15 @@ import org.apache.activemq.artemis.core.config.DivertConfiguration;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * A DivertAndACKClientTest
  *
  * https://jira.jboss.org/jira/browse/HORNETQ-165
  */
+@RunWith(value = Parameterized.class)
 public class DivertAndACKClientTest extends JMSTestBase {
 
    @Test

@@ -30,7 +30,10 @@ import javax.jms.TextMessage;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class JMSMessageProducerTest extends JMSClientTestSupport {
 
    @Test(timeout = 30000)

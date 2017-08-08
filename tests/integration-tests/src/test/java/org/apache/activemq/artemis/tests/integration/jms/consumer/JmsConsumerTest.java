@@ -46,7 +46,10 @@ import org.apache.activemq.artemis.utils.ReusableLatch;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(value = Parameterized.class)
 public class JmsConsumerTest extends JMSTestBase {
 
    private static final IntegrationTestLogger log = IntegrationTestLogger.LOGGER;

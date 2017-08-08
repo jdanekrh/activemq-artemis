@@ -28,7 +28,10 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.artemis.tests.integration.IntegrationTestLogger;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class JMSConnectionWithSecurityTest extends JMSClientTestSupport {
 
    @Override

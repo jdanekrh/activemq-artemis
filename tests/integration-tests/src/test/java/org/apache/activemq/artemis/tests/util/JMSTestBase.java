@@ -16,23 +16,11 @@
  */
 package org.apache.activemq.artemis.tests.util;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSConsumer;
-import javax.jms.JMSContext;
-import javax.jms.JMSException;
-import javax.jms.JMSProducer;
-import javax.jms.JMSRuntimeException;
-import javax.jms.Message;
+import javax.jms.*;
 import javax.jms.Queue;
-import javax.jms.Topic;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.activemq.artemis.api.core.TransportConfiguration;
 import org.apache.activemq.artemis.api.core.management.QueueControl;
@@ -40,15 +28,18 @@ import org.apache.activemq.artemis.core.config.Configuration;
 import org.apache.activemq.artemis.core.registry.JndiBindingRegistry;
 import org.apache.activemq.artemis.core.server.ActiveMQServer;
 import org.apache.activemq.artemis.core.server.ActiveMQServers;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.jms.server.config.ConnectionFactoryConfiguration;
 import org.apache.activemq.artemis.jms.server.config.impl.ConnectionFactoryConfigurationImpl;
 import org.apache.activemq.artemis.jms.server.impl.JMSServerManagerImpl;
 import org.apache.activemq.artemis.service.extensions.ServiceUtils;
 import org.apache.activemq.artemis.tests.integration.ra.DummyTransactionManager;
 import org.apache.activemq.artemis.tests.unit.util.InVMNamingContext;
+import org.apache.qpid.jms.JmsConnectionFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.runners.Parameterized;
 
 public class JMSTestBase extends ActiveMQTestBase {
 
@@ -194,19 +185,55 @@ public class JMSTestBase extends ActiveMQTestBase {
       super.tearDown();
    }
 
-   protected void registerConnectionFactory() throws Exception {
-      List<TransportConfiguration> connectorConfigs = new ArrayList<>();
-      connectorConfigs.add(new TransportConfiguration(INVM_CONNECTOR_FACTORY));
+      @Parameterized.Parameters(name = "protocol={0}")
+   public static Collection getParameters() {
+      Object[] protocols = new Object[]{"core", "openwire", "amqp"};
 
-      List<TransportConfiguration> connectorConfigs1 = new ArrayList<>();
-      connectorConfigs1.add(new TransportConfiguration(NETTY_CONNECTOR_FACTORY));
-
-      createCF(connectorConfigs, "/cf");
-      createCF("NettyCF", connectorConfigs1, "/nettyCf");
-
-      cf = (ConnectionFactory) namingContext.lookup("/cf");
-      nettyCf = (ConnectionFactory)namingContext.lookup("/nettyCf");
+      ArrayList<Object[]> objects = new ArrayList<>();
+      for (Object p : protocols) {
+         objects.add(new Object[]{p});
+      }
+      return objects;
    }
+
+   @Parameterized.Parameter
+   public String protocol;
+
+   protected void registerConnectionFactory() throws Exception {
+      switch (protocol) {
+         case "core": {
+            ConnectionFactory factory = new ActiveMQConnectionFactory();
+            ((ActiveMQConnectionFactory) factory).setBlockOnAcknowledge(true);
+            this.cf = factory;
+            break;
+         }
+         case "amqp": {
+            final JmsConnectionFactory factory = new JmsConnectionFactory("amqp://localhost:61616");
+            factory.setForceAsyncAcks(true);
+            this.cf = factory;
+            break;
+         }
+         default:
+            org.apache.activemq.ActiveMQConnectionFactory cf = new org.apache.activemq.ActiveMQConnectionFactory("tcp://localhost:61616?wireFormat.cacheEnabled=true");
+            cf.setSendAcksAsync(false);
+            this.cf = cf;
+             break;
+      }
+   }
+
+//   protected void registerConnectionFactory() throws Exception {
+//      List<TransportConfiguration> connectorConfigs = new ArrayList<>();
+//      connectorConfigs.add(new TransportConfiguration(INVM_CONNECTOR_FACTORY));
+//
+//      List<TransportConfiguration> connectorConfigs1 = new ArrayList<>();
+//      connectorConfigs1.add(new TransportConfiguration(NETTY_CONNECTOR_FACTORY));
+//
+//      createCF(connectorConfigs, "/cf");
+//      createCF("NettyCF", connectorConfigs1, "/nettyCf");
+//
+//      cf = (ConnectionFactory) namingContext.lookup("/cf");
+//      nettyCf = (ConnectionFactory)namingContext.lookup("/nettyCf");
+//   }
 
    protected void createCF(final List<TransportConfiguration> connectorConfigs,
                            final String... jndiBindings) throws Exception {

@@ -59,12 +59,15 @@ import org.apache.activemq.artemis.utils.RandomUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * A JMSFailoverTest
  * <br>
  * A simple test to test setFailoverListener when using the JMS API.
  */
+@RunWith(value = Parameterized.class)
 public class JMSFailoverListenerTest extends ActiveMQTestBase {
 
    private static final IntegrationTestLogger log = IntegrationTestLogger.LOGGER;

@@ -16,11 +16,7 @@
  */
 package org.apache.activemq.artemis.tests.integration.jms.client;
 
-import javax.jms.Connection;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.Session;
-import javax.jms.TextMessage;
+import javax.jms.*;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 
@@ -34,17 +30,62 @@ import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.jms.server.impl.JMSServerManagerImpl;
 import org.apache.activemq.artemis.tests.unit.util.InVMNamingContext;
 import org.apache.activemq.artemis.tests.util.ActiveMQTestBase;
+import org.apache.qpid.jms.JmsConnectionFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * test Written to replicate https://issues.jboss.org/browse/HORNETQ-1312
  */
+@RunWith(Parameterized.class)
 public class RemoteConnectionStressTest extends ActiveMQTestBase {
 
    ActiveMQServer server;
    MBeanServer mbeanServer;
    JMSServerManagerImpl jmsServer;
+
+   ConnectionFactory cf;
+
+      @Parameterized.Parameters(name = "protocol={0}")
+   public static Collection getParameters() {
+      Object[] protocols = new Object[]{"core", "openwire", "amqp"};
+
+      ArrayList<Object[]> objects = new ArrayList<>();
+      for (Object p : protocols) {
+         objects.add(new Object[]{p});
+      }
+      return objects;
+   }
+
+   @Parameterized.Parameter
+   public String protocol;
+
+   protected void registerConnectionFactory() throws Exception {
+      switch (protocol) {
+         case "core": {
+            ConnectionFactory factory = new ActiveMQConnectionFactory();
+            ((ActiveMQConnectionFactory) factory).setBlockOnAcknowledge(true);
+            this.cf = factory;
+            break;
+         }
+         case "amqp": {
+            final JmsConnectionFactory factory = new JmsConnectionFactory("amqp://localhost:61616");
+            factory.setForceAsyncAcks(true);
+            this.cf = factory;
+            break;
+         }
+         default:
+            org.apache.activemq.ActiveMQConnectionFactory cf = new org.apache.activemq.ActiveMQConnectionFactory("tcp://localhost:61616?wireFormat.cacheEnabled=true");
+            cf.setSendAcksAsync(false);
+            this.cf = cf;
+             break;
+      }
+   }
 
    @Override
    @Before
@@ -62,16 +103,17 @@ public class RemoteConnectionStressTest extends ActiveMQTestBase {
       jmsServer.start();
 
       jmsServer.createQueue(true, "SomeQueue", null, true, "/jms/SomeQueue");
+
+      registerConnectionFactory();
    }
 
    @Test
    public void testSimpleRemoteConnections() throws Exception {
       for (int i = 0; i < 1000; i++) {
-
-         TransportConfiguration config = new TransportConfiguration(NETTY_CONNECTOR_FACTORY);
-         ActiveMQConnectionFactory cf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, config);
-         cf.setInitialConnectAttempts(10);
-         cf.setRetryInterval(100);
+//         TransportConfiguration config = new TransportConfiguration(NETTY_CONNECTOR_FACTORY);
+//         ActiveMQConnectionFactory cf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, config);
+//         cf.setInitialConnectAttempts(10);
+//         cf.setRetryInterval(100);
 
          Connection conn = cf.createConnection();
 
@@ -90,7 +132,7 @@ public class RemoteConnectionStressTest extends ActiveMQTestBase {
          session.close();
          conn.close();
 
-         cf.close();
+//         cf.close();
 
       }
    }

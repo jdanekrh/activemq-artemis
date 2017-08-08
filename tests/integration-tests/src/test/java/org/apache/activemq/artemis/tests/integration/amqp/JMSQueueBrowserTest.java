@@ -28,16 +28,20 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.artemis.core.server.Queue;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnection;
 import org.apache.activemq.artemis.tests.util.Wait;
 import org.apache.qpid.jms.JmsConnection;
 import org.apache.qpid.jms.policy.JmsDefaultPrefetchPolicy;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Tests for various QueueBrowser scenarios with an AMQP JMS client.
  */
+@RunWith(Parameterized.class)
 public class JMSQueueBrowserTest extends JMSClientTestSupport {
 
    protected static final Logger LOG = LoggerFactory.getLogger(JMSQueueBrowserTest.class);
@@ -47,8 +51,15 @@ public class JMSQueueBrowserTest extends JMSClientTestSupport {
 
       final int MSG_COUNT = 5;
 
-      JmsConnection connection = (JmsConnection) createConnection();
-      ((JmsDefaultPrefetchPolicy) connection.getPrefetchPolicy()).setAll(0);
+      Connection connection = createConnection();
+      if (connection instanceof JmsConnection) {
+         ((JmsDefaultPrefetchPolicy)((JmsConnection) connection).getPrefetchPolicy()).setAll(0);
+      } else if (connection instanceof ActiveMQConnection) {
+//         ((ActiveMQConnection) connection).createSession()
+         // TODO
+      } else if (connection instanceof org.apache.activemq.ActiveMQConnection) {
+         ((org.apache.activemq.ActiveMQConnection) connection).getPrefetchPolicy().setAll(0);
+      }
 
       connection.start();
 

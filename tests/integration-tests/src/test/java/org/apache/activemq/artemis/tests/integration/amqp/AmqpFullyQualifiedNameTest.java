@@ -43,7 +43,10 @@ import org.apache.activemq.artemis.tests.util.Wait;
 import org.apache.activemq.artemis.utils.CompositeAddress;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class AmqpFullyQualifiedNameTest extends JMSClientTestSupport {
 
    private SimpleString anycastAddress = new SimpleString("address.anycast");

@@ -25,12 +25,23 @@ import org.apache.activemq.artemis.api.jms.JMSFactoryType;
 import org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * A CloseConnectionOnGCTest
  */
+@RunWith(value = Parameterized.class)
 public class CloseConnectionFactoryOnGCest extends JMSTestBase {
+   @Override
+   @Before
+   public void setUp() throws Exception {
+      super.setUp();
+   }
 
+   @Test
    public void testCloseCFOnGC() throws Exception {
 
       final AtomicInteger valueGC = new AtomicInteger(0);
@@ -45,7 +56,8 @@ public class CloseConnectionFactoryOnGCest extends JMSTestBase {
       try {
          // System.setOut(out);
          for (int i = 0; i < 100; i++) {
-            ActiveMQConnectionFactory cf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(INVM_CONNECTOR_FACTORY));
+//            ActiveMQConnectionFactory cf = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(INVM_CONNECTOR_FACTORY));
+            registerConnectionFactory();
             Connection conn = cf.createConnection();
             cf = null;
             conn.close();

@@ -27,10 +27,13 @@ import javax.jms.TextMessage;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * A ReceiveNoWaitTest
  */
+@RunWith(Parameterized.class)
 public class ReceiveNoWaitTest extends JMSTestBase {
 
    private Queue queue;

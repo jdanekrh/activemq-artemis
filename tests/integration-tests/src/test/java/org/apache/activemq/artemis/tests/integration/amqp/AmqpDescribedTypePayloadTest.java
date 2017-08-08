@@ -39,11 +39,15 @@ import org.apache.activemq.transport.amqp.client.AmqpSender;
 import org.apache.activemq.transport.amqp.client.AmqpSession;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Test that the broker can pass through an AMQP message with a described type in the message
  * body regardless of transformer in use.
  */
+@RunWith(Parameterized.class)
+
 public class AmqpDescribedTypePayloadTest extends JMSClientTestSupport {
 
    @Test(timeout = 60000)

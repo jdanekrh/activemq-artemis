@@ -27,7 +27,10 @@ import org.apache.activemq.artemis.api.jms.ActiveMQJMSClient;
 import org.apache.activemq.artemis.tests.util.JMSClusteredTestBase;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class AutoCreateQueueClusterTest extends JMSClusteredTestBase {
 
    @Override

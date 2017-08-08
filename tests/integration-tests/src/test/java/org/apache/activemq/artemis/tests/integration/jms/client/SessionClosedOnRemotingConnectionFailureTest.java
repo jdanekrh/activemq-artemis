@@ -37,10 +37,13 @@ import org.apache.activemq.artemis.tests.integration.IntegrationTestLogger;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * A SessionClosedOnRemotingConnectionFailureTest
  */
+@RunWith(Parameterized.class)
 public class SessionClosedOnRemotingConnectionFailureTest extends JMSTestBase {
    // Constants -----------------------------------------------------
 
