@@ -28,7 +28,10 @@ import org.apache.activemq.artemis.api.jms.ActiveMQJMSClient;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(value = Parameterized.class)
 public class BodyTest extends JMSTestBase {
 
    private static final String Q_NAME = "SomeQueue";
@@ -49,7 +52,7 @@ public class BodyTest extends JMSTestBase {
          Connection conn = cf.createConnection();
       ) {
 
-         Session sess = conn.createSession();
+         Session sess = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
          MessageProducer producer = sess.createProducer(queue);
 
          MessageConsumer cons = sess.createConsumer(queue);
@@ -58,7 +61,8 @@ public class BodyTest extends JMSTestBase {
          BytesMessage bytesMessage = sess.createBytesMessage();
          producer.send(bytesMessage);
 
-         Message msg = cons.receiveNoWait();
+//         Message msg = cons.receiveNoWait();
+         Message msg = cons.receive(500);
          assertNotNull(msg);
 
          try {

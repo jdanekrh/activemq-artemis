@@ -39,11 +39,15 @@ import org.apache.activemq.transport.amqp.client.AmqpSender;
 import org.apache.activemq.transport.amqp.client.AmqpSession;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Test that the broker can pass through an AMQP message with a described type in the message
  * body regardless of transformer in use.
  */
+@RunWith(Parameterized.class)
+
 public class AmqpDescribedTypePayloadTest extends JMSClientTestSupport {
 
    @Test(timeout = 60000)
@@ -59,6 +63,7 @@ public class AmqpDescribedTypePayloadTest extends JMSClientTestSupport {
       sender.close();
 
       Queue queue = getProxyToQueue(getQueueName());
+      Wait.waitFor(() -> queue.getMessageCount() == 1, 10000);
       assertEquals(1, queue.getMessageCount());
 
       AmqpReceiver receiver = session.createReceiver(getQueueName());
@@ -86,6 +91,7 @@ public class AmqpDescribedTypePayloadTest extends JMSClientTestSupport {
       connection.close();
 
       Queue queue = getProxyToQueue(getQueueName());
+      Wait.waitFor(() -> queue.getMessageCount() == 1, 10000);
       assertEquals(1, queue.getMessageCount());
 
       ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(getBrokerOpenWireConnectionURI());

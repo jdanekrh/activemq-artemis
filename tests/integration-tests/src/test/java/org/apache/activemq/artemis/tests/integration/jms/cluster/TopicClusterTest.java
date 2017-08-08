@@ -26,7 +26,10 @@ import javax.jms.Topic;
 
 import org.apache.activemq.artemis.tests.util.JMSClusteredTestBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(value = Parameterized.class)
 public class TopicClusterTest extends JMSClusteredTestBase {
 
    // TODO: required to match cluster-connection

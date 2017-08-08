@@ -41,10 +41,13 @@ import org.apache.activemq.artemis.utils.ByteUtil;
 import org.apache.activemq.artemis.utils.RandomUtil;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * Test that various message types are handled as expected with an AMQP JMS client.
  */
+@RunWith(Parameterized.class)
 public class JMSMessageTypesTest extends JMSClientTestSupport {
 
    final int NUM_MESSAGES = 10;

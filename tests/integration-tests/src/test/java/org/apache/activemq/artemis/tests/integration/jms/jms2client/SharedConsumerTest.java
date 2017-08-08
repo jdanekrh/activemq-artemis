@@ -28,7 +28,10 @@ import org.apache.activemq.artemis.core.postoffice.Binding;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(value = Parameterized.class)
 public class SharedConsumerTest extends JMSTestBase {
 
    private JMSContext context;
@@ -92,6 +95,9 @@ public class SharedConsumerTest extends JMSTestBase {
          JMSConsumer con1 = context.createSharedConsumer(topic1, "mySharedCon");
          JMSConsumer con2 = context.createSharedConsumer(topic1, "mySharedCon");
          con1.close();
+         server.getPostOffice().getAllBindings().entrySet().forEach((entry) -> {
+            System.out.println("> " + entry.getKey() + ">>" + entry.getValue());
+         });
          Binding binding = server.getPostOffice().getBinding(new SimpleString("nonDurable.mySharedCon"));
          assertNotNull(binding);
          con2.close();

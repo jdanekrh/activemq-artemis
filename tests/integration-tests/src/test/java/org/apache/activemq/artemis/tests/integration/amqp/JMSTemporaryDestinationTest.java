@@ -29,7 +29,10 @@ import javax.jms.TextMessage;
 import org.apache.activemq.artemis.core.server.Queue;
 import org.apache.activemq.artemis.tests.util.Wait;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class JMSTemporaryDestinationTest extends JMSClientTestSupport {
 
    @Test(timeout = 60000)

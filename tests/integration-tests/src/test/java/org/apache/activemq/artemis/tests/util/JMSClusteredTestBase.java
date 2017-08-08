@@ -22,6 +22,8 @@ import javax.jms.Topic;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerFactory;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 import org.apache.activemq.artemis.api.core.TransportConfiguration;
 import org.apache.activemq.artemis.api.jms.ActiveMQJMSClient;
@@ -30,15 +32,19 @@ import org.apache.activemq.artemis.core.config.ClusterConnectionConfiguration;
 import org.apache.activemq.artemis.core.config.Configuration;
 import org.apache.activemq.artemis.core.registry.JndiBindingRegistry;
 import org.apache.activemq.artemis.core.remoting.impl.invm.InVMConnectorFactory;
+import org.apache.activemq.artemis.core.remoting.impl.netty.TransportConstants;
 import org.apache.activemq.artemis.core.server.ActiveMQServer;
 import org.apache.activemq.artemis.core.server.ActiveMQServers;
 import org.apache.activemq.artemis.core.server.cluster.impl.MessageLoadBalancingType;
 import org.apache.activemq.artemis.core.settings.impl.AddressSettings;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.jms.server.config.impl.JMSConfigurationImpl;
 import org.apache.activemq.artemis.jms.server.impl.JMSServerManagerImpl;
 import org.apache.activemq.artemis.tests.integration.IntegrationTestLogger;
 import org.apache.activemq.artemis.tests.unit.util.InVMNamingContext;
+import org.apache.qpid.jms.JmsConnectionFactory;
 import org.junit.Before;
+import org.junit.runners.Parameterized;
 
 public class JMSClusteredTestBase extends ActiveMQTestBase {
 
@@ -124,9 +130,14 @@ public class JMSClusteredTestBase extends ActiveMQTestBase {
 
       waitForTopology(jmsServer2.getActiveMQServer(), 2);
 
-      cf1 = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(InVMConnectorFactory.class.getName(), generateInVMParams(1)));
-      cf2 = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(InVMConnectorFactory.class.getName(), generateInVMParams(2)));
+      cf1 = registerConnectionFactory(1);
+      cf2 = registerConnectionFactory(2);
+
+//      cf1 = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(InVMConnectorFactory.class.getName(), generateInVMParams(1)));
+//      cf2 = ActiveMQJMSClient.createConnectionFactoryWithoutHA(JMSFactoryType.CF, new TransportConfiguration(InVMConnectorFactory.class.getName(), generateInVMParams(2)));
+
    }
+
 
    /**
     * @throws Exception
@@ -162,12 +173,52 @@ public class JMSClusteredTestBase extends ActiveMQTestBase {
       return false;
    }
 
+   @Parameterized.Parameters(name = "protocol={0}")
+   public static Collection getParameters() {
+      Object[] protocols = new Object[]{"core", "openwire", "amqp"};
+
+      ArrayList<Object[]> objects = new ArrayList<>();
+      for (Object p : protocols) {
+         objects.add(new Object[]{p});
+      }
+      return objects;
+   }
+
+   @Parameterized.Parameter
+   public String protocol;
+
+   protected ConnectionFactory registerConnectionFactory(int port) throws Exception {
+      port += 61616;
+      switch (protocol) {
+         case "core": {
+//            return ActiveMQJMSClient.createConnectionFactoryWithoutHA(
+//               new TransportConfiguration(InVMConnectorFactory.class.getName(), generateInVMParams(port)));
+            ConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:" + port);
+            ((ActiveMQConnectionFactory) factory).setBlockOnAcknowledge(true);
+            return factory;
+         }
+         case "amqp": {
+            final JmsConnectionFactory factory = new JmsConnectionFactory("amqp://localhost:" + port);
+            factory.setForceAsyncAcks(true);
+            return factory;
+         }
+         default:
+            org.apache.activemq.ActiveMQConnectionFactory cf = new org.apache.activemq.ActiveMQConnectionFactory("tcp://localhost:" + port + "?wireFormat.cacheEnabled=true");
+            cf.setSendAcksAsync(false);
+            return cf;
+      }
+   }
+
    /**
     * @return
     */
    protected Configuration createConfigServer(final int source, final int destination) throws Exception {
       final String destinationLabel = "toServer" + destination;
       final String sourceLabel = "server" + source;
+
+      HashMap<String, Object> params = new HashMap<>();
+      params.put(TransportConstants.PORT_PROP_NAME, String.valueOf(61616 + source));
+      params.put(TransportConstants.PROTOCOLS_PROP_NAME, "AMQP,CORE,OPENWIRE");
 
       Configuration configuration = createDefaultInVMConfig(source).setSecurityEnabled(false)
                                                                    .setJMXManagementEnabled(true)
@@ -184,7 +235,8 @@ public class JMSClusteredTestBase extends ActiveMQTestBase {
                                                                                                                                    {
                                                                                                                                       add(destinationLabel);
                                                                                                                                    }
-                                                                                                                                }));
+                                                                                                                                }))
+         .addAcceptorConfiguration(new TransportConfiguration(NETTY_ACCEPTOR_FACTORY, params, "netty-acceptor"));
 
       configuration.getAddressesSettings().put("#", new AddressSettings().setRedistributionDelay(0));
 

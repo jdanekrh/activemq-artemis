@@ -40,7 +40,10 @@ import org.apache.activemq.transport.amqp.client.AmqpSender;
 import org.apache.activemq.transport.amqp.client.AmqpSession;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class AmqpFlowControlTest extends JMSClientTestSupport {
 
    private static final long MAX_SIZE_BYTES = 1 * 1024 * 1024;
@@ -123,6 +126,7 @@ public class AmqpFlowControlTest extends JMSClientTestSupport {
       } catch (ResourceAllocationException rae) {
          e = rae;
       }
+      assertNotNull(e);
       assertTrue(e instanceof ResourceAllocationException);
       assertTrue(e.getMessage().contains("resource-limit-exceeded"));
 

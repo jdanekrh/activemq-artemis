@@ -40,10 +40,13 @@ import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * GroupingTest
  */
+@RunWith(Parameterized.class)
 public class GroupingTest extends JMSTestBase {
 
    private Queue queue;
@@ -57,7 +60,15 @@ public class GroupingTest extends JMSTestBase {
    }
 
    protected void setProperty(Message message) {
-      ((ActiveMQMessage) message).getCoreMessage().putStringProperty(org.apache.activemq.artemis.api.core.Message.HDR_GROUP_ID, new SimpleString("foo"));
+      if (message instanceof ActiveMQMessage) {
+         ((ActiveMQMessage) message).getCoreMessage().putStringProperty(org.apache.activemq.artemis.api.core.Message.HDR_GROUP_ID, new SimpleString("foo"));
+      } else {
+         try {
+            message.setStringProperty("JMSXGroupID", "foo");
+         } catch (JMSException e) {
+            throw new RuntimeException(e);
+         }
+      }
    }
 
    protected ConnectionFactory getCF() throws Exception {
@@ -119,21 +130,25 @@ public class GroupingTest extends JMSTestBase {
    @Test
    public void testGroupingWithJMS2Producer() throws Exception {
       ConnectionFactory fact = getCF();
-      Assume.assumeFalse("only makes sense withOUT auto-group", ((ActiveMQConnectionFactory) fact).isAutoGroup());
-      Assume.assumeTrue("only makes sense withOUT explicit group-id", ((ActiveMQConnectionFactory) fact).getGroupID() == null);
+      if (fact instanceof ActiveMQConnectionFactory) {
+         Assume.assumeFalse("only makes sense withOUT auto-group", ((ActiveMQConnectionFactory) fact).isAutoGroup());
+         Assume.assumeTrue("only makes sense withOUT explicit group-id", ((ActiveMQConnectionFactory) fact).getGroupID() == null);
+      }
       final String groupID = UUID.randomUUID().toString();
-      JMSContext ctx = addContext(getCF().createContext(JMSContext.SESSION_TRANSACTED));
+      final Connection connection = getCF().createConnection();
+      Session ctx = connection.createSession(true, Session.CLIENT_ACKNOWLEDGE);
 
-      JMSProducer producer = ctx.createProducer().setProperty("JMSXGroupID", groupID);
+      MessageProducer producer = ctx.createProducer(null);
 
-      JMSConsumer consumer1 = ctx.createConsumer(queue);
-      JMSConsumer consumer2 = ctx.createConsumer(queue);
-      JMSConsumer consumer3 = ctx.createConsumer(queue);
+      MessageConsumer consumer1 = ctx.createConsumer(queue);
+      MessageConsumer consumer2 = ctx.createConsumer(queue);
+      MessageConsumer consumer3 = ctx.createConsumer(queue);
 
-      ctx.start();
+      connection.start();
 
       for (int j = 0; j < 100; j++) {
          TextMessage message = ctx.createTextMessage("Message" + j);
+         message.setStringProperty("JMSXGroupID", groupID);
 
          producer.send(queue, message);
 
@@ -166,12 +181,15 @@ public class GroupingTest extends JMSTestBase {
       ctx.commit();
 
       ctx.close();
+      connection.close();
    }
 
    @Test
    public void testManyGroups() throws Exception {
       ConnectionFactory fact = getCF();
-      Assume.assumeFalse("only makes sense withOUT auto-group", ((ActiveMQConnectionFactory) fact).isAutoGroup());
+      if (fact instanceof ActiveMQConnectionFactory) {
+         Assume.assumeFalse("only makes sense withOUT auto-group", ((ActiveMQConnectionFactory) fact).isAutoGroup());
+      }
 
       Connection connection = fact.createConnection();
 
@@ -194,9 +212,11 @@ public class GroupingTest extends JMSTestBase {
 
          producer.send(message);
 
-         String prop = message.getStringProperty("JMSXGroupID");
+         if (protocol.equals("core")) {
+            String prop = message.getStringProperty("JMSXGroupID");
 
-         assertNotNull(prop);
+            assertNotNull(prop);
+         }
 
       }
 
@@ -218,9 +238,9 @@ public class GroupingTest extends JMSTestBase {
 
    @Test
    public void testGroupingRollbackOnClose() throws Exception {
-      ActiveMQConnectionFactory fact = (ActiveMQConnectionFactory) getCF();
-      fact.setConsumerWindowSize(1000);
-      fact.setTransactionBatchSize(0);
+      ConnectionFactory fact = getCF();
+//      fact.setConsumerWindowSize(1000);
+//      fact.setTransactionBatchSize(0);
       Connection connection = fact.createConnection();
       RemotingConnection rc = server.getRemotingService().getConnections().iterator().next();
       Connection connection2 = fact.createConnection();
@@ -280,9 +300,11 @@ public class GroupingTest extends JMSTestBase {
 
          assertNotNull(tm);
 
-         long text = ((ActiveMQTextMessage) tm).getCoreMessage().getMessageID();
-         System.out.println(tm.getJMSMessageID() + " text = " + text);
-         //assertEquals("Message" + j, text);
+         if (protocol.equals("core")) {
+            long text = ((ActiveMQTextMessage) tm).getCoreMessage().getMessageID();
+            System.out.println(tm.getJMSMessageID() + " text = " + text);
+            //assertEquals("Message" + j, text);
+         }
 
          assertEquals(tm.getStringProperty("JMSXGroupID"), jmsxgroupID);
       }

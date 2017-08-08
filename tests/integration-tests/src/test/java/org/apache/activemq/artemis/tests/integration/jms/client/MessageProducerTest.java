@@ -26,10 +26,13 @@ import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  *
  */
+@RunWith(Parameterized.class)
 public class MessageProducerTest extends JMSTestBase {
 
    @Override
@@ -41,7 +44,7 @@ public class MessageProducerTest extends JMSTestBase {
 
    @Test
    public void testNoDefaultDestination() throws JMSException {
-      Session session = conn.createSession();
+      Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
       try {
          MessageProducer producer = session.createProducer(null);
          Message m = session.createMessage();
@@ -58,7 +61,7 @@ public class MessageProducerTest extends JMSTestBase {
 
    @Test
    public void testHasDefaultDestination() throws Exception {
-      Session session = conn.createSession();
+      Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
       try {
          Queue queue = createQueue(name.getMethodName());
          Queue queue2 = createQueue(name.getMethodName() + "2");

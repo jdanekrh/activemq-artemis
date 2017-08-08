@@ -17,13 +17,7 @@
 
 package org.apache.activemq.artemis.tests.integration.persistence;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
-import javax.jms.Session;
+import javax.jms.*;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
@@ -147,6 +141,49 @@ public class SyncSendTest extends ActiveMQTestBase {
       }
       return totalRecordTime;
 
+   }
+
+      @Test
+   public void testJMSCorrelationIDOnSelector() throws Exception {
+      Connection conn = null;
+
+      try {
+         conn = newCF().createConnection();
+         conn.start();
+
+         Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+         Queue queue1 = session.createQueue("queue1");
+
+         MessageProducer prod = session.createProducer(queue1);
+
+         TextMessage msg1 = session.createTextMessage("msg1");
+         msg1.setJMSCorrelationID("cid1");
+         prod.send(msg1);
+
+         TextMessage msg2 = session.createTextMessage("msg2");
+         msg2.setJMSCorrelationID("cid2");
+         prod.send(msg2);
+
+         String selector = "JMSCorrelationID = 'cid2'";
+
+         MessageConsumer cons = session.createConsumer(queue1, selector);
+
+         conn.start();
+
+         TextMessage rec = (TextMessage) cons.receive(10000);
+
+         assertNotNull(rec);
+
+         Assert.assertEquals("msg2", rec.getText());
+
+         assertNull(cons.receiveNoWait());
+
+      } finally {
+         if (conn != null) {
+            conn.close();
+         }
+      }
    }
 
    @Test
