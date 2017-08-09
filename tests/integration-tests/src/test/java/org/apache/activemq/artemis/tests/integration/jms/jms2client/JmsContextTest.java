@@ -349,14 +349,12 @@ public class JmsContextTest extends JMSTestBase {
       }
    }
 
-//   @Test(expected = JMSRuntimeException.class)
-//   @Test()
+   @Test(expected = JMSRuntimeException.class)
    public void testInvalidSessionModesValueMinusOne() {
       context.createContext(-1);
    }
 
-//   @Test(expected = JMSRuntimeException.class)
-//   @Test
+   @Test(expected = JMSRuntimeException.class)
    public void testInvalidSessionModesValue4() {
       context.createContext(4);
    }
