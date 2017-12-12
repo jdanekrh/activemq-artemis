@@ -16,35 +16,34 @@
  */
 package org.apache.activemq.artemis.tests.integration.jms.client;
 
-import javax.jms.Connection;
-import javax.jms.QueueConnection;
-import javax.jms.QueueSession;
-import javax.jms.Session;
-import javax.jms.Topic;
+import javax.jms.*;
 
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class SessionTest extends JMSTestBase {
 
    @Test
    public void testIllegalStateException() throws Exception {
       Connection defaultConn = null;
-      QueueConnection qConn = null;
+      Connection qConn = null;
       Connection connClientID = null;
-      ActiveMQConnectionFactory activeMQConnectionFactory = (ActiveMQConnectionFactory) cf;
+      ConnectionFactory activeMQConnectionFactory = cf;
       try {
          String clientID = "somethingElse" + name.getMethodName();
          defaultConn = cf.createConnection();
-         qConn = activeMQConnectionFactory.createQueueConnection();
+         qConn = activeMQConnectionFactory.createConnection();
 
          connClientID = cf.createConnection();
          connClientID.setClientID(clientID);
 
          Topic topic = createTopic("topic");
 
-         QueueSession qSess = qConn.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+         Session qSess = qConn.createSession(false, Session.AUTO_ACKNOWLEDGE);
          try {
             qSess.createDurableConsumer(topic, "mySub1");
             fail("exception expected");

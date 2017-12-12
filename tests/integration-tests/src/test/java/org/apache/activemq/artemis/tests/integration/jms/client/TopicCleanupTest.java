@@ -40,12 +40,15 @@ import org.apache.activemq.artemis.core.server.impl.QueueImpl;
 import org.apache.activemq.artemis.jms.client.ActiveMQTopic;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  * This test will simulate a situation where the Topics used to have an extra queue on startup.
  * The server was then written to perform a cleanup, and that cleanup should always work.
  * This test will create the dirty situation where the test should recover from
  */
+@RunWith(Parameterized.class)
 public class TopicCleanupTest extends JMSTestBase {
 
    @Override

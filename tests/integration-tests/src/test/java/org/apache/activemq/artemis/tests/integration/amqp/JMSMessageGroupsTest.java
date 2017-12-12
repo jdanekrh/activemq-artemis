@@ -28,9 +28,12 @@ import javax.jms.Queue;
 import javax.jms.Session;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@RunWith(Parameterized.class)
 public class JMSMessageGroupsTest extends JMSClientTestSupport {
 
    protected static final Logger LOG = LoggerFactory.getLogger(JMSMessageGroupsTest.class);

@@ -37,16 +37,17 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class JMSSharedConsumerTest extends JMSClientTestSupport {
 
-   @Parameterized.Parameters(name = "{index}: amqpUseCoreSubscriptionNaming={0}")
-   public static Collection<Object[]> parameters() {
-      return Arrays.asList(new Object[][] {
-         {true}, {false}
-      });
-   }
-
-   /* NOT private @see https://github.com/junit-team/junit4/wiki/parameterized-tests */
-   @Parameterized.Parameter(0)
-   public boolean amqpUseCoreSubscriptionNaming;
+//   @Parameterized.Parameters(name = "{index}: amqpUseCoreSubscriptionNaming={0}")
+//   public static Collection<Object[]> parameters() {
+//      return Arrays.asList(new Object[][] {
+//         {true}, {false}
+//      });
+//   }
+//
+//   /* NOT private @see https://github.com/junit-team/junit4/wiki/parameterized-tests */
+//   @Parameterized.Parameter(0)
+//   public boolean amqpUseCoreSubscriptionNaming = true;
+   public boolean amqpUseCoreSubscriptionNaming = false;
 
    @Override
    protected void addConfiguration(ActiveMQServer server) {

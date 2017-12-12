@@ -183,6 +183,10 @@ public interface Message {
       return null;
    }
 
+   default Message setLastValueProperty(SimpleString lastValueName) {
+      return this;
+   }
+
    /**
     * @deprecated do not use this, use through ICoreMessage or ClientMessage
     */
@@ -631,7 +635,9 @@ public interface Message {
    default Map<String, Object> toPropertyMap() {
       Map map = new HashMap<>();
       for (SimpleString name : getPropertyNames()) {
-         map.put(name.toString(), getObjectProperty(name.toString()));
+         //some property is SimpleString, which is not available for management console
+         Object value = getObjectProperty(name.toString());
+         map.put(name.toString(), value == null ? null : value.toString());
       }
       return map;
    }

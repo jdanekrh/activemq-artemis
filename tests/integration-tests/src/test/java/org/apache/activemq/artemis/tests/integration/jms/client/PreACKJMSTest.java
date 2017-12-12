@@ -30,7 +30,10 @@ import org.apache.activemq.artemis.api.jms.JMSFactoryType;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class PreACKJMSTest extends JMSTestBase {
 
    // Constants -----------------------------------------------------
@@ -90,7 +93,9 @@ public class PreACKJMSTest extends JMSTestBase {
 
       cons = sess.createConsumer(queue);
 
-      msg2 = (TextMessage) cons.receiveNoWait();
+//      msg2 = (TextMessage) cons.receiveNoWait();
+      msg2 = ((TextMessage) cons.receive(500));
+
 
       assertNull("ConnectionFactory is on PreACK mode, the message shouldn't be received", msg2);
    }

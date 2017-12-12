@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.apache.activemq.artemis.api.core.SimpleString;
+import org.apache.activemq.artemis.api.core.client.ClientSession;
 import org.apache.activemq.artemis.core.client.impl.ClientSessionImpl;
 import org.apache.activemq.artemis.api.core.RoutingType;
 import org.apache.activemq.artemis.core.settings.impl.AddressSettings;
@@ -39,7 +40,10 @@ import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(value = Parameterized.class)
 public class JmsProducerTest extends JMSTestBase {
 
    private JMSProducer producer;
@@ -108,12 +112,14 @@ public class JmsProducerTest extends JMSTestBase {
          context.createProducer().send(q1, "Text" + i);
       }
 
-      ActiveMQSession sessionUsed = (ActiveMQSession) (((ActiveMQJMSContext) context).getUsedSession());
+      if (context instanceof ActiveMQJMSContext) {
+         ActiveMQSession sessionUsed = (ActiveMQSession) (((ActiveMQJMSContext) context).getUsedSession());
 
-      ClientSessionImpl coreSession = (ClientSessionImpl) sessionUsed.getCoreSession();
+         ClientSessionImpl coreSession = (ClientSessionImpl) sessionUsed.getCoreSession();
 
-      // JMSConsumer is supposed to cache the producer, each call to createProducer is supposed to always return the same producer
-      assertEquals(1, coreSession.cloneProducers().size());
+         // JMSConsumer is supposed to cache the producer, each call to createProducer is supposed to always return the same producer
+         assertEquals(1, coreSession.cloneProducers().size());
+      }
 
       JMSConsumer consumer = context.createConsumer(q1);
 
@@ -207,7 +213,7 @@ public class JmsProducerTest extends JMSTestBase {
                throw t;
             if (!t.getClass().equals(expected.getClass())) {
                throw new Exception("Expected exception: " + expected.getClass().getName() +
-                                      " but got: " + t.getClass(), t);
+                  " but got: " + t.getClass(), t);
             }
          }
       }
@@ -235,7 +241,7 @@ public class JmsProducerTest extends JMSTestBase {
                throw t;
             if (!t.getClass().equals(expected.getClass())) {
                throw new Exception("Expected exception: " + expected.getClass().getName() +
-                                      " but got: " + t.getClass(), t);
+                  " but got: " + t.getClass(), t);
             }
          }
       }
@@ -263,7 +269,7 @@ public class JmsProducerTest extends JMSTestBase {
                throw t;
             if (!t.getClass().equals(expected.getClass())) {
                throw new Exception("Expected exception: " + expected.getClass().getName() +
-                                      " but got: " + t.getClass(), t);
+                  " but got: " + t.getClass(), t);
             }
          }
       }
@@ -291,7 +297,7 @@ public class JmsProducerTest extends JMSTestBase {
                throw t;
             if (!t.getClass().equals(expected.getClass())) {
                throw new Exception("Expected exception: " + expected.getClass().getName() +
-                                      " but got: " + t.getClass(), t);
+                  " but got: " + t.getClass(), t);
             }
          }
       }
@@ -319,7 +325,7 @@ public class JmsProducerTest extends JMSTestBase {
                throw t;
             if (!t.getClass().equals(expected.getClass())) {
                throw new Exception("Expected exception: " + expected.getClass().getName() +
-                                      " but got: " + t.getClass(), t);
+                  " but got: " + t.getClass(), t);
             }
          }
       }
@@ -347,7 +353,7 @@ public class JmsProducerTest extends JMSTestBase {
                throw t;
             if (!t.getClass().equals(expected.getClass())) {
                throw new Exception("Expected exception: " + expected.getClass().getName() +
-                                      " but got: " + t.getClass(), t);
+                  " but got: " + t.getClass(), t);
             }
          }
       }
@@ -375,7 +381,7 @@ public class JmsProducerTest extends JMSTestBase {
                throw t;
             if (!t.getClass().equals(expected.getClass())) {
                throw new Exception("Expected exception: " + expected.getClass().getName() +
-                                      " but got: " + t.getClass(), t);
+                  " but got: " + t.getClass(), t);
             }
          }
       }

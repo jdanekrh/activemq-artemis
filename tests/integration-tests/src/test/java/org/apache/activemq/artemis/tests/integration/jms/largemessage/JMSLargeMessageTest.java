@@ -36,7 +36,10 @@ import org.apache.activemq.artemis.utils.UUIDGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(value = Parameterized.class)
 public class JMSLargeMessageTest extends JMSTestBase {
    // Constants -----------------------------------------------------
 

@@ -42,9 +42,12 @@ import org.apache.qpid.jms.JmsConnection;
 import org.apache.qpid.jms.policy.JmsDefaultPrefetchPolicy;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@RunWith(Parameterized.class)
 public class JMSMessageConsumerTest extends JMSClientTestSupport {
 
    protected static final Logger LOG = LoggerFactory.getLogger(JMSMessageConsumerTest.class);

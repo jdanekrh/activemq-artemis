@@ -41,6 +41,7 @@ import org.apache.activemq.artemis.core.config.impl.FileConfiguration;
 import org.apache.activemq.artemis.core.config.impl.SecurityConfiguration;
 import org.apache.activemq.artemis.core.registry.JndiBindingRegistry;
 import org.apache.activemq.artemis.core.remoting.impl.netty.NettyConnectorFactory;
+import org.apache.activemq.artemis.core.remoting.impl.netty.TransportConstants;
 import org.apache.activemq.artemis.core.security.Role;
 import org.apache.activemq.artemis.core.server.ActiveMQServer;
 import org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl;
@@ -49,6 +50,8 @@ import org.apache.activemq.artemis.jms.server.impl.JMSServerManagerImpl;
 import org.apache.activemq.artemis.jms.tests.JmsTestLogger;
 import org.apache.activemq.artemis.spi.core.security.ActiveMQJAASSecurityManager;
 import org.apache.activemq.artemis.spi.core.security.jaas.InVMLoginModule;
+
+import static org.apache.activemq.artemis.tests.util.ActiveMQTestBase.NETTY_ACCEPTOR_FACTORY;
 
 public class LocalTestServer implements Server, Runnable {
    // Constants ------------------------------------------------------------------------------------
@@ -117,7 +120,20 @@ public class LocalTestServer implements Server, Runnable {
 
       FileDeploymentManager deploymentManager = new FileDeploymentManager();
       deploymentManager.addDeployable(fileConfiguration).readConfiguration();
+
+      HashMap<String, Object> params = new HashMap<>();
+      params.put(TransportConstants.PORT_PROP_NAME, String.valueOf(61616));
+      params.put(TransportConstants.PROTOCOLS_PROP_NAME, "AMQP,CORE,OPENWIRE");
+
+      HashMap<String, Object> amqpParams = new HashMap<>();
+
+//      activeMQServer.getConfiguration().getAcceptorConfigurations().clear();
+      activeMQServer.getConfiguration().getAcceptorConfigurations().add(new TransportConfiguration(NETTY_ACCEPTOR_FACTORY, params, "netty-acceptor", amqpParams));
+
+//      jmsServerManager.
+//      activeMQServer.start();
       jmsServerManager.start();
+
       started = true;
 
    }

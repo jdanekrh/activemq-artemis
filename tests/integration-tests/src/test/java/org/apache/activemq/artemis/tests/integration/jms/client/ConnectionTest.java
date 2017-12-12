@@ -16,28 +16,22 @@
  */
 package org.apache.activemq.artemis.tests.integration.jms.client;
 
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.InvalidClientIDException;
-import javax.jms.JMSContext;
-import javax.jms.QueueConnection;
-import javax.jms.QueueSession;
-import javax.jms.Session;
-import javax.jms.TopicConnection;
-import javax.jms.TopicSession;
-import javax.jms.XAConnection;
-import javax.jms.XASession;
+import javax.jms.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.function.Supplier;
 
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.tests.util.JMSTestBase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(Parameterized.class)
 public class ConnectionTest extends JMSTestBase {
 
    private Connection conn2;
@@ -102,8 +96,8 @@ public class ConnectionTest extends JMSTestBase {
       }
 
 
-      Session session1 = conn.createSession();
-      Session session2 = conn.createSession();
+      Session session1 = conn.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+      Session session2 = conn.createSession(false, Session.CLIENT_ACKNOWLEDGE);
 
       session1.close();
       session2.close();
@@ -139,6 +133,10 @@ public class ConnectionTest extends JMSTestBase {
       conn.getClientID();
 
       conn.setClientID("somethingElse");
+   }
+
+   private interface JMSSupplier<T> {
+      T get() throws JMSException;
    }
 
    @Test

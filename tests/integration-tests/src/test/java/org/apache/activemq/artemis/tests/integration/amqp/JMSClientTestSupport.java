@@ -17,18 +17,22 @@
 package org.apache.activemq.artemis.tests.integration.amqp;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.jms.client.ActiveMQJMSConnectionFactory;
 import org.apache.qpid.jms.JmsConnectionFactory;
 import org.jboss.logging.Logger;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.runners.Parameterized;
 
 public abstract class JMSClientTestSupport extends AmqpClientTestSupport {
 
@@ -135,7 +139,12 @@ public abstract class JMSClientTestSupport extends AmqpClientTestSupport {
    }
 
    private Connection createConnection(URI remoteURI, String username, String password, String clientId, boolean start) throws JMSException {
-      JmsConnectionFactory factory = new JmsConnectionFactory(remoteURI);
+      ConnectionFactory factory = null;
+      try {
+         factory = newConnectionFactory();
+      } catch (Exception e) {
+         throw new RuntimeException(e);
+      }
 
       Connection connection = trackJMSConnection(factory.createConnection(username, password));
 
@@ -155,6 +164,40 @@ public abstract class JMSClientTestSupport extends AmqpClientTestSupport {
       }
 
       return connection;
+   }
+
+         @Parameterized.Parameters(name = "protocol={0}")
+   public static Collection getParameters() {
+      Object[] protocols = new Object[]{"core", "openwire", "amqp"};
+
+      ArrayList<Object[]> objects = new ArrayList<>();
+      for (Object p : protocols) {
+         objects.add(new Object[]{p});
+      }
+      return objects;
+   }
+
+   @Parameterized.Parameter
+   public String protocol;
+
+   protected ConnectionFactory newConnectionFactory() throws Exception {
+      switch (protocol) {
+         case "core": {
+            ConnectionFactory factory = new ActiveMQConnectionFactory("tcp://localhost:5672");
+            ((ActiveMQConnectionFactory) factory).setBlockOnAcknowledge(true);
+            return factory;
+         }
+         case "amqp": {
+            final JmsConnectionFactory factory = new JmsConnectionFactory("amqp://localhost:5672");
+            factory.setForceAsyncAcks(true);
+            return factory;
+         }
+         default:
+            org.apache.activemq.ActiveMQConnectionFactory cf = new org.apache.activemq.ActiveMQConnectionFactory("tcp://localhost:5672?wireFormat.cacheEnabled=true");
+            cf.setSendAcksAsync(false);
+            return cf;
+
+      }
    }
 
 
@@ -234,7 +277,7 @@ public abstract class JMSClientTestSupport extends AmqpClientTestSupport {
    }
 
    protected Connection createOpenWireConnection() throws JMSException {
-      return createCoreConnection(getBrokerOpenWireJMSConnectionString(), null, null, null, true);
+      return createOpenWireConnection(getBrokerOpenWireJMSConnectionString(), null, null, null, true);
    }
 
    private Connection createOpenWireConnection(String connectionString, String username, String password, String clientId, boolean start) throws JMSException {

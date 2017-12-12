@@ -25,7 +25,10 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.artemis.tests.util.JMSClusteredTestBase;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+@RunWith(value = Parameterized.class)
 public class TemporaryQueueClusterTest extends JMSClusteredTestBase {
 
    public static final String QUEUE_NAME = "target";
