@@ -488,7 +488,7 @@ def ds_generated_maven_jars():
   # org.apache.directory.server:apacheds-interceptors-normalization:bundle:2.0.0-M6 got requested version
   native.maven_jar(
       name = "org_apache_directory_server_apacheds_core_api",
-      artifact = "org.apache.directory.server:apacheds-core-api:2.0.0-M15",  # todo 15 todo
+      artifact = "org.apache.directory.server:apacheds-core-api:2.0.0-M6",  # todo 15 todo
       repository = "http://repo.apache.maven.org/maven2/",
 #      sha1 = "f9a3648659c51b69a6aae45878e77658fcfdd59a",
   )
