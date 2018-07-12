@@ -85,3 +85,21 @@ java_library(
         ":org_slf4j_slf4j_api",
     ],
 )
+
+java_library(
+    name = "org_apache_directory_shared_shared_ldap_schema_data",
+    visibility = ["//visibility:public"],
+    exports = ["@org_apache_directory_shared_shared_ldap_schema_data//jar"],
+    runtime_deps = [
+        ":antlr_antlr",
+        ":commons_collections_commons_collections",
+        ":commons_lang_commons_lang",
+        ":org_apache_directory_shared_shared_asn1_api",
+        ":org_apache_directory_shared_shared_asn1_ber",
+        ":org_apache_directory_shared_shared_i18n",
+        ":org_apache_directory_shared_shared_ldap_model",
+        ":org_apache_directory_shared_shared_util",
+        ":org_apache_mina_mina_core",
+        ":org_slf4j_slf4j_api",
+    ],
+)

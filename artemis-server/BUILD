@@ -2,7 +2,6 @@ java_library(
     name = "artemis-server",
     srcs = glob(
         ["src/main/java/**/*.java"],
-        exclude = ["src/main/java/ResourceJavaAgent.java"],
     ),
     resources = glob(["src/main/resources/**"]),
     visibility = ["//visibility:public"],
@@ -153,7 +152,11 @@ junit_tests(
     runtime_deps = [
         "//artemis-commons:artemis-commons-SimplePasswordCodec_test",  # for org.apache.activemq.artemis.core.security.jaas.LDAPLoginModuleMaskPasswordTest.testLoginExternalCodec2
         "//third_party:org_apache_derby_derby",
+        "//third_party:org_apache_directory_server_apacheds_core_api",  # NoSuchMethodError: org.apache.directory.server.core.api.subtree.SubtreeEvaluator
         "//third_party:org_apache_directory_server_apacheds_test_framework",  # bit too broad, but ok... deffiniely need ldap_codec_standalone....
+        "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # ClassNotFoundException: org.apache.directory.shared.ldap.codec.api.LdapApiServiceFactory
+        "//third_party:org_apache_directory_shared_shared_ldap_model",  # NoClassDefFoundError: org/apache/directory/shared/ldap/model/exception/LdapException
+        "//third_party:org_apache_directory_shared_shared_ldap_schema_data",  # ClassNotFoundException: org.apache.directory.shared.ldap.schemaextractor.SchemaLdifExtractor
     ],
     deps = [
         ":internal_tests",
