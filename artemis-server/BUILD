@@ -169,6 +169,8 @@ junit_tests(
         "//third_party:io_netty_netty_buffer",
         "//third_party:org_apache_directory_server_apacheds_core_annotations",
         "//third_party:org_apache_directory_server_apacheds_core_integ",
+        "//third_party:org_apache_directory_server_apacheds_protocol_ldap",
+        "//third_party:org_apache_directory_server_apacheds_protocol_shared",
         "//third_party:org_apache_directory_server_apacheds_server_annotations",
         "//third_party:org_jboss_logging_jboss_logging",
         "//third_party:test-agent_deploy.jar",  # not runtime_deps, cause https://github.com/bazelbuild/bazel/issues/1566
