@@ -53,6 +53,9 @@ junit_tests(
         ["src/test/java/**/*.java"],
         exclude = testlib_srcs,
     ),
+    tags = [
+        "block-network",  # NetworkHealthTest.testCheckUsingHTTP
+    ],
     deps = [
         ":artemis-commons",
         ":artemis-commons_testlib",
