@@ -51,6 +51,7 @@ public class ClientAckTopicTest extends MessageTestBase {
       testAckTimeout();
    }
 
+   @Test
    public void testAckTimeout() throws Exception {
 
       ClientRequest request = new ClientRequest(TestPortProvider.generateURL("/topics/testAck"));

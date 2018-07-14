@@ -52,6 +52,7 @@ public class ClientAckQueueTest extends MessageTestBase {
       testAckTimeout();
    }
 
+   @Test
    public void testAckTimeout() throws Exception {
       ClientRequest request = new ClientRequest(generateURL("/queues/testAck"));
 
