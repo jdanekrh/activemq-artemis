@@ -9,7 +9,7 @@ java_library(
         "//third_party:io_netty_netty_buffer",  # must be third_party, because extra plugin processing for annotations todo: that comment does not make sense
         "//third_party:io_netty_netty_common",
         "//third_party:org_jboss_logging_jboss_logging",
-        "//third_party:org_jboss_logging_jboss_logging_annotations",
+        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
     ],
 )
 

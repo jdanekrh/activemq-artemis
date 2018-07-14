@@ -10,8 +10,8 @@ java_library(
         "//third_party:io_netty_netty_handler",
         "//third_party:io_netty_netty_transport",
         "//third_party:org_jboss_logging_jboss_logging",
-        "//third_party:org_jboss_logging_jboss_logging_annotations",
         "//third_party:org_jboss_logmanager_jboss_logmanager",
+        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
     ],
 )
 
@@ -34,14 +34,15 @@ java_library(
 
 java_library(
     name = "artemis-commons-SimplePasswordCodec_test",
-    srcs = ["src/test/java/org/apache/activemq/artemis/utils/MaskPasswordResolvingTest.java",
-            ],
     testonly = True,
-        visibility = ["//visibility:public"],
+    srcs = [
+        "src/test/java/org/apache/activemq/artemis/utils/MaskPasswordResolvingTest.java",
+    ],
+    visibility = ["//visibility:public"],
     deps = [
-        "//third_party:junit_junit",
         "//artemis-commons",
-        ]
+        "//third_party:junit_junit",
+    ],
 )
 
 load("//third_party:junit.bzl", "junit_tests")

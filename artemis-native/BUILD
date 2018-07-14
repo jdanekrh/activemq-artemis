@@ -4,8 +4,8 @@ java_library(
     #    javacopts = ["--native_header_output headerss"],
     deps = [
         "//third_party:org_jboss_logging_jboss_logging",
-        "//third_party:org_jboss_logging_jboss_logging_annotations",
         "//third_party:org_jboss_logging_jboss_logging_processor",  # IllegalArgumentException: Invalid logger interface
+        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
     ],
 )
 

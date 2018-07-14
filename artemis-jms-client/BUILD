@@ -8,7 +8,7 @@ java_library(
         "//artemis-selector",
         "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
         "//third_party:org_jboss_logging_jboss_logging",
-        "//third_party:org_jboss_logging_jboss_logging_annotations",
+        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
     ],
 )
 

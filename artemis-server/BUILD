@@ -23,7 +23,7 @@ java_library(
         "//third_party:io_netty_netty_transport_native_unix_common",
         "//third_party:org_apache_geronimo_specs_geronimo_json_1_0_spec",
         "//third_party:org_jboss_logging_jboss_logging",
-        "//third_party:org_jboss_logging_jboss_logging_annotations",
+        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
     ],
 )
 
@@ -46,7 +46,7 @@ exports_files(["src/test/resources/ConfigurationTest-full-config.xml"])  # neede
 #        "//artemis-server",
 #        "//artemis-core-client",
 #        #        "//third_party:org_jboss_logging_jboss_logging",
-#        #        "//third_party:org_jboss_logging_jboss_logging_annotations",
+#        #        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
 #    ],
 #) for test in glob(
 #    ["src/test/java/**/*.java"],
