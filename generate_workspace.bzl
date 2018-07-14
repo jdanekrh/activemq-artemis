@@ -157,9 +157,9 @@ def generated_maven_jars():
       repository = "http://repo.apache.maven.org/maven2/",
       sha1 = "10a2f7cfa055e776eb996ca456747a07fdf2015e",
   )
-  maven_jar(
+  native.maven_jar(
       name = "org_apache_directory_jdbm_apacheds_jdbm1",
-      artifact = "org.apache.directory.jdbm:apacheds-jdbm1:2.0.0-M2:jar",
+      artifact = "org.apache.directory.jdbm:apacheds-jdbm1:jar:2.0.0-M2",
       repository = "http://repo.apache.maven.org/maven2/",
       sha1 = "149b7f27997a0865fd7c954d0164cb5847186059",
   )
@@ -189,7 +189,7 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_eclipse_jetty_aggregate_jetty_all_uber",
-      artifact = "org.eclipse.jetty.aggregate:jetty-all:jar:9.4.3.v20170317:uber",
+      artifact = "org.eclipse.jetty.aggregate:jetty-all:jar:uber:9.4.3.v20170317",
       repository = "http://repo.apache.maven.org/maven2/",
       sha1 = "275dd7cc38e9a3373437583d0ac24815bab1a0a9",
   )
@@ -951,7 +951,7 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_transport_native_epoll_linux_x86_64",
-      artifact = "io.netty:netty-transport-native-epoll:jar:4.1.24.Final:linux-x86_64",
+      artifact = "io.netty:netty-transport-native-epoll:jar:linux-x86_64:4.1.24.Final",
       repository = "http://repo.apache.maven.org/maven2/",
       sha1 = "6c2569df1688ea1c6596cef9df8d1a47f8066e4a",
   )
@@ -1299,7 +1299,7 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_transport_native_kqueue_osx_x86_64",
-      artifact = "io.netty:netty-transport-native-kqueue:jar:4.1.24.Final:osx-x86_64",
+      artifact = "io.netty:netty-transport-native-kqueue:jar:osx-x86_64:4.1.24.Final",
       repository = "http://repo.apache.maven.org/maven2/",
       sha1 = "acdf0603d63bbfbc0c55f625e75e12408cd8395e",
   )
