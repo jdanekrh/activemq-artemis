@@ -7,7 +7,7 @@ java_library(
     resources = glob(["src/main/resources/**"]),
     deps = [
         "//artemis-commons",
-    ]
+    ],
 )
 
 java_library(
@@ -23,15 +23,16 @@ java_library(
 
 java_plugin(
     name = "jaxb_ap",
-    processor_class = "build.ArtemisAP",  # extends "com.sun.tools.jxc.ap.SchemaGenerator",
     srcs = [":gen_ap"],
+    processor_class = "build.ArtemisAP",  # extends "com.sun.tools.jxc.ap.SchemaGenerator",
     deps = [
+        "//third_party:com_sun_xml_bind_jaxb_core",  # runtime dep
+        "//third_party:com_sun_xml_bind_jaxb_impl",  # runtime dep
         "//third_party:com_sun_xml_bind_jaxb_jxc",
     ],
 )
 
-
-genrule (
+genrule(
     name = "gen_ap",
     outs = ["ArtemisAP.java"],
     cmd = """
@@ -82,5 +83,5 @@ public class ArtemisAP extends AbstractProcessor {
     }
 }
 EOF
-"""
+""",
 )

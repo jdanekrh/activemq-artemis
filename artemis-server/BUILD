@@ -18,8 +18,8 @@ java_library(
         "//third_party:io_netty_netty_common",
         "//third_party:io_netty_netty_handler",
         "//third_party:io_netty_netty_transport",
-        "//third_party:io_netty_netty_transport_native_epoll",
-        "//third_party:io_netty_netty_transport_native_kqueue",
+        "//third_party:io_netty_netty_transport_native_epoll_linux_x86_64",
+        "//third_party:io_netty_netty_transport_native_kqueue_osx_x86_64",
         "//third_party:io_netty_netty_transport_native_unix_common",
         "//third_party:org_apache_geronimo_specs_geronimo_json_1_0_spec",
         "//third_party:org_jboss_logging_jboss_logging",
@@ -127,7 +127,7 @@ junit_tests(
         #            "src/test/java/org/apache/activemq/artemis/core/config/impl/WrongRoleFileConfigurationParserTest.java",
         #            "src/test/java/org/apache/activemq/artemis/core/security/jaas/LDAPLoginModuleTest.java",
         #        ],
-        exclude = test_srcs,
+        exclude = external_srcs + test_srcs,
     ),
     data = ["//tests/config:logging.properties"] + glob([
         "src/test/resources/**",
@@ -152,13 +152,16 @@ junit_tests(
     runtime_deps = [
         "//artemis-commons:artemis-commons-SimplePasswordCodec_test",  # for org.apache.activemq.artemis.core.security.jaas.LDAPLoginModuleMaskPasswordTest.testLoginExternalCodec2
         "//third_party:org_apache_derby_derby",
-        "//third_party:org_apache_directory_server_apacheds_core_api",  # NoSuchMethodError: org.apache.directory.server.core.api.subtree.SubtreeEvaluator
+        #        "//third_party:org_apache_directory_server_apacheds_core_api",  # NoSuchMethodError: org.apache.directory.server.core.api.subtree.SubtreeEvaluator
         "//third_party:org_apache_directory_server_apacheds_test_framework",  # bit too broad, but ok... deffiniely need ldap_codec_standalone....
-        "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # ClassNotFoundException: org.apache.directory.shared.ldap.codec.api.LdapApiServiceFactory
-        "//third_party:org_apache_directory_shared_shared_ldap_model",  # NoClassDefFoundError: org/apache/directory/shared/ldap/model/exception/LdapException
-        "//third_party:org_apache_directory_shared_shared_ldap_schema_data",  # ClassNotFoundException: org.apache.directory.shared.ldap.schemaextractor.SchemaLdifExtractor
+        #        "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # ClassNotFoundException: org.apache.directory.shared.ldap.codec.api.LdapApiServiceFactory
+        #        "//third_party:org_apache_directory_shared_shared_ldap_model",  # NoClassDefFoundError: org/apache/directory/shared/ldap/model/exception/LdapException
+        #        "//third_party:org_apache_directory_shared_shared_ldap_schema_data",  # ClassNotFoundException: org.apache.directory.shared.ldap.schemaextractor.SchemaLdifExtractor  # Multiple copies of resource named 'schema/ou=schema/cn=apachedns/ou=objectclasses/m-oid=1.3.6.1.4.1.18060.0.4.2.3.9.ldif' located on classpath at urls
+        #        #    jar:file:/root/.cache/bazel/_bazel_root/2922dfc54b519461309e9fa021b20e56/sandbox/processwrapper-sandbox/1/execroot/__main__/bazel-out/k8-fastbuild/bin/artemis-server/artemis-server-tests.runfiles/__main__/../org_apache_directory_api_api_ldap_schema_data/jar/api-ldap-schema-data-1.0.0-M30.jar!/schema/ou%3dschema/cn%3dapachedns/ou%3dobjectclasses/m-oid%3d1.3.6.1.4.1.18060.0.4.2.3.9.ldif
+        #        #    jar:file:/root/.cache/bazel/_bazel_root/2922dfc54b519461309e9fa021b20e56/sandbox/processwrapper-sandbox/1/execroot/__main__/bazel-out/k8-fastbuild/bin/artemis-server/artemis-server-tests.runfiles/__main__/../org_apache_directory_shared_shared_ldap_schema_data/jar/shared-ldap-schema-data-1.0.0-M11.jar!/schema/ou%3dschema/cn%3dapachedns/ou%3dobjectclasses/m-oid%3d1.3.6.1.4.1.18060.0.4.2.3.9.ldif
     ],
     deps = [
+        ":external_tests",
         ":internal_tests",
         "//artemis-commons",
         "//artemis-commons:artemis-commons_testlib",
@@ -171,10 +174,10 @@ junit_tests(
         "//third_party:commons_io_commons_io",
         "//third_party:io_netty_netty_buffer",
         "//third_party:org_apache_directory_server_apacheds_core_annotations",
-        "//third_party:org_apache_directory_server_apacheds_core_integ",
         "//third_party:org_apache_directory_server_apacheds_protocol_ldap",
         "//third_party:org_apache_directory_server_apacheds_protocol_shared",
         "//third_party:org_apache_directory_server_apacheds_server_annotations",
+        "//third_party:org_apache_directory_server_apacheds_test_framework",
         "//third_party:org_jboss_logging_jboss_logging",
         "//third_party:test-agent_deploy.jar",  # not runtime_deps, cause https://github.com/bazelbuild/bazel/issues/1566
     ],
