@@ -52,7 +52,7 @@ load("//third_party:GenTestRules.bzl", "GenTestRules")
 moar_test_deps = []
 
 runtime_deps = [
-    #    "//third_party:org_apache_derby_derby",  # integration/xa/XaTimeoutTesT: java.lang.RuntimeException: Could not find class: org.apache.derby.jdbc.EmbeddedDriver
+    "//third_party:org_apache_derby_derby",  # integration/xa/XaTimeoutTesT: java.lang.RuntimeException: Could not find class: org.apache.derby.jdbc.EmbeddedDriver
     #    "//third_party:org_apache_directory_shared_shared_ldap_model",  # tests/integration/amqp/JMSSaslGssapiTest: Caused by: java.lang.ClassNotFoundException: org.apache.directory.shared.ldap.model.entry.Entry
     #    "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # tests/integration/amqp/JMSSaslGssapiTest:
     #    "//third_party:test-agent",
