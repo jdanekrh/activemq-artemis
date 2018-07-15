@@ -37,6 +37,9 @@ junit_tests(
         "-Djava.system.class.loader=ResourceJavaAgent",
         "-Dextra.class.path=artemis-junit/src/test/resources/",
     ],
+    tags = [
+        "block-network",  # PlainTest.testPlain can fail: JMSSecurityException: AMQ119031: Unable to validate user from /127.0.0.1:35488. Username: null; SSL certificate subject DN: unavailable
+    ],
     deps = [
         ":artemis-junit",
         "//artemis-commons",
