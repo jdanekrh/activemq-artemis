@@ -167,7 +167,7 @@ public final class SpawnedVMSupport {
       // The logs will be huge if you don't set this
       if (useLogging) {
          commandList.add("-Djava.util.logging.manager=org.jboss.logmanager.LogManager");
-         commandList.add("-Dlogging.configuration=file:../config/logging.properties");
+         commandList.add("-Dlogging.configuration=file:tests/config/logging.properties");
       }
 
       commandList.add("-Djava.io.tmpdir=" + System.getProperty("java.io.tmpdir", "./tmp"));
