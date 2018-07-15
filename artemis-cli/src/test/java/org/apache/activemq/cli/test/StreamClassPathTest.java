@@ -32,7 +32,8 @@ public class StreamClassPathTest {
    @Test
    public void testFindStreams() throws Exception {
       testStream(Create.class, Create.BIN_ARTEMIS_CMD);
-      testStream(Create.class, Create.BIN_ARTEMIS_SERVICE_EXE);
+//      @Ignore("requires winsw exe dependency")
+//      testStream(Create.class, Create.BIN_ARTEMIS_SERVICE_EXE);
       testStream(Create.class, Create.BIN_ARTEMIS_SERVICE_XML);
       testStream(Create.class, "etc/" + Create.ETC_ARTEMIS_PROFILE_CMD);
       testStream(Create.class, Create.BIN_ARTEMIS);
