@@ -20,6 +20,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.activemq.artemis.junit.Wait;
 import org.apache.activemq.artemis.rest.queue.QueueDeployment;
 import org.apache.activemq.artemis.rest.queue.push.ActiveMQPushStrategy;
 import org.apache.activemq.artemis.rest.queue.push.xml.PushRegistration;
@@ -156,7 +157,7 @@ public class PushQueueConsumerTest extends MessageTestBase {
    @Path("/my")
    public static class MyResource {
 
-      public static String got_it;
+      volatile static String got_it;
 
       @PUT
       public void put(String str) {
@@ -211,9 +212,8 @@ public class PushQueueConsumerTest extends MessageTestBase {
 
          sendMessage(destinationForSend, messageContent);
 
-         Thread.sleep(100);
-
-         Assert.assertEquals(messageContent, MyResource.got_it);
+         Assert.assertTrue("Message has been delivered",
+                 Wait.waitFor(() -> messageContent.equals(MyResource.got_it), 5000, 100));
       } finally {
          cleanupSubscription(pushSubscription);
       }
