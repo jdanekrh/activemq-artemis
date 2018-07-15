@@ -1,6 +1,12 @@
 load("//third_party:junit.bzl", "junit_tests")
 
-exports_files([
+filegroup(
+    name = "resources",
+    srcs = glob(["src/test/resources/**"]),
+    visibility = ["//visibility:public"],
+)
+
+exports_files(glob([
     "src/test/resources/openssl-client-side-keystore.jks",  # for integration tests tests/integration/ssl/SSLProviderTwoWayTest
     "src/test/resources/client-side-keystore.jks",  # for integration tests tests/integration/ssl/SSLProviderTwoWayTest
     "src/test/resources/openssl-client-side-truststore.jks",
@@ -9,8 +15,8 @@ exports_files([
     "src/test/resources/server-side-keystore.jks",
     "src/test/resources/openssl-server-side-truststore.jks",
     "src/test/resources/server-side-truststore.jks",
-    #"src/test/resources/login.config",
-])
+    "src/test/resources/**",
+]))
 
 lib_test_srcs = glob(
     [
