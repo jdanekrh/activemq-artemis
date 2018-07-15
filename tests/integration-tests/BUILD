@@ -196,6 +196,11 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/JMSSaslGssapiTest",  # needs ldap, have dependency vetrsion problems there now
     ],
     jvm_flags = [
+        # https://blogs.oracle.com/java-platform-group/java-se-support-for-docker-cpu-and-memory-limits
+        "-XX:MaxHeapSize=2G",
+        "-XX:CICompilerCount=2",
+        "-XX:ConcGCThreads=2",
+        "-XX:ParallelGCThreads=2",
         # logging
         "-Djava.system.class.loader=ResourceJavaAgent",
         "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
