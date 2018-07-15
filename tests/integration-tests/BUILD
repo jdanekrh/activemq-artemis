@@ -9,7 +9,11 @@ lib_test_srcs = glob(
         "src/test/java/org/apache/activemq/artemis/tests/integration/ra/DummyTransactionManager.java",
         "src/test/java/org/apache/activemq/artemis/tests/integration/ra/DummyTransaction.java",
         "src/test/java/org/apache/activemq/artemis/tests/integration/IntegrationTestLogger.java",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/amq/ProducerFlowControlBaseTest.java",
         "src/test/java/org/apache/activemq/artemis/tests/util/**/*.java",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/BasicOpenWireTest.java",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/BasicSecurityTest.java",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/OpenWireTestBase.java",
     ],
     #    exclude = ["src/test/java/org/apache/activemq/artemis/tests/unit/util/**/*Test.java"],
 )
@@ -31,6 +35,7 @@ java_library(
         "//artemis-service-extensions",
         "//tests/unit-tests:lib_test",
         "//third_party:junit_junit",
+        "//third_party:org_apache_activemq_activemq_client",
         "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
         "//third_party:org_apache_geronimo_specs_geronimo_jta_1_1_spec",
         "//third_party:org_jboss_logging_jboss_logging",
@@ -43,6 +48,7 @@ load("//third_party:GenTestRules.bzl", "GenTestRules")
 moar_test_deps = []
 
 runtime_deps = [
+    "//third_party:org_eclipse_jetty_aggregate_jetty_all_uber",  # todo: probably be consistent in this, either singly, or all uber
     "//third_party:org_apache_derby_derby",  # integration/xa/XaTimeoutTesT: java.lang.RuntimeException: Could not find class: org.apache.derby.jdbc.EmbeddedDriver
     #    "//third_party:org_apache_directory_shared_shared_ldap_model",  # tests/integration/amqp/JMSSaslGssapiTest: Caused by: java.lang.ClassNotFoundException: org.apache.directory.shared.ldap.model.entry.Entry
     #    "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # tests/integration/amqp/JMSSaslGssapiTest:
