@@ -4,23 +4,10 @@ lib_test_srcs = glob(
     [
         "src/test/java/org/apache/activemq/artemis/tests/integration/security/SimpleClient.java",  # todo having this in tests braks output, whitespace
         "src/test/java/org/apache/activemq/artemis/tests/integration/ra/DummyTransaction.java",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/server/FileLockTimeoutTest.java",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/server/FakeStorageManager.java",
         #        "src/test/java/org/apache/activemq/artemis/tests/unit/util/**/*.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/util/**/*.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/fakes/**/*.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/SequentialFileFactoryTestBase.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/JournalImplTestBase.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/JournalImplTestUnit.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/config/impl/fakes/**/*.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/asyncio/AIOTestBase.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/remoting/ActiveMQBufferTestBase.java",  # java/lang/InstantiationException
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/FileFactoryTestBase.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/remoting/server/impl/fake/**/*.java",  # todo: inconsistency, fake_s
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/server/impl/fakes/**/*.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/UnitTestLogger.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/ra/MessageEndpointFactory.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/ra/BootstrapContext.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/server/impl/fakes/FakeQueueFactory.java",
-        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/postoffice/impl/FakeQueue.java"
+        "src/test/java/org/apache/activemq/artemis/tests/util/**/*.java",
     ],
     #    exclude = ["src/test/java/org/apache/activemq/artemis/tests/unit/util/**/*Test.java"],
 )
