@@ -1,0 +1,21 @@
+java_library(
+    name = "artemis-test-support",
+    testonly = True,
+    srcs = glob(["src/main/java/**/*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//artemis-junit",
+        "//third_party:io_netty_netty_buffer",
+        "//third_party:org_fusesource_hawtbuf_hawtbuf",
+        "//third_party:org_apache_activemq_activemq_client",
+        "//third_party:io_netty_netty_codec",
+        "//third_party:io_netty_netty_handler",
+        "//third_party:io_netty_netty_codec_http",
+        "//third_party:io_netty_netty_common",
+        "//third_party:io_netty_netty_transport",
+        "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
+        "//third_party:org_apache_qpid_proton_j",
+        "//third_party:org_slf4j_slf4j_api",
+        "//third_party:org_apache_qpid_qpid_jms_client",
+    ],
+)
