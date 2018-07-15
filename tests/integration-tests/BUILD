@@ -1,0 +1,409 @@
+load("//third_party:junit.bzl", "junit_tests")
+
+lib_test_srcs = glob(
+    [
+        "src/test/java/org/apache/activemq/artemis/tests/integration/security/SimpleClient.java",  # todo having this in tests braks output, whitespace
+        "src/test/java/org/apache/activemq/artemis/tests/integration/ra/DummyTransaction.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/util/**/*.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/util/**/*.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/fakes/**/*.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/SequentialFileFactoryTestBase.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/JournalImplTestBase.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/JournalImplTestUnit.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/config/impl/fakes/**/*.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/asyncio/AIOTestBase.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/remoting/ActiveMQBufferTestBase.java",  # java/lang/InstantiationException
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/journal/impl/FileFactoryTestBase.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/remoting/server/impl/fake/**/*.java",  # todo: inconsistency, fake_s
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/server/impl/fakes/**/*.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/UnitTestLogger.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/ra/MessageEndpointFactory.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/ra/BootstrapContext.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/server/impl/fakes/FakeQueueFactory.java",
+        #        "src/test/java/org/apache/activemq/artemis/tests/unit/core/postoffice/impl/FakeQueue.java"
+    ],
+    #    exclude = ["src/test/java/org/apache/activemq/artemis/tests/unit/util/**/*Test.java"],
+)
+
+#
+java_library(
+    name = "lib_test",
+    testonly = True,
+    srcs = lib_test_srcs,
+    deps = [
+        "//artemis-commons",
+        "//artemis-core-client",
+        "//artemis-jms-client",
+        "//third_party:org_apache_geronimo_specs_geronimo_jta_1_1_spec",
+        #        "//artemis-journal",
+        #        "//artemis-cli",
+        #        "//artemis-native",
+        #        "//artemis-server",
+        #        "//third_party:junit_junit",
+        #        "//third_party:org_apache_geronimo_specs_geronimo_j2ee_connector_1_5_spec",
+        #        "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
+        #        "//third_party:org_jboss_logging_jboss_logging",
+        #        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
+    ],
+)
+
+load("//third_party:GenTestRules.bzl", "GenTestRules")
+
+moar_test_deps = []
+
+runtime_deps = [
+    #    "//third_party:org_apache_derby_derby",  # integration/xa/XaTimeoutTesT: java.lang.RuntimeException: Could not find class: org.apache.derby.jdbc.EmbeddedDriver
+    #    "//third_party:org_apache_directory_shared_shared_ldap_model",  # tests/integration/amqp/JMSSaslGssapiTest: Caused by: java.lang.ClassNotFoundException: org.apache.directory.shared.ldap.model.entry.Entry
+    #    "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # tests/integration/amqp/JMSSaslGssapiTest:
+    #    "//third_party:test-agent",
+    #    "//",
+]
+
+java_library(
+    name = "testslib",
+    testonly = True,
+    srcs = glob(
+        ["src/test/java/**/*.java"],
+        exclude = lib_test_srcs + [
+            "src/test/java/**/package-info.java",
+        ],
+    ),
+    data = glob(["src/test/resources/**"]) + [
+        "//tests/unit-tests:src/test/resources/openssl-client-side-keystore.jks",
+        "//tests/unit-tests:src/test/resources/client-side-keystore.jks",
+        "//tests/unit-tests:src/test/resources/openssl-client-side-truststore.jks",
+        "//tests/unit-tests:src/test/resources/client-side-truststore.jks",
+        "//tests/unit-tests:src/test/resources/openssl-server-side-keystore.jks",
+        "//tests/unit-tests:src/test/resources/server-side-keystore.jks",
+        "//tests/unit-tests:src/test/resources/openssl-server-side-truststore.jks",
+        "//tests/unit-tests:src/test/resources/server-side-truststore.jks",
+        #        "//tests/unit-tests:src/test/resources/login.config",
+    ],
+    deps = moar_test_deps + [
+        ":lib_test",
+        #        ":org_apache_directory_shared_shared_asn1_api",
+        "//artemis-cli",
+        "//artemis-commons",
+        "//artemis-commons:artemis-commons_testlib",
+        "//artemis-core-client",
+        "//artemis-core-client:artemis-core-client_testlib",
+        "//artemis-dto",
+        "//artemis-jdbc-store",
+        "//artemis-jms-client",
+        "//artemis-jms-server",
+        "//artemis-journal",
+        "//artemis-junit",
+        "//artemis-native",
+        "//artemis-protocols/artemis-amqp-protocol",
+        "//artemis-protocols/artemis-hqclient-protocol",
+        "//artemis-protocols/artemis-mqtt-protocol",
+        "//artemis-protocols/artemis-openwire-protocol",
+        "//artemis-protocols/artemis-stomp-protocol",
+        "//artemis-ra",
+        "//artemis-rest",
+        "//artemis-selector:artemis_selector_static",
+        "//artemis-server",
+        "//artemis-server:external_tests",
+        "//artemis-service-extensions",
+        "//artemis-web",
+        "//tests/artemis-test-support",
+        "//tests/unit-tests:lib_test",
+        "//third_party:com_google_guava_guava",
+        "//third_party:commons_beanutils_commons_beanutils",
+        "//third_party:commons_io_commons_io",
+        "//third_party:commons_lang_commons_lang",
+        "//third_party:io_netty_netty_buffer",
+        "//third_party:io_netty_netty_codec_http",
+        "//third_party:io_netty_netty_codec_mqtt",
+        "//third_party:io_netty_netty_handler",
+        "//third_party:io_netty_netty_transport",
+        "//third_party:javax_inject_javax_inject",  # todo all
+        "//third_party:junit_junit",  # todo all  # todo all
+        "//third_party:log4j_log4j",
+        "//third_party:org_apache_activemq_activemq_client",
+        "//third_party:org_apache_directory_api_api_asn1_api",  # TODO: not in pom, maybe my erreo, see shared shared
+        "//third_party:org_apache_directory_api_api_ldap_model",
+        "//third_party:org_apache_directory_server_apacheds_core_annotations",
+        "//third_party:org_apache_directory_server_apacheds_core_api",
+        "//third_party:org_apache_directory_server_apacheds_interceptor_kerberos",
+        "//third_party:org_apache_directory_server_apacheds_test_framework",
+        "//third_party:org_apache_directory_server_apacheds_kerberos_codec",
+        "//third_party:org_apache_directory_server_apacheds_protocol_kerberos",
+        "//third_party:org_apache_directory_server_apacheds_protocol_ldap",
+        "//third_party:org_apache_directory_server_apacheds_protocol_shared",  # DirectoryBackedService
+        "//third_party:org_apache_directory_server_apacheds_server_annotations",
+        "//third_party:org_apache_geronimo_specs_geronimo_j2ee_connector_1_5_spec",
+        "//third_party:org_apache_geronimo_specs_geronimo_j2ee_management_1_1_spec",
+        "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
+        "//third_party:org_apache_geronimo_specs_geronimo_json_1_0_spec",
+        "//third_party:org_apache_geronimo_specs_geronimo_jta_1_1_spec",
+        "//third_party:org_apache_hadoop_hadoop_minikdc",
+        "//third_party:org_apache_httpcomponents_httpclient",
+        "//third_party:org_apache_httpcomponents_httpcore",
+        "//third_party:org_apache_johnzon_johnzon_core",
+        "//third_party:org_apache_karaf_features_org_apache_karaf_features_core",
+        "//third_party:org_apache_karaf_jaas_org_apache_karaf_jaas_boot",
+        "//third_party:org_apache_karaf_shell_org_apache_karaf_shell_core",
+        "//third_party:org_apache_mina_mina_core",
+        "//third_party:org_apache_qpid_proton_j",
+        "//third_party:org_apache_qpid_qpid_jms_client",
+        "//third_party:org_eclipse_jetty_jetty_server",
+        "//third_party:org_eclipse_jetty_jetty_servlet",
+        "//third_party:org_eclipse_jetty_jetty_webapp",
+        "//third_party:org_eclipse_paho_org_eclipse_paho_client_mqttv3",
+        "//third_party:org_eclipse_tycho_org_eclipse_osgi",  # todo why eclipse osgi?
+        "//third_party:org_fusesource_hawtbuf_hawtbuf",
+        "//third_party:org_fusesource_mqtt_client_mqtt_client",
+        "//third_party:org_hamcrest_hamcrest_core",
+        "//third_party:org_jboss_logging_jboss_logging",
+        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
+        "//third_party:org_jboss_logmanager_jboss_logmanager",
+        "//third_party:org_jgroups_jgroups",
+        "//third_party:org_ops4j_pax_exam_pax_exam",
+        "//third_party:org_ops4j_pax_exam_pax_exam_container_karaf",
+        "//third_party:org_ops4j_pax_exam_pax_exam_junit4",
+        "//third_party:org_ops4j_pax_url_pax_url_aether",
+        "//third_party:org_slf4j_slf4j_api",
+        "//third_party:org_springframework_spring_beans",
+        "//third_party:org_springframework_spring_context",
+        "//third_party:org_springframework_spring_core",
+        "//third_party:org_springframework_spring_jms",
+    ],
+)
+
+# why u no work?
+genrule(
+    name = "target_test_classes",
+    outs = ["target/test_classes"],
+    cmd = "mkdir -p $(OUTS)",
+    output_to_bindir = True,
+)
+
+#junit_tests(
+GenTestRules(
+    name = "integration-tests",
+    data = [
+        ":target_test_classes",  # todo: likely not necessary
+        "//tests/config:logging.properties",  # spawnVM needs this, and the path, ehm, does not match!
+        "//third_party:test-agent_deploy.jar",  # mkdir -p
+    ],
+    #    data = glob(["src/test/resources/**"]) + ["//artemis-server:src/test/resources/ConfigurationTest-full-config.xml"],
+    #    jvm_flags = [
+    #        "-Djava.system.class.loader=ResourceJavaAgent",
+    #        "-Dextra.class.path=tests/unit-tests/src/test/resources/:artemis-server/src/test/resources/",
+    #    ],
+    exclude_tests = [
+        "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/JMSSaslGssapiTest",  # needs ldap, have dependency vetrsion problems there now
+    ],
+    jvm_flags = [
+        # logging
+        "-Djava.system.class.loader=ResourceJavaAgent",
+        "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
+        "-Dlogging.configuration=\"file:$(location //tests/config:logging.properties)\"",
+        # agent
+        "-javaagent:$(location //third_party:test-agent_deploy.jar)",
+        "-Dextra.dirs=target/test-classes",
+        # classloader
+        "-Djava.system.class.loader=ResourceJavaAgent",
+        "-Dextra.class.path=" + ":".join([
+            "tests/integration-tests/src/test/resources/",
+            "tests/unit-tests/src/test/resources/",
+            "target/test-classes/",  # for doTestClientVersionCompatibilityWithRealConnection
+        ]),
+    ],
+    large_tests = [
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/LargeMessageCompressTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/NettyFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/LargeMessageAvoidLargeMessagesTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/LargeMessageTest",
+    ],
+    medium_tests = [
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/IncompatibleVersionTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/LargeMessageRedistributionTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/ProducerFlowControlTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/NettyProducerFlowControlTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/ConsumerTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/SlowConsumerTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/bridge/BridgeTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/NettyFileStorageSymmetricClusterWithDiscoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/NettySymmetricClusterWithDiscoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/SymmetricClusterWithDiscoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/TwoWayTwoNodeClusterWithDiscoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/DiscoveryClusterWithBackupFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/FailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/LargeMessageFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/LiveToLiveFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/NettyDiscoveryClusterWithBackupFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/NettyFileStorageDiscoveryClusterWithBackupFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/PagingFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/ReplicatedPagedFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/ReplicatedPagingFailoverTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/topology/HAClientTopologyWithDiscoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/topology/NettyHAClientTopologyWithDiscoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/journal/AIOJournalCompactTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/management/QueueControlTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/management/QueueControlUsingCoreTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/mqtt/imported/MQTTTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/amq/ProducerBlockingTtlTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/paging/GlobalPagingTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/paging/PagingTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/persistence/DuplicateCacheTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/persistence/RolesConfigurationStorageTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/remoting/PingTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/scheduling/ScheduledMessageTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/stomp/StompConnectionCleanupTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/stomp/StompTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/stomp/v11/StompV11Test",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/stomp/v12/StompV12Test",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/xa/BasicXaTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/xa/BasicXaRecoveryTest",
+    ],
+    tags = [
+        "block-network",
+    ],
+    test_files = glob(
+        ["src/test/java/**/*.java"],
+        exclude = lib_test_srcs + [
+            "src/test/java/**/package-info.java",
+        ],
+    ),
+    deps = runtime_deps + moar_test_deps + [
+        "//third_party:org_hamcrest_hamcrest_core",
+        "//third_party:junit_junit",  # todo all  # todo all
+        "//third_party:javax_inject_javax_inject",  # todo all
+        "//artemis-web",
+        "//artemis-rest",
+        ":lib_test",
+        ":testslib",  # HACK: to have each test class separate
+        "//artemis-protocols/artemis-openwire-protocol",
+        "//artemis-protocols/artemis-stomp-protocol",
+        "//artemis-protocols/artemis-mqtt-protocol",
+        "//artemis-protocols/artemis-amqp-protocol",
+        "//artemis-protocols/artemis-hqclient-protocol",
+        "//artemis-server:external_tests",
+        "//tests/unit-tests:lib_test",
+        "//artemis-core-client:artemis-core-client_testlib",
+        #        "//artemis-cli",
+        #        "//artemis-commons",
+        #                "//artemis-core-client:artemis-core-client_testlib",
+        #        "//artemis-jms-client",
+        #        "//artemis-journal",
+        #        "//artemis-junit",
+        #        "//artemis-native",
+        "//artemis-ra",
+        "//artemis-server",
+        "//third_party:org_apache_hadoop_hadoop_minikdc",
+        #        "//third_party:test-agent",
+        "//tests/artemis-test-support",
+        #        "//third_party:io_netty_netty_buffer",
+        "//third_party:org_apache_directory_api_api_ldap_model",
+        "//third_party:org_apache_karaf_jaas_org_apache_karaf_jaas_boot",
+        "//third_party:log4j_log4j",
+        "//third_party:org_apache_karaf_shell_org_apache_karaf_shell_core",
+        "//third_party:commons_io_commons_io",
+        "//third_party:org_eclipse_tycho_org_eclipse_osgi",  # todo why eclipse osgi?
+        "//third_party:org_eclipse_jetty_jetty_server",
+        "//third_party:org_eclipse_jetty_jetty_servlet",
+        "//third_party:org_ops4j_pax_exam_pax_exam",
+        "//third_party:org_ops4j_pax_url_pax_url_aether",
+        "//third_party:org_ops4j_pax_exam_pax_exam_container_karaf",
+        "//third_party:org_eclipse_jetty_jetty_webapp",
+        "//third_party:org_apache_johnzon_johnzon_core",
+        "//third_party:org_springframework_spring_context",
+        "//third_party:org_springframework_spring_core",
+        "//third_party:org_springframework_spring_beans",
+        "//third_party:org_springframework_spring_jms",
+        "//third_party:org_fusesource_mqtt_client_mqtt_client",
+        "//third_party:org_apache_httpcomponents_httpcore",
+        "//third_party:org_apache_httpcomponents_httpclient",
+        "//third_party:org_apache_directory_server_apacheds_core_annotations",
+        "//third_party:org_apache_karaf_features_org_apache_karaf_features_core",
+        "//third_party:org_apache_directory_server_apacheds_core_api",
+        "//third_party:org_apache_directory_server_apacheds_server_annotations",
+        "//third_party:org_apache_directory_server_apacheds_interceptor_kerberos",
+        "//third_party:org_apache_directory_server_apacheds_protocol_ldap",
+        "//third_party:org_apache_directory_server_apacheds_protocol_kerberos",
+        "//third_party:org_apache_directory_server_apacheds_kerberos_codec",
+        "//third_party:org_ops4j_pax_exam_pax_exam_junit4",
+        #        "//third_party:org_apache_directory_server_apacheds_core_integ",
+        "//third_party:commons_lang_commons_lang",
+        #        "//third_party:io_netty_netty_transport",
+        #        "//third_party:org_apache_geronimo_specs_geronimo_j2ee_connector_1_5_spec",
+        "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
+        "//third_party:org_apache_qpid_proton_j",
+        "//third_party:org_eclipse_paho_org_eclipse_paho_client_mqttv3",
+        #        "//third_party:org_jboss_logging_jboss_logging",
+        "//artemis-commons",
+        "//artemis-core-client",
+        "//artemis-jms-client",
+        "//artemis-junit",
+        "//artemis-selector:artemis_selector_static",
+        "//third_party:org_apache_activemq_activemq_client",
+        "//third_party:org_fusesource_hawtbuf_hawtbuf",
+        "//third_party:org_apache_qpid_qpid_jms_client",
+        "//third_party:org_jboss_logging_jboss_logging",
+        "//third_party:org_jgroups_jgroups",
+        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
+        "//third_party:org_apache_geronimo_specs_geronimo_j2ee_management_1_1_spec",
+        "//third_party:org_slf4j_slf4j_api",
+        "//third_party:org_apache_directory_api_api_asn1_api",  # TODO: not in pom, maybe my erreo, see shared shared
+        #        ":org_apache_directory_shared_shared_asn1_api",
+        "//third_party:org_apache_directory_server_apacheds_protocol_shared",  # DirectoryBackedService
+        "//third_party:org_apache_mina_mina_core",
+        "//artemis-cli",
+        "//artemis-commons:artemis-commons_testlib",
+        "//artemis-jms-server",
+        "//artemis-journal",
+        "//artemis-native",
+        "//artemis-service-extensions",
+        "//third_party:io_netty_netty_buffer",
+        "//third_party:io_netty_netty_transport",
+        "//artemis-dto",
+        "//artemis-jdbc-store",
+        "//third_party:commons_beanutils_commons_beanutils",
+        "//third_party:io_netty_netty_codec_mqtt",
+        "//third_party:org_apache_geronimo_specs_geronimo_json_1_0_spec",
+        "//third_party:com_google_guava_guava",
+        "//third_party:io_netty_netty_codec_http",
+        "//third_party:io_netty_netty_handler",
+        "//third_party:org_apache_geronimo_specs_geronimo_j2ee_connector_1_5_spec",
+        "//third_party:org_apache_geronimo_specs_geronimo_jta_1_1_spec",
+        "//third_party:org_jboss_logmanager_jboss_logmanager",
+        #"//third_party:",
+        #"//third_party:",
+        #"//third_party:",
+        #"//third_party:",
+    ],
+)
+
+#java_library(
+#    name = "org_apache_directory_shared_shared_i18n",
+#    visibility = ["//visibility:public"],
+#    exports = ["@org_apache_directory_shared_shared_i18n//jar"],
+#    runtime_deps = [
+#        "//third_party:org_slf4j_slf4j_api",
+#    ],
+#)
+#
+#java_library(
+#    name = "org_apache_directory_shared_shared_asn1_api",
+#    visibility = ["//visibility:public"],
+#    exports = ["@org_apache_directory_shared_shared_asn1_api//jar"],
+#    runtime_deps = [
+#        "org_apache_directory_shared_shared_i18n",
+#        "//third_party:org_slf4j_slf4j_api",
+#    ],
+#)
+
+#[java_test(
+#    name = test.rsplit("/", 1)[1].split(".")[0],
+#    srcs = glob(["src/test/java/**/*.java"]),
+#    deps = [
+#        "//artemis-commons",
+#        "//third_party:org_jboss_logging_jboss_logging",
+#        "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
+#    ],
+#) for test in ,
+#    exclude = [
+#    ],
+#)]
