@@ -4,9 +4,11 @@ import java.lang.instrument.Instrumentation;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +23,17 @@ public class ResourceJavaAgent extends URLClassLoader {
         System.out.println("initializing url classloader");
     }
 
+    private static URL pathToUrl(String path) throws MalformedURLException {
+        URL url = Paths.get(path).toUri().toURL(); // important only for resource url, really: this url must be absolute, to pass getClass().getResource("/users.properties").toURI()) with uri that isOpaque == false.
+        if (path.endsWith("/")) {
+            if (!url.getPath().endsWith("/")) {
+                // if the directory at the target url does not yet exist, the trailing / will be lost
+                url = new URL(url.toString() + "/");  // append it back
+            }
+        }
+        return url;
+    }
+
     private static URL[] buildClassPath() throws MalformedURLException {
         final String JAVA_CLASS_PATH = "java.class.path";
         final String EXTRA_CLASS_PATH = "extra.class.path";
@@ -29,7 +42,7 @@ public class ResourceJavaAgent extends URLClassLoader {
         paths.addAll(Arrays.asList(System.getProperty(JAVA_CLASS_PATH, "").split(File.pathSeparator)));
         URL[] urls = new URL[paths.size()];
         for (int i = 0; i < paths.size(); i++) {
-            urls[i] = Paths.get(paths.get(i)).toUri().toURL(); // important only for resource url, really: this url must be absolute, to pass getClass().getResource("/users.properties").toURI()) with uri that isOpaque == false.
+            urls[i] = pathToUrl(paths.get(i));
 //            System.out.println(urls[i]);
         }
         // this is for spawnVM functionality in tests
@@ -52,6 +65,35 @@ public class ResourceJavaAgent extends URLClassLoader {
         }
     }
 
+    private static void copyRequestedDirs() {
+        String copyPaths = System.getProperty("extra.copy.path", null);
+        if (copyPaths == null) {
+            return;
+        }
+        for (String copyPath : copyPaths.split(",")) {
+            String[] fromTo = copyPath.split(":");
+            Path from = Paths.get(fromTo[0]);
+            Path to = Paths.get(fromTo[1]);
+            copyDir(from, to, true);
+        }
+    }
+
+    // https://stackoverflow.com/questions/6214703/copy-entire-directory-contents-to-another-directory
+    private static void copyDir(Path src, Path dest, boolean overwrite) {
+        try {
+            Files.walk(src).forEach(a -> {
+                Path b = dest.resolve(src.relativize(a));  // new.resolve(old.relativize(old/subdir) ~> new/subdir
+                try {
+                    Files.copy(a, b, overwrite ? new CopyOption[]{StandardCopyOption.REPLACE_EXISTING} : new CopyOption[]{});
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException("Permission issue while copying", e);
+        }
+    }
+
     private static void createRequestedLinks() {
         String linkPaths = System.getProperty("extra.link.path", null);
         if (linkPaths == null) {
@@ -71,6 +113,7 @@ public class ResourceJavaAgent extends URLClassLoader {
 
     public static void premain(String args, Instrumentation instrumentation) throws Exception {
         createRequestedDirs();
+        copyRequestedDirs();
         createRequestedLinks();
     }
 }
