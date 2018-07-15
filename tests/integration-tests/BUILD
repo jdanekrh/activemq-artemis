@@ -171,19 +171,10 @@ java_library(
     ],
 )
 
-# why u no work?
-genrule(
-    name = "target_test_classes",
-    outs = ["target/test_classes"],
-    cmd = "mkdir -p $(OUTS)",
-    output_to_bindir = True,
-)
-
 #junit_tests(
 GenTestRules(
     name = "integration-tests",
     data = [
-        ":target_test_classes",  # todo: likely not necessary
         "//tests/config:logging.properties",  # spawnVM needs this, and the path, ehm, does not match!
         "//third_party:test-agent_deploy.jar",  # mkdir -p
     ],
