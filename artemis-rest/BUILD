@@ -64,6 +64,7 @@ junit_tests(
         "//artemis-commons",
         "//artemis-core-client",
         "//artemis-jms-client",
+        "//artemis-junit",
         "//artemis-server",
         "//third_party:org_apache_geronimo_specs_geronimo_jaxrs_2_0_spec",
         "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
