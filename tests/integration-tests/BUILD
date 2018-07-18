@@ -198,6 +198,10 @@ GenTestRules(
         "-XX:CICompilerCount=2",
         "-XX:ConcGCThreads=2",
         "-XX:ParallelGCThreads=2",
+        # surefire args from maven build
+        "-Djgroups.bind_addr=localhost",
+        "-Dorg.apache.activemq.artemis.api.core.UDPBroadcastEndpointFactory.localBindAddress=localhost",
+        "-Djava.net.preferIPv4Stack=true",
         # logging
         "-Djava.system.class.loader=ResourceJavaAgent",
         "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
