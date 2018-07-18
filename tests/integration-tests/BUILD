@@ -188,6 +188,9 @@ GenTestRules(
     #    ],
     exclude_tests = [
         "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/JMSSaslGssapiTest",  # needs ldap, have dependency vetrsion problems there now
+        "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/SaslKrb5LDAPSecurityTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/security/LDAPSecurityTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/security/LegacyLDAPSecuritySettingPluginListenerTest",
     ],
     jvm_flags = [
         # https://blogs.oracle.com/java-platform-group/java-se-support-for-docker-cpu-and-memory-limits
@@ -210,6 +213,10 @@ GenTestRules(
             "target/test-classes/",  # for doTestClientVersionCompatibilityWithRealConnection
         ]),
     ],
+    enormous_tests = [
+        "src/test/java/org/apache/activemq/artemis/tests/integration/paging/GlobalPagingTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/paging/PagingTest",
+    ],
     large_tests = [
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/LargeMessageCompressTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/NettyFailoverTest",
@@ -217,6 +224,11 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/LargeMessageTest",
     ],
     medium_tests = [
+        "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/JMSMessageConsumerTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/ConcurrentCreateDeleteProduceTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/mqtt/imported/PahoMQTTTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/xa/XaTimeoutTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/stomp/v11/StompV11Test",
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/IncompatibleVersionTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/LargeMessageRedistributionTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/ProducerFlowControlTest",
@@ -244,8 +256,6 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/management/QueueControlUsingCoreTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/mqtt/imported/MQTTTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/amq/ProducerBlockingTtlTest",
-        "src/test/java/org/apache/activemq/artemis/tests/integration/paging/GlobalPagingTest",
-        "src/test/java/org/apache/activemq/artemis/tests/integration/paging/PagingTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/persistence/DuplicateCacheTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/persistence/RolesConfigurationStorageTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/remoting/PingTest",
