@@ -23,5 +23,6 @@ junit_tests(
         "//artemis-commons",
         "//artemis-core-client",
         "//third_party:commons_beanutils_commons_beanutils",
+        "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
     ],
 )

@@ -4,6 +4,8 @@ java_library(
         glob(["src/main/java/**/*.java"]) + [":gen_parser"],
     visibility = ["//visibility:public"],
     deps = [
+        "//artemis-commons",
+        "//artemis-core-client",
         ":xalan_xalan",
     ],
 )
@@ -110,6 +112,7 @@ junit_tests(
     name = "junit",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
+        "//artemis-commons",
         ":artemis-selector",
     ],
 )
