@@ -34,6 +34,7 @@ java_library(
         "//third_party:io_netty_netty_buffer",
         "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
         "//third_party:org_apache_qpid_proton_j",
+        "//third_party:org_mockito_mockito_core",
     ],
 ) for test in glob(
     ["src/test/java/**/*.java"],
