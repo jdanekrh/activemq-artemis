@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.activemq.artemis.api.core.ActiveMQDuplicateIdException;
 import org.apache.activemq.artemis.api.core.ActiveMQException;
+import org.apache.activemq.artemis.api.core.ActiveMQExceptionType;
+import org.apache.activemq.artemis.api.core.ActiveMQSessionCreationException;
 import org.apache.activemq.artemis.api.core.ActiveMQTransactionOutcomeUnknownException;
 import org.apache.activemq.artemis.api.core.ActiveMQTransactionRolledBackException;
 import org.apache.activemq.artemis.api.core.ActiveMQUnBlockedException;
@@ -331,7 +333,18 @@ public class AsynchronousFailoverTest extends FailoverTestBase {
 
             final int numMessages = 1000;
 
-            session = sf.createSession(false, false);
+            while (true) {
+               try {
+                  session = sf.createSession(false, false);
+                  break;
+               } catch (ActiveMQSessionCreationException sce) {
+                  if (sce.getType() == ActiveMQExceptionType.SESSION_CREATION_REJECTED) {
+                     Thread.sleep(100);
+                     continue;
+                  }
+                  throw sce;
+               }
+            }
 
             listener = new CountDownSessionFailureListener(session);
             session.addFailureListener(listener);
