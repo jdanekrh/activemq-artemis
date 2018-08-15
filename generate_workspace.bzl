@@ -662,6 +662,12 @@ def generated_maven_jars():
       sha1 = "c65484ba33883687a49c7a6d631d26c68b831704",
   )
   native.maven_jar(
+      name = "net_bytebuddy_byte_buddy",
+      artifact = "net.bytebuddy:byte-buddy:jar:1.6.14",
+      repository = "http://repo.apache.maven.org/maven2/",
+      sha1 = "871c3e49dc6183d0d361601c2f1d11abb1a6b48c",
+  )
+  native.maven_jar(
       name = "org_codehaus_jackson_jackson_xc",
       artifact = "org.codehaus.jackson:jackson-xc:jar:1.9.12",
       repository = "http://repo.apache.maven.org/maven2/",
@@ -690,6 +696,12 @@ def generated_maven_jars():
       artifact = "org.apache.httpcomponents:httpcore:jar:4.3.3",
       repository = "http://repo.apache.maven.org/maven2/",
       sha1 = "f91b7a4aadc5cf486df6e4634748d7dd7a73f06d",
+  )
+  native.maven_jar(
+      name = "org_objenesis_objenesis",
+      artifact = "org.objenesis:objenesis:jar:2.5",
+      repository = "http://repo.apache.maven.org/maven2/",
+      sha1 = "612ecb799912ccf77cba9b3ed8c813da086076e9",
   )
   native.maven_jar(
       name = "org_apache_geronimo_specs_geronimo_jms_1_1_spec",
@@ -764,6 +776,18 @@ def generated_maven_jars():
       sha1 = "3cb3af93406d02e2609c51e081c15501a471aee7",
   )
   native.maven_jar(
+      name = "net_bytebuddy_byte_buddy_agent",
+      artifact = "net.bytebuddy:byte-buddy-agent:jar:1.6.14",
+      repository = "http://repo.apache.maven.org/maven2/",
+      sha1 = "ba1e5ba3a84fb2fbf2f4de9138df19665eec4d59",
+  )
+  native.maven_jar(
+      name = "org_mockito_mockito_core",
+      artifact = "org.mockito:mockito-core:jar:2.8.47",
+      repository = "http://repo.apache.maven.org/maven2/",
+      sha1 = "48840cfced22ec0c07203a0201c5ae7bc12557b5",
+  )
+  native.maven_jar(
       name = "javax_enterprise_cdi_api",
       artifact = "javax.enterprise:cdi-api:jar:1.2",
       repository = "http://repo.apache.maven.org/maven2/",
@@ -813,9 +837,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_apache_qpid_proton_j",
-      artifact = "org.apache.qpid:proton-j:jar:0.27.1",
+      artifact = "org.apache.qpid:proton-j:jar:0.27.3",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "eda2a609ca78437a13fcc3f50e68d36d2341236f",
+      sha1 = "eb7b79ff23496e7809a8d4485266484f03a0f1a6",
   )
   native.maven_jar(
       name = "org_ops4j_pax_exam_pax_exam_container_karaf",
@@ -2551,6 +2575,12 @@ def generated_java_libraries():
       ],
   )
   native.java_library(
+      name = "net_bytebuddy_byte_buddy",
+      visibility = ["//visibility:public"],
+      exports = ["@net_bytebuddy_byte_buddy//jar"],
+      runtime_deps = [      ],
+  )
+  native.java_library(
       name = "org_codehaus_jackson_jackson_xc",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_jackson_jackson_xc//jar"],
@@ -2579,6 +2609,12 @@ def generated_java_libraries():
       name = "org_apache_httpcomponents_httpcore",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_httpcomponents_httpcore//jar"],
+      runtime_deps = [      ],
+  )
+  native.java_library(
+      name = "org_objenesis_objenesis",
+      visibility = ["//visibility:public"],
+      exports = ["@org_objenesis_objenesis//jar"],
       runtime_deps = [      ],
   )
   native.java_library(
@@ -2656,6 +2692,21 @@ def generated_java_libraries():
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_jdbm_apacheds_jdbm2//jar"],
       runtime_deps = [      ],
+  )
+  native.java_library(
+      name = "net_bytebuddy_byte_buddy_agent",
+      visibility = ["//visibility:public"],
+      exports = ["@net_bytebuddy_byte_buddy_agent//jar"],
+      runtime_deps = [      ],
+  )
+  native.java_library(
+      name = "org_mockito_mockito_core",
+      visibility = ["//visibility:public"],
+      exports = ["@org_mockito_mockito_core//jar"],
+      runtime_deps = [          ":net_bytebuddy_byte_buddy",
+          ":net_bytebuddy_byte_buddy_agent",
+          ":org_objenesis_objenesis",
+      ],
   )
   native.java_library(
       name = "javax_enterprise_cdi_api",
