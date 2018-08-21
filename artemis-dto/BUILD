@@ -29,6 +29,8 @@ java_plugin(
         "//third_party:com_sun_xml_bind_jaxb_core",  # runtime dep
         "//third_party:com_sun_xml_bind_jaxb_impl",  # runtime dep
         "//third_party:com_sun_xml_bind_jaxb_jxc",
+        "//third_party:javax_xml_bind_jaxb_api",  # on new JDK
+        "//third_party:javax_activation_activation",  # on new JDK
     ],
 )
 

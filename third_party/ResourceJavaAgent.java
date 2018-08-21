@@ -17,6 +17,9 @@ import java.util.List;
 public class ResourceJavaAgent extends URLClassLoader {
     private final ClassLoader parent;
 
+    public void appendToClassPathForInstrumentation(String string) {
+    }
+
     public ResourceJavaAgent(ClassLoader parent) throws MalformedURLException {
         super(buildClassPath(), null);
         this.parent = parent; // I need the parent as backup for SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");

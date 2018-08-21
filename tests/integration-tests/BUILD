@@ -355,7 +355,7 @@ GenTestRules(
         "//artemis-ra",
         "//artemis-server",
         "//third_party:org_apache_hadoop_hadoop_minikdc",
-        #        "//third_party:test-agent",
+        "//third_party:test-agent",
         "//tests/artemis-test-support",
         #        "//third_party:io_netty_netty_buffer",
         "//third_party:org_apache_directory_api_api_ldap_model",
