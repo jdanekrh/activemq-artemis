@@ -1827,51 +1827,49 @@ def generated_java_libraries():
       name = "org_apache_directory_api_api_i18n",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_i18n//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jline_jline",
       visibility = ["//visibility:public"],
       exports = ["@org_jline_jline//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_swissbox_pax_swissbox_tracker",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_swissbox_pax_swissbox_tracker//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_exception",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_exception//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_logging_pax_logging_api",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_logging_pax_logging_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_logging_jboss_logging_processor",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_logging_jboss_logging_processor//jar"],
-      runtime_deps = [          ":org_jboss_jdeparser_jdeparser",
+      runtime_deps = [
+          ":org_jboss_jdeparser_jdeparser",
       ],
   )
   native.java_library(
       name = "com_sun_xml_fastinfoset_FastInfoset",
       visibility = ["//visibility:public"],
       exports = ["@com_sun_xml_fastinfoset_FastInfoset//jar"],
-      runtime_deps = [          ":javax_xml_bind_jsr173_api",
+      runtime_deps = [
+          ":javax_xml_bind_jsr173_api",
       ],
   )
   native.java_library(
       name = "org_apache_karaf_shell_org_apache_karaf_shell_console",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_shell_org_apache_karaf_shell_console//jar"],
-      runtime_deps = [          ":jline_jline",
+      runtime_deps = [
+          ":jline_jline",
           ":org_apache_karaf_jaas_org_apache_karaf_jaas_modules",
           ":org_apache_karaf_jaas_org_apache_karaf_jaas_boot",
           ":org_apache_karaf_shell_org_apache_karaf_shell_core",
@@ -1882,25 +1880,23 @@ def generated_java_libraries():
       name = "org_codehaus_jackson_jackson_jaxrs",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_jackson_jackson_jaxrs//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_protocol_shared",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_protocol_shared//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "com_google_guava_guava",
       visibility = ["//visibility:public"],
       exports = ["@com_google_guava_guava//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_deploy",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_deploy//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_jetty_webapp",
+      runtime_deps = [
+          ":org_eclipse_jetty_jetty_webapp",
           ":org_eclipse_jetty_jetty_xml",
       ],
   )
@@ -1908,63 +1904,59 @@ def generated_java_libraries():
       name = "org_apache_karaf_jaas_org_apache_karaf_jaas_modules",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_jaas_org_apache_karaf_jaas_modules//jar"],
-      runtime_deps = [          ":org_apache_karaf_jaas_org_apache_karaf_jaas_config",
+      runtime_deps = [
+          ":org_apache_karaf_jaas_org_apache_karaf_jaas_config",
       ],
   )
   native.java_library(
       name = "org_springframework_spring_aop",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_aop//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "bouncycastle_bcprov_jdk15",
       visibility = ["//visibility:public"],
       exports = ["@bouncycastle_bcprov_jdk15//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_interceptor_javax_interceptor_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_interceptor_javax_interceptor_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_hawt_hawtio_util",
       visibility = ["//visibility:public"],
       exports = ["@io_hawt_hawtio_util//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jledit_core",
       visibility = ["//visibility:public"],
       exports = ["@org_jledit_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_springframework_spring_core",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_core//jar"],
-      runtime_deps = [          ":org_springframework_spring_jcl",
+      runtime_deps = [
+          ":org_springframework_spring_jcl",
       ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_extras_aci",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_extras_aci//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_event",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_event//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_plexus_plexus_container_default",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_plexus_plexus_container_default//jar"],
-      runtime_deps = [          ":junit_junit",
+      runtime_deps = [
+          ":junit_junit",
           ":classworlds_classworlds",
       ],
   )
@@ -1972,39 +1964,39 @@ def generated_java_libraries():
       name = "org_ops4j_pax_url_pax_url_aether",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_url_pax_url_aether//jar"],
-      runtime_deps = [          ":org_ops4j_pax_url_pax_url_aether_support",
+      runtime_deps = [
+          ":org_ops4j_pax_url_pax_url_aether_support",
       ],
   )
   native.java_library(
       name = "org_jboss_spec_javax_ws_rs_jboss_jaxrs_api_2_0_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_spec_javax_ws_rs_jboss_jaxrs_api_2_0_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_http2_http2_server",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_http2_http2_server//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_http2_http2_common",
+      runtime_deps = [
+          ":org_eclipse_jetty_http2_http2_common",
       ],
   )
   native.java_library(
       name = "org_ops4j_base_ops4j_base_util_property",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_util_property//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_jdbm_apacheds_jdbm1",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_jdbm_apacheds_jdbm1//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_activemq_activemq_client",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_activemq_activemq_client//jar"],
-      runtime_deps = [          ":org_slf4j_slf4j_api",
+      runtime_deps = [
+          ":org_slf4j_slf4j_api",
           ":org_apache_geronimo_specs_geronimo_j2ee_management_1_1_spec",
       ],
   )
@@ -2012,20 +2004,21 @@ def generated_java_libraries():
       name = "org_jboss_spec_javax_annotation_jboss_annotations_api_1_2_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_spec_javax_annotation_jboss_annotations_api_1_2_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "junit_junit",
       visibility = ["//visibility:public"],
       exports = ["@junit_junit//jar"],
-      runtime_deps = [          ":org_hamcrest_hamcrest_core",
+      runtime_deps = [
+          ":org_hamcrest_hamcrest_core",
       ],
   )
   native.java_library(
       name = "org_apache_directory_mavibot_mavibot",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_mavibot_mavibot//jar"],
-      runtime_deps = [          ":org_slf4j_slf4j_log4j12",
+      runtime_deps = [
+          ":org_slf4j_slf4j_log4j12",
           ":log4j_log4j",
       ],
   )
@@ -2033,7 +2026,8 @@ def generated_java_libraries():
       name = "org_eclipse_jetty_aggregate_jetty_all_uber",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_aggregate_jetty_all_uber//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_jetty_client",
+      runtime_deps = [
+          ":org_eclipse_jetty_jetty_client",
           ":org_eclipse_jetty_jetty_deploy",
           ":org_eclipse_jetty_jetty_jmx",
           ":org_eclipse_jetty_jetty_plus",
@@ -2060,13 +2054,13 @@ def generated_java_libraries():
       name = "jline_jline",
       visibility = ["//visibility:public"],
       exports = ["@jline_jline//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_server_annotations",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_server_annotations//jar"],
-      runtime_deps = [          ":org_apache_directory_api_api_ldap_codec_core",
+      runtime_deps = [
+          ":org_apache_directory_api_api_ldap_codec_core",
           ":org_apache_mina_mina_core",
       ],
   )
@@ -2074,69 +2068,64 @@ def generated_java_libraries():
       name = "org_eclipse_jetty_jetty_security",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_security//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_websocket_websocket_servlet",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_websocket_websocket_servlet//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_websocket_websocket_api",
+      runtime_deps = [
+          ":org_eclipse_jetty_websocket_websocket_api",
       ],
   )
   native.java_library(
       name = "org_apache_geronimo_specs_geronimo_jta_1_1_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_geronimo_specs_geronimo_jta_1_1_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "com_google_code_findbugs_annotations",
       visibility = ["//visibility:public"],
       exports = ["@com_google_code_findbugs_annotations//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "commons_logging_commons_logging",
       visibility = ["//visibility:public"],
       exports = ["@commons_logging_commons_logging//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_features_base",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_features_base//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_logging_pax_logging_log4j2",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_logging_pax_logging_log4j2//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "xml_apis_xml_apis",
       visibility = ["//visibility:public"],
       exports = ["@xml_apis_xml_apis//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_exam_pax_exam_spi//jar"],
-      runtime_deps = [          ":org_ops4j_pax_tinybundles_tinybundles",
+      runtime_deps = [
+          ":org_ops4j_pax_tinybundles_tinybundles",
       ],
   )
   native.java_library(
       name = "commons_lang_commons_lang",
       visibility = ["//visibility:public"],
       exports = ["@commons_lang_commons_lang//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_client",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_client//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_jetty_http",
+      runtime_deps = [
+          ":org_eclipse_jetty_jetty_http",
           ":org_eclipse_jetty_jetty_io",
       ],
   )
@@ -2144,13 +2133,13 @@ def generated_java_libraries():
       name = "org_apache_karaf_jaas_org_apache_karaf_jaas_config",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_jaas_org_apache_karaf_jaas_config//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_websocket_javax_websocket_server_impl",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_websocket_javax_websocket_server_impl//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_websocket_javax_websocket_client_impl",
+      runtime_deps = [
+          ":org_eclipse_jetty_websocket_javax_websocket_client_impl",
           ":org_eclipse_jetty_websocket_websocket_server",
       ],
   )
@@ -2158,31 +2147,28 @@ def generated_java_libraries():
       name = "org_jboss_arquillian_container_arquillian_container_test_impl_base",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_container_arquillian_container_test_impl_base//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_geronimo_specs_geronimo_json_1_0_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_geronimo_specs_geronimo_json_1_0_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "net_jcip_jcip_annotations",
       visibility = ["//visibility:public"],
       exports = ["@net_jcip_jcip_annotations//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_config_arquillian_config_api",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_config_arquillian_config_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_junit_arquillian_junit_container",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_junit_arquillian_junit_container//jar"],
-      runtime_deps = [          ":org_jboss_arquillian_test_arquillian_test_api",
+      runtime_deps = [
+          ":org_jboss_arquillian_test_arquillian_test_api",
           ":org_jboss_arquillian_container_arquillian_container_test_api",
           ":org_jboss_arquillian_container_arquillian_container_test_spi",
           ":org_jboss_arquillian_core_arquillian_core_impl_base",
@@ -2196,98 +2182,86 @@ def generated_java_libraries():
       name = "org_apache_felix_org_apache_felix_configadmin",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_felix_org_apache_felix_configadmin//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_johnzon_johnzon_core",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_johnzon_johnzon_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_shell_org_apache_karaf_shell_core",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_shell_org_apache_karaf_shell_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_maven_plugin_tools_maven_plugin_annotations",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_plugin_tools_maven_plugin_annotations//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_geronimo_specs_geronimo_j2ee_management_1_1_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_geronimo_specs_geronimo_j2ee_management_1_1_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_springframework_spring_jcl",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_jcl//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_logging_pax_logging_service",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_logging_pax_logging_service//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_fusesource_hawtbuf_hawtbuf",
       visibility = ["//visibility:public"],
       exports = ["@org_fusesource_hawtbuf_hawtbuf//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_resteasy_tjws",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_resteasy_tjws//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_inject_javax_inject",
       visibility = ["//visibility:public"],
       exports = ["@javax_inject_javax_inject//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_transport",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_transport//jar"],
-      runtime_deps = [          ":io_netty_netty_resolver",
+      runtime_deps = [
+          ":io_netty_netty_resolver",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_subtree",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_subtree//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_core_shared",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_core_shared//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_extras_codec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_extras_codec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_plexus_plexus_classworlds",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_plexus_plexus_classworlds//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_springframework_spring_jms",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_jms//jar"],
-      runtime_deps = [          ":org_springframework_spring_messaging",
+      runtime_deps = [
+          ":org_springframework_spring_messaging",
           ":org_springframework_spring_tx",
       ],
   )
@@ -2295,94 +2269,87 @@ def generated_java_libraries():
       name = "org_jboss_shrinkwrap_shrinkwrap_impl_base",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_shrinkwrap_shrinkwrap_impl_base//jar"],
-      runtime_deps = [          ":org_jboss_shrinkwrap_shrinkwrap_spi",
+      runtime_deps = [
+          ":org_jboss_shrinkwrap_shrinkwrap_spi",
       ],
   )
   native.java_library(
       name = "org_apache_geronimo_specs_geronimo_j2ee_connector_1_5_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_geronimo_specs_geronimo_j2ee_connector_1_5_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_all",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_all//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_tukaani_xz",
       visibility = ["//visibility:public"],
       exports = ["@org_tukaani_xz//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_base_ops4j_base_store",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_store//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_websocket_websocket_client",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_websocket_websocket_client//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_websocket_websocket_common",
+      runtime_deps = [
+          ":org_eclipse_jetty_websocket_websocket_common",
       ],
   )
   native.java_library(
       name = "javax_transaction_javax_transaction_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_transaction_javax_transaction_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_client_api",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_client_api//jar"],
-      runtime_deps = [          ":commons_pool_commons_pool",
+      runtime_deps = [
+          ":commons_pool_commons_pool",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_util",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_util//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_tycho_org_eclipse_osgi",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_tycho_org_eclipse_osgi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_codec_core",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_codec_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_features_org_apache_karaf_features_core",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_features_org_apache_karaf_features_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_websocket_websocket_common",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_websocket_websocket_common//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_changelog",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_changelog//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_annotations",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_annotations//jar"],
-      runtime_deps = [          ":javax_annotation_javax_annotation_api",
+      runtime_deps = [
+          ":javax_annotation_javax_annotation_api",
           ":org_ow2_asm_asm",
           ":org_ow2_asm_asm_commons",
       ],
@@ -2391,43 +2358,38 @@ def generated_java_libraries():
       name = "org_apache_maven_maven_repository_metadata",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_repository_metadata//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_felix_org_apache_felix_utils",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_felix_org_apache_felix_utils//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_transport_native_unix_common",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_transport_native_unix_common//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam_container_rbc",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_exam_pax_exam_container_rbc//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_asn1_ber",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_asn1_ber//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "com_sun_xml_bind_jaxb_xjc",
       visibility = ["//visibility:public"],
       exports = ["@com_sun_xml_bind_jaxb_xjc//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_protocol_kerberos",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_protocol_kerberos//jar"],
-      runtime_deps = [          ":org_apache_directory_server_apacheds_kerberos_codec",
+      runtime_deps = [
+          ":org_apache_directory_server_apacheds_kerberos_codec",
           ":org_apache_directory_server_apacheds_core_shared",
       ],
   )
@@ -2435,32 +2397,31 @@ def generated_java_libraries():
       name = "org_codehaus_jackson_jackson_mapper_asl",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_jackson_jackson_mapper_asl//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_container_arquillian_container_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_container_arquillian_container_spi//jar"],
-      runtime_deps = [          ":org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_api_base",
+      runtime_deps = [
+          ":org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_api_base",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_continuation",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_continuation//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_jmx",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_jmx//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_resteasy_resteasy_jackson_provider",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_resteasy_resteasy_jackson_provider//jar"],
-      runtime_deps = [          ":org_codehaus_jackson_jackson_core_asl",
+      runtime_deps = [
+          ":org_codehaus_jackson_jackson_core_asl",
           ":org_codehaus_jackson_jackson_mapper_asl",
           ":org_codehaus_jackson_jackson_jaxrs",
           ":org_codehaus_jackson_jackson_xc",
@@ -2470,7 +2431,8 @@ def generated_java_libraries():
       name = "org_apache_karaf_org_apache_karaf_main",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_org_apache_karaf_main//jar"],
-      runtime_deps = [          ":org_apache_karaf_org_apache_karaf_util",
+      runtime_deps = [
+          ":org_apache_karaf_org_apache_karaf_util",
           ":net_java_dev_jna_jna",
           ":net_java_dev_jna_jna_platform",
       ],
@@ -2479,69 +2441,64 @@ def generated_java_libraries():
       name = "io_netty_netty_codec",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_codec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_logging_jboss_logging",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_logging_jboss_logging//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_features_org_apache_karaf_features_extension",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_features_org_apache_karaf_features_extension//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "com_sun_xml_bind_jaxb_jxc",
       visibility = ["//visibility:public"],
       exports = ["@com_sun_xml_bind_jaxb_jxc//jar"],
-      runtime_deps = [          ":com_sun_xml_bind_jaxb_xjc",
+      runtime_deps = [
+          ":com_sun_xml_bind_jaxb_xjc",
       ],
   )
   native.java_library(
       name = "org_apache_sshd_sshd_core",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_sshd_sshd_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ow2_asm_asm_commons",
       visibility = ["//visibility:public"],
       exports = ["@org_ow2_asm_asm_commons//jar"],
-      runtime_deps = [          ":org_ow2_asm_asm_tree",
+      runtime_deps = [
+          ":org_ow2_asm_asm_tree",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_xdbm_partition",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_xdbm_partition//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "xalan_serializer",
       visibility = ["//visibility:public"],
       exports = ["@xalan_serializer//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_jndi",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_jndi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_authn",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_authn//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam_container_remote",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_exam_pax_exam_container_remote//jar"],
-      runtime_deps = [          ":org_ops4j_pax_exam_pax_exam_container_rbc_client",
+      runtime_deps = [
+          ":org_ops4j_pax_exam_pax_exam_container_rbc_client",
           ":org_ops4j_pax_swissbox_pax_swissbox_core",
           ":org_ops4j_base_ops4j_base_net",
       ],
@@ -2550,7 +2507,8 @@ def generated_java_libraries():
       name = "org_apache_hadoop_hadoop_minikdc",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_hadoop_hadoop_minikdc//jar"],
-      runtime_deps = [          ":org_apache_directory_server_apacheds_interceptor_kerberos",
+      runtime_deps = [
+          ":org_apache_directory_server_apacheds_interceptor_kerberos",
           ":org_apache_directory_server_apacheds_ldif_partition",
           ":org_apache_directory_server_apacheds_mavibot_partition",
           ":org_apache_directory_api_api_all",
@@ -2562,7 +2520,8 @@ def generated_java_libraries():
       name = "org_apache_maven_maven_plugin_api",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_plugin_api//jar"],
-      runtime_deps = [          ":org_apache_maven_maven_model",
+      runtime_deps = [
+          ":org_apache_maven_maven_model",
           ":org_eclipse_sisu_org_eclipse_sisu_plexus",
       ],
   )
@@ -2570,7 +2529,8 @@ def generated_java_libraries():
       name = "io_hawt_hawtio_core",
       visibility = ["//visibility:public"],
       exports = ["@io_hawt_hawtio_core//jar"],
-      runtime_deps = [          ":io_hawt_hawtio_util",
+      runtime_deps = [
+          ":io_hawt_hawtio_util",
           ":org_slf4j_slf4j_api",
       ],
   )
@@ -2578,74 +2538,66 @@ def generated_java_libraries():
       name = "net_bytebuddy_byte_buddy",
       visibility = ["//visibility:public"],
       exports = ["@net_bytebuddy_byte_buddy//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_jackson_jackson_xc",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_jackson_jackson_xc//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_webapp",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_webapp//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_jetty_servlet",
+      runtime_deps = [
+          ":org_eclipse_jetty_jetty_servlet",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptor_kerberos",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptor_kerberos//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_diagnostic_org_apache_karaf_diagnostic_boot",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_diagnostic_org_apache_karaf_diagnostic_boot//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_httpcomponents_httpcore",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_httpcomponents_httpcore//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_objenesis_objenesis",
       visibility = ["//visibility:public"],
       exports = ["@org_objenesis_objenesis//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_geronimo_specs_geronimo_jms_1_1_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_geronimo_specs_geronimo_jms_1_1_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_admin",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_admin//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_core_avl",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_core_avl//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_i18n",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_i18n//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_container_arquillian_container_impl_base",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_container_arquillian_container_impl_base//jar"],
-      runtime_deps = [          ":org_jboss_arquillian_config_arquillian_config_api",
+      runtime_deps = [
+          ":org_jboss_arquillian_config_arquillian_config_api",
           ":org_jboss_arquillian_config_arquillian_config_impl_base",
           ":org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_spi",
       ],
@@ -2654,56 +2606,51 @@ def generated_java_libraries():
       name = "org_ops4j_base_ops4j_base_io",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_io//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_tcnative_boringssl_static",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_tcnative_boringssl_static//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_postgresql_postgresql",
       visibility = ["//visibility:public"],
       exports = ["@org_postgresql_postgresql//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_extras_trigger",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_extras_trigger//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_woodstox_woodstox_core_asl",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_woodstox_woodstox_core_asl//jar"],
-      runtime_deps = [          ":org_codehaus_woodstox_stax2_api",
+      runtime_deps = [
+          ":org_codehaus_woodstox_stax2_api",
       ],
   )
   native.java_library(
       name = "org_jboss_marshalling_jboss_marshalling",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_marshalling_jboss_marshalling//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_jdbm_apacheds_jdbm2",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_jdbm_apacheds_jdbm2//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "net_bytebuddy_byte_buddy_agent",
       visibility = ["//visibility:public"],
       exports = ["@net_bytebuddy_byte_buddy_agent//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_mockito_mockito_core",
       visibility = ["//visibility:public"],
       exports = ["@org_mockito_mockito_core//jar"],
-      runtime_deps = [          ":net_bytebuddy_byte_buddy",
+      runtime_deps = [
+          ":net_bytebuddy_byte_buddy",
           ":net_bytebuddy_byte_buddy_agent",
           ":org_objenesis_objenesis",
       ],
@@ -2712,7 +2659,8 @@ def generated_java_libraries():
       name = "javax_enterprise_cdi_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_enterprise_cdi_api//jar"],
-      runtime_deps = [          ":javax_el_javax_el_api",
+      runtime_deps = [
+          ":javax_el_javax_el_api",
           ":javax_interceptor_javax_interceptor_api",
       ],
   )
@@ -2720,55 +2668,48 @@ def generated_java_libraries():
       name = "org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_api_base",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_api_base//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ow2_asm_asm",
       visibility = ["//visibility:public"],
       exports = ["@org_ow2_asm_asm//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_orbit_javax_security_auth_message",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_orbit_javax_security_auth_message//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_server",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_server//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_xml_bind_jaxb_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_xml_bind_jaxb_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "log4j_log4j",
       visibility = ["//visibility:public"],
       exports = ["@log4j_log4j//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_derby_derby",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_derby_derby//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_qpid_proton_j",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_qpid_proton_j//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam_container_karaf",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_exam_pax_exam_container_karaf//jar"],
-      runtime_deps = [          ":org_ops4j_pax_exam_pax_exam",
+      runtime_deps = [
+          ":org_ops4j_pax_exam_pax_exam",
           ":org_ops4j_pax_exam_pax_exam_container_remote",
           ":org_apache_commons_commons_compress",
           ":org_ops4j_pax_swissbox_pax_swissbox_framework",
@@ -2779,180 +2720,163 @@ def generated_java_libraries():
       name = "io_netty_netty_common",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_common//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_ldif_partition",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_ldif_partition//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_springframework_spring_tx",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_tx//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_slf4j_slf4j_log4j12",
       visibility = ["//visibility:public"],
       exports = ["@org_slf4j_slf4j_log4j12//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_woodstox_stax2_api",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_woodstox_stax2_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_shrinkwrap_descriptors_shrinkwrap_descriptors_spi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_fusesource_hawtdispatch_hawtdispatch_transport",
       visibility = ["//visibility:public"],
       exports = ["@org_fusesource_hawtdispatch_hawtdispatch_transport//jar"],
-      runtime_deps = [          ":org_fusesource_hawtdispatch_hawtdispatch",
+      runtime_deps = [
+          ":org_fusesource_hawtdispatch_hawtdispatch",
       ],
   )
   native.java_library(
       name = "org_apache_karaf_jaas_org_apache_karaf_jaas_boot",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_jaas_org_apache_karaf_jaas_boot//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_plexus_plexus_utils",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_plexus_plexus_utils//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_tomcat_tomcat_servlet_api",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_tomcat_tomcat_servlet_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_maven_maven_artifact",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_artifact//jar"],
-      runtime_deps = [          ":org_codehaus_plexus_plexus_utils",
+      runtime_deps = [
+          ":org_codehaus_plexus_plexus_utils",
       ],
   )
   native.java_library(
       name = "commons_collections_commons_collections",
       visibility = ["//visibility:public"],
       exports = ["@commons_collections_commons_collections//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_servlets",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_servlets//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_jetty_continuation",
+      runtime_deps = [
+          ":org_eclipse_jetty_jetty_continuation",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_trigger",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_trigger//jar"],
-      runtime_deps = [          ":org_apache_directory_api_api_ldap_extras_trigger",
+      runtime_deps = [
+          ":org_apache_directory_api_api_ldap_extras_trigger",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_normalization",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_normalization//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_osgi_org_osgi_core",
       visibility = ["//visibility:public"],
       exports = ["@org_osgi_org_osgi_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_schema_data",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_schema_data//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_logmanager_jboss_logmanager",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_logmanager_jboss_logmanager//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_referral",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_referral//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_xml_bind_jsr173_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_xml_bind_jsr173_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_operational",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_operational//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_transport_native_epoll_linux_x86_64",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_transport_native_epoll_linux_x86_64//jar"],
-      runtime_deps = [          ":io_netty_netty_transport_native_unix_common",
+      runtime_deps = [
+          ":io_netty_netty_transport_native_unix_common",
       ],
   )
   native.java_library(
       name = "io_netty_netty_codec_http",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_codec_http//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_hawt_hawtio_git",
       visibility = ["//visibility:public"],
       exports = ["@io_hawt_hawtio_git//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_commons_commons_lang3",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_commons_commons_lang3//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_base_ops4j_base_exec",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_exec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_collective",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_collective//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_paho_org_eclipse_paho_client_mqttv3",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_paho_org_eclipse_paho_client_mqttv3//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_qpid_qpid_jms_client",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_qpid_qpid_jms_client//jar"],
-      runtime_deps = [          ":org_slf4j_slf4j_api",
+      runtime_deps = [
+          ":org_slf4j_slf4j_api",
           ":org_apache_qpid_proton_j",
       ],
   )
@@ -2960,43 +2884,38 @@ def generated_java_libraries():
       name = "org_jgroups_jgroups",
       visibility = ["//visibility:public"],
       exports = ["@org_jgroups_jgroups//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_container_arquillian_container_test_api",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_container_arquillian_container_test_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_url_pax_url_aether_support",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_url_pax_url_aether_support//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_testenricher_arquillian_testenricher_cdi",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_testenricher_arquillian_testenricher_cdi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_journal",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_journal//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_el_javax_el_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_el_javax_el_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_swissbox_pax_swissbox_framework",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_swissbox_pax_swissbox_framework//jar"],
-      runtime_deps = [          ":org_ops4j_pax_swissbox_pax_swissbox_tracker",
+      runtime_deps = [
+          ":org_ops4j_pax_swissbox_pax_swissbox_tracker",
           ":org_ops4j_base_ops4j_base_exec",
           ":org_ops4j_base_ops4j_base_io",
           ":org_ops4j_base_ops4j_base_monitors",
@@ -3006,31 +2925,28 @@ def generated_java_libraries():
       name = "org_jboss_slf4j_slf4j_jboss_logmanager",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_slf4j_slf4j_jboss_logmanager//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_servlet_javax_servlet_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_servlet_javax_servlet_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_extras_util",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_extras_util//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_plexus_plexus_component_annotations",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_plexus_plexus_component_annotations//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_maven_maven_artifact_manager",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_artifact_manager//jar"],
-      runtime_deps = [          ":org_apache_maven_maven_repository_metadata",
+      runtime_deps = [
+          ":org_apache_maven_maven_repository_metadata",
           ":org_apache_maven_wagon_wagon_provider_api",
       ],
   )
@@ -3038,40 +2954,42 @@ def generated_java_libraries():
       name = "org_apache_geronimo_specs_geronimo_jaxrs_2_0_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_geronimo_specs_geronimo_jaxrs_2_0_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_http2_http2_common",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_http2_http2_common//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_http2_http2_hpack",
+      runtime_deps = [
+          ":org_eclipse_jetty_http2_http2_hpack",
       ],
   )
   native.java_library(
       name = "org_jboss_logging_jboss_logging_annotations",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_logging_jboss_logging_annotations//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_codec_standalone",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_codec_standalone//jar"],
-      runtime_deps = [          ":org_apache_directory_api_api_ldap_net_mina",
+      runtime_deps = [
+          ":org_apache_directory_api_api_ldap_net_mina",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_jdbm_partition",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_jdbm_partition//jar"],
-      runtime_deps = [          ":org_apache_directory_server_apacheds_core_avl",
+      runtime_deps = [
+          ":org_apache_directory_server_apacheds_core_avl",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_core_api",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_core_api//jar"],
-      runtime_deps = [          ":commons_lang_commons_lang",
+      runtime_deps = [
+          ":commons_lang_commons_lang",
           ":org_apache_directory_server_apacheds_core_constants",
           ":org_apache_directory_api_api_i18n",
           ":org_apache_directory_api_api_asn1_api",
@@ -3085,7 +3003,8 @@ def generated_java_libraries():
       name = "org_eclipse_sisu_org_eclipse_sisu_plexus",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_sisu_org_eclipse_sisu_plexus//jar"],
-      runtime_deps = [          ":javax_enterprise_cdi_api",
+      runtime_deps = [
+          ":javax_enterprise_cdi_api",
           ":org_eclipse_sisu_org_eclipse_sisu_inject",
           ":org_codehaus_plexus_plexus_component_annotations",
           ":org_codehaus_plexus_plexus_classworlds",
@@ -3095,43 +3014,38 @@ def generated_java_libraries():
       name = "org_jboss_resteasy_resteasy_jaxb_provider",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_resteasy_resteasy_jaxb_provider//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "commons_io_commons_io",
       visibility = ["//visibility:public"],
       exports = ["@commons_io_commons_io//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_base_ops4j_base_net",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_net//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_shrinkwrap_shrinkwrap_api",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_shrinkwrap_shrinkwrap_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_schema",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_schema//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_maven_maven_plugin_registry",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_plugin_registry//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_org_apache_karaf_client",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_org_apache_karaf_client//jar"],
-      runtime_deps = [          ":org_apache_sshd_sshd_core",
+      runtime_deps = [
+          ":org_apache_sshd_sshd_core",
           ":org_slf4j_slf4j_api",
       ],
   )
@@ -3139,44 +3053,41 @@ def generated_java_libraries():
       name = "io_netty_netty_buffer",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_buffer//jar"],
-      runtime_deps = [          ":io_netty_netty_common",
+      runtime_deps = [
+          ":io_netty_netty_common",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_websocket_javax_websocket_client_impl",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_websocket_javax_websocket_client_impl//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_weld_se_weld_se",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_weld_se_weld_se//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_container_arquillian_container_test_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_container_arquillian_container_test_spi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_alpn_client",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_alpn_client//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_shrinkwrap_shrinkwrap_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_shrinkwrap_shrinkwrap_spi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_httpcomponents_httpclient",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_httpcomponents_httpclient//jar"],
-      runtime_deps = [          ":commons_logging_commons_logging",
+      runtime_deps = [
+          ":commons_logging_commons_logging",
           ":commons_codec_commons_codec",
       ],
   )
@@ -3184,50 +3095,46 @@ def generated_java_libraries():
       name = "org_eclipse_jetty_jetty_servlet",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_servlet//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "commons_pool_commons_pool",
       visibility = ["//visibility:public"],
       exports = ["@commons_pool_commons_pool//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_websocket_javax_websocket_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_websocket_javax_websocket_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_org_apache_karaf_util",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_org_apache_karaf_util//jar"],
-      runtime_deps = [          ":org_apache_felix_org_apache_felix_utils",
+      runtime_deps = [
+          ":org_apache_felix_org_apache_felix_utils",
       ],
   )
   native.java_library(
       name = "javax_annotation_javax_annotation_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_annotation_javax_annotation_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_sisu_org_eclipse_sisu_inject",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_sisu_org_eclipse_sisu_inject//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_slf4j_slf4j_api",
       visibility = ["//visibility:public"],
       exports = ["@org_slf4j_slf4j_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_protocol_ldap",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_protocol_ldap//jar"],
-      runtime_deps = [          ":org_apache_directory_jdbm_apacheds_jdbm1",
+      runtime_deps = [
+          ":org_apache_directory_jdbm_apacheds_jdbm1",
           ":org_apache_directory_api_api_asn1_ber",
           ":org_apache_directory_api_api_ldap_extras_codec_api",
           ":org_apache_directory_api_api_ldap_extras_codec",
@@ -3239,113 +3146,105 @@ def generated_java_libraries():
       name = "org_springframework_spring_beans",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_beans//jar"],
-      runtime_deps = [          ":org_springframework_spring_core",
+      runtime_deps = [
+          ":org_springframework_spring_core",
       ],
   )
   native.java_library(
       name = "org_apache_commons_commons_configuration2",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_commons_commons_configuration2//jar"],
-      runtime_deps = [          ":commons_logging_commons_logging",
+      runtime_deps = [
+          ":commons_logging_commons_logging",
       ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_util",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_util//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_mina_mina_core",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_mina_mina_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "com_sun_istack_istack_commons_runtime",
       visibility = ["//visibility:public"],
       exports = ["@com_sun_istack_istack_commons_runtime//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "net_sf_ehcache_ehcache_core",
       visibility = ["//visibility:public"],
       exports = ["@net_sf_ehcache_ehcache_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_fusesource_hawtdispatch_hawtdispatch",
       visibility = ["//visibility:public"],
       exports = ["@org_fusesource_hawtdispatch_hawtdispatch//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_net_mina",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_net_mina//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_maven_maven_settings",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_settings//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_transport_native_kqueue_osx_x86_64",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_transport_native_kqueue_osx_x86_64//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_http2_http2_hpack",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_http2_http2_hpack//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_osgi_osgi_cmpn",
       visibility = ["//visibility:public"],
       exports = ["@org_osgi_osgi_cmpn//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_felix_org_apache_felix_framework",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_felix_org_apache_felix_framework//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_handler",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_handler//jar"],
-      runtime_deps = [          ":io_netty_netty_codec",
+      runtime_deps = [
+          ":io_netty_netty_codec",
       ],
   )
   native.java_library(
       name = "io_netty_netty_resolver",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_resolver//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_orbit_javax_mail_glassfish",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_orbit_javax_mail_glassfish//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_orbit_javax_activation",
+      runtime_deps = [
+          ":org_eclipse_jetty_orbit_javax_activation",
       ],
   )
   native.java_library(
       name = "net_java_dev_jna_jna",
       visibility = ["//visibility:public"],
       exports = ["@net_java_dev_jna_jna//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "com_sun_xml_bind_jaxb_impl",
       visibility = ["//visibility:public"],
       exports = ["@com_sun_xml_bind_jaxb_impl//jar"],
-      runtime_deps = [          ":com_sun_xml_bind_jaxb_core",
+      runtime_deps = [
+          ":com_sun_xml_bind_jaxb_core",
           ":com_sun_xml_fastinfoset_FastInfoset",
       ],
   )
@@ -3353,7 +3252,8 @@ def generated_java_libraries():
       name = "org_eclipse_jetty_jetty_jaspi",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_jaspi//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_jetty_security",
+      runtime_deps = [
+          ":org_eclipse_jetty_jetty_security",
           ":org_eclipse_jetty_orbit_javax_security_auth_message",
       ],
   )
@@ -3361,76 +3261,72 @@ def generated_java_libraries():
       name = "org_eclipse_aether_aether_api",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_aether_aether_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_base_ops4j_base_monitors",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_monitors//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_core_arquillian_core_impl_base",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_core_arquillian_core_impl_base//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_test_arquillian_test_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_test_arquillian_test_spi//jar"],
-      runtime_deps = [          ":org_jboss_arquillian_core_arquillian_core_spi",
+      runtime_deps = [
+          ":org_jboss_arquillian_core_arquillian_core_spi",
       ],
   )
   native.java_library(
       name = "org_jboss_arquillian_core_arquillian_core_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_core_arquillian_core_spi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_http",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_http//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_marshalling_jboss_marshalling_river",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_marshalling_jboss_marshalling_river//jar"],
-      runtime_deps = [          ":org_jboss_marshalling_jboss_marshalling",
+      runtime_deps = [
+          ":org_jboss_marshalling_jboss_marshalling",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_io",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_io//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_websocket_websocket_api",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_websocket_websocket_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_model",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_model//jar"],
-      runtime_deps = [          ":antlr_antlr",
+      runtime_deps = [
+          ":antlr_antlr",
       ],
   )
   native.java_library(
       name = "org_apache_maven_maven_model",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_model//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_container_arquillian_weld_embedded",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_container_arquillian_weld_embedded//jar"],
-      runtime_deps = [          ":org_jboss_arquillian_container_arquillian_container_spi",
+      runtime_deps = [
+          ":org_jboss_arquillian_container_arquillian_container_spi",
           ":org_jboss_arquillian_testenricher_arquillian_testenricher_cdi",
       ],
   )
@@ -3438,14 +3334,16 @@ def generated_java_libraries():
       name = "org_ops4j_pax_tinybundles_tinybundles",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_tinybundles_tinybundles//jar"],
-      runtime_deps = [          ":biz_aQute_bnd_bndlib",
+      runtime_deps = [
+          ":biz_aQute_bnd_bndlib",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_core_annotations",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_core_annotations//jar"],
-      runtime_deps = [          ":org_apache_directory_server_apacheds_core",
+      runtime_deps = [
+          ":org_apache_directory_server_apacheds_core",
           ":org_apache_directory_server_apacheds_ldif_partition",
           ":org_apache_directory_server_apacheds_jdbm_partition",
           ":org_apache_directory_server_apacheds_xdbm_partition",
@@ -3459,39 +3357,39 @@ def generated_java_libraries():
       name = "org_apache_directory_server_apacheds_core_constants",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_core_constants//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_test_arquillian_test_api",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_test_arquillian_test_api//jar"],
-      runtime_deps = [          ":org_jboss_arquillian_core_arquillian_core_api",
+      runtime_deps = [
+          ":org_jboss_arquillian_core_arquillian_core_api",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_rewrite",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_rewrite//jar"],
-      runtime_deps = [          ":org_eclipse_jetty_jetty_server",
+      runtime_deps = [
+          ":org_eclipse_jetty_jetty_server",
       ],
   )
   native.java_library(
       name = "org_jboss_arquillian_core_arquillian_core_api",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_core_arquillian_core_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_hdrhistogram_HdrHistogram",
       visibility = ["//visibility:public"],
       exports = ["@org_hdrhistogram_HdrHistogram//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam_junit4",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_exam_pax_exam_junit4//jar"],
-      runtime_deps = [          ":org_ops4j_pax_exam_pax_exam_spi",
+      runtime_deps = [
+          ":org_ops4j_pax_exam_pax_exam_spi",
           ":org_ops4j_base_ops4j_base_lang",
       ],
   )
@@ -3499,52 +3397,52 @@ def generated_java_libraries():
       name = "org_codehaus_jackson_jackson_core_asl",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_jackson_jackson_core_asl//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "xalan_xalan",
       visibility = ["//visibility:public"],
       exports = ["@xalan_xalan//jar"],
-      runtime_deps = [          ":xalan_serializer",
+      runtime_deps = [
+          ":xalan_serializer",
       ],
   )
   native.java_library(
       name = "org_jboss_arquillian_junit_arquillian_junit_core",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_junit_arquillian_junit_core//jar"],
-      runtime_deps = [          ":org_jboss_arquillian_test_arquillian_test_spi",
+      runtime_deps = [
+          ":org_jboss_arquillian_test_arquillian_test_spi",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_orbit_javax_activation",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_orbit_javax_activation//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_hamcrest_hamcrest_core",
       visibility = ["//visibility:public"],
       exports = ["@org_hamcrest_hamcrest_core//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_karaf_org_apache_karaf_exception",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_karaf_org_apache_karaf_exception//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_all",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_all//jar"],
-      runtime_deps = [          ":commons_pool_commons_pool",
+      runtime_deps = [
+          ":commons_pool_commons_pool",
       ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_test_framework",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_test_framework//jar"],
-      runtime_deps = [          ":org_apache_directory_server_apacheds_core_api",
+      runtime_deps = [
+          ":org_apache_directory_server_apacheds_core_api",
           ":org_apache_directory_server_apacheds_i18n",
           ":org_apache_directory_server_apacheds_protocol_kerberos",
           ":org_apache_directory_server_apacheds_protocol_ldap",
@@ -3558,44 +3456,41 @@ def generated_java_libraries():
       name = "org_apache_directory_api_api_asn1_api",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_asn1_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "commons_codec_commons_codec",
       visibility = ["//visibility:public"],
       exports = ["@commons_codec_commons_codec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_springframework_spring_messaging",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_messaging//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam_container_rbc_client",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_exam_pax_exam_container_rbc_client//jar"],
-      runtime_deps = [          ":org_ops4j_pax_exam_pax_exam_container_rbc",
+      runtime_deps = [
+          ":org_ops4j_pax_exam_pax_exam_container_rbc",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_xml",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_xml//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_codehaus_groovy_groovy_all",
       visibility = ["//visibility:public"],
       exports = ["@org_codehaus_groovy_groovy_all//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "commons_beanutils_commons_beanutils",
       visibility = ["//visibility:public"],
       exports = ["@commons_beanutils_commons_beanutils//jar"],
-      runtime_deps = [          ":commons_logging_commons_logging",
+      runtime_deps = [
+          ":commons_logging_commons_logging",
           ":commons_collections_commons_collections",
       ],
   )
@@ -3603,7 +3498,8 @@ def generated_java_libraries():
       name = "org_apache_directory_server_apacheds_core",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_core//jar"],
-      runtime_deps = [          ":org_apache_directory_server_apacheds_interceptors_admin",
+      runtime_deps = [
+          ":org_apache_directory_server_apacheds_interceptors_admin",
           ":org_apache_directory_server_apacheds_interceptors_authn",
           ":org_apache_directory_server_apacheds_interceptors_authz",
           ":org_apache_directory_server_apacheds_interceptors_changelog",
@@ -3623,43 +3519,38 @@ def generated_java_libraries():
       name = "org_apache_maven_wagon_wagon_provider_api",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_wagon_wagon_provider_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_springframework_spring_expression",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_expression//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "io_netty_netty_codec_mqtt",
       visibility = ["//visibility:public"],
       exports = ["@io_netty_netty_codec_mqtt//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_websocket_websocket_server",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_websocket_websocket_server//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_extras_codec_api",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_extras_codec_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_arquillian_config_arquillian_config_impl_base",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_config_arquillian_config_impl_base//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_exam_pax_exam//jar"],
-      runtime_deps = [          ":org_ops4j_base_ops4j_base_store",
+      runtime_deps = [
+          ":org_ops4j_base_ops4j_base_store",
           ":org_ops4j_base_ops4j_base_util_property",
       ],
   )
@@ -3667,64 +3558,62 @@ def generated_java_libraries():
       name = "org_ops4j_pax_swissbox_pax_swissbox_lifecycle",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_swissbox_pax_swissbox_lifecycle//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_felix_org_apache_felix_fileinstall",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_felix_org_apache_felix_fileinstall//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_quickstart",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_quickstart//jar"],
-      runtime_deps = [          ":javax_transaction_javax_transaction_api",
+      runtime_deps = [
+          ":javax_transaction_javax_transaction_api",
       ],
   )
   native.java_library(
       name = "antlr_antlr",
       visibility = ["//visibility:public"],
       exports = ["@antlr_antlr//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_pax_swissbox_pax_swissbox_core",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_pax_swissbox_pax_swissbox_core//jar"],
-      runtime_deps = [          ":org_ops4j_pax_swissbox_pax_swissbox_lifecycle",
+      runtime_deps = [
+          ":org_ops4j_pax_swissbox_pax_swissbox_lifecycle",
       ],
   )
   native.java_library(
       name = "org_jboss_arquillian_test_arquillian_test_impl_base",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_test_arquillian_test_impl_base//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_commons_commons_compress",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_commons_commons_compress//jar"],
-      runtime_deps = [          ":org_tukaani_xz",
+      runtime_deps = [
+          ":org_tukaani_xz",
       ],
   )
   native.java_library(
       name = "org_eclipse_jetty_jetty_plus",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_jetty_plus//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_eclipse_jetty_http2_http2_client",
       visibility = ["//visibility:public"],
       exports = ["@org_eclipse_jetty_http2_http2_client//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_jboss_resteasy_resteasy_jaxrs",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_resteasy_resteasy_jaxrs//jar"],
-      runtime_deps = [          ":org_jboss_spec_javax_annotation_jboss_annotations_api_1_2_spec",
+      runtime_deps = [
+          ":org_jboss_spec_javax_annotation_jboss_annotations_api_1_2_spec",
           ":javax_activation_activation",
           ":commons_io_commons_io",
           ":net_jcip_jcip_annotations",
@@ -3734,38 +3623,36 @@ def generated_java_libraries():
       name = "org_ow2_asm_asm_tree",
       visibility = ["//visibility:public"],
       exports = ["@org_ow2_asm_asm_tree//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_interceptors_authz",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_interceptors_authz//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_server_apacheds_kerberos_codec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_kerberos_codec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_base_ops4j_base_spi",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_spi//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "com_sun_xml_bind_jaxb_core",
       visibility = ["//visibility:public"],
       exports = ["@com_sun_xml_bind_jaxb_core//jar"],
-      runtime_deps = [          ":com_sun_istack_istack_commons_runtime",
+      runtime_deps = [
+          ":com_sun_istack_istack_commons_runtime",
       ],
   )
   native.java_library(
       name = "io_airlift_airline",
       visibility = ["//visibility:public"],
       exports = ["@io_airlift_airline//jar"],
-      runtime_deps = [          ":com_google_code_findbugs_annotations",
+      runtime_deps = [
+          ":com_google_code_findbugs_annotations",
           ":com_google_guava_guava",
       ],
   )
@@ -3773,56 +3660,51 @@ def generated_java_libraries():
       name = "org_apache_directory_server_apacheds_mavibot_partition",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_server_apacheds_mavibot_partition//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "net_java_dev_jna_jna_platform",
       visibility = ["//visibility:public"],
       exports = ["@net_java_dev_jna_jna_platform//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_ops4j_base_ops4j_base_lang",
       visibility = ["//visibility:public"],
       exports = ["@org_ops4j_base_ops4j_base_lang//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_geronimo_specs_geronimo_jms_2_0_spec",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_geronimo_specs_geronimo_jms_2_0_spec//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_servlet_servlet_api",
       visibility = ["//visibility:public"],
       exports = ["@javax_servlet_servlet_api//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_fusesource_mqtt_client_mqtt_client",
       visibility = ["//visibility:public"],
       exports = ["@org_fusesource_mqtt_client_mqtt_client//jar"],
-      runtime_deps = [          ":org_fusesource_hawtdispatch_hawtdispatch_transport",
+      runtime_deps = [
+          ":org_fusesource_hawtdispatch_hawtdispatch_transport",
       ],
   )
   native.java_library(
       name = "biz_aQute_bnd_bndlib",
       visibility = ["//visibility:public"],
       exports = ["@biz_aQute_bnd_bndlib//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "classworlds_classworlds",
       visibility = ["//visibility:public"],
       exports = ["@classworlds_classworlds//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_springframework_spring_context",
       visibility = ["//visibility:public"],
       exports = ["@org_springframework_spring_context//jar"],
-      runtime_deps = [          ":org_springframework_spring_aop",
+      runtime_deps = [
+          ":org_springframework_spring_aop",
           ":org_springframework_spring_core",
           ":org_springframework_spring_expression",
       ],
@@ -3831,7 +3713,8 @@ def generated_java_libraries():
       name = "org_apache_maven_maven_project",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_project//jar"],
-      runtime_deps = [          ":org_apache_maven_maven_settings",
+      runtime_deps = [
+          ":org_apache_maven_maven_settings",
           ":org_apache_maven_maven_profile",
           ":org_apache_maven_maven_artifact_manager",
           ":org_apache_maven_maven_plugin_registry",
@@ -3842,23 +3725,19 @@ def generated_java_libraries():
       name = "org_jboss_jdeparser_jdeparser",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_jdeparser_jdeparser//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_directory_api_api_ldap_extras_sp",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_directory_api_api_ldap_extras_sp//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "org_apache_maven_maven_profile",
       visibility = ["//visibility:public"],
       exports = ["@org_apache_maven_maven_profile//jar"],
-      runtime_deps = [      ],
   )
   native.java_library(
       name = "javax_activation_activation",
       visibility = ["//visibility:public"],
       exports = ["@javax_activation_activation//jar"],
-      runtime_deps = [      ],
   )
