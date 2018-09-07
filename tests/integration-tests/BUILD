@@ -299,6 +299,8 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/NettySymmetricClusterWithDiscoveryTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/SymmetricClusterWithDiscoveryTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/TwoWayTwoNodeClusterWithDiscoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/BackupSyncLargeMessageTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/ReplicatedMultipleServerFailoverExtraBackupsTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/DiscoveryClusterWithBackupFailoverTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/FailoverTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/LargeMessageFailoverTest",
