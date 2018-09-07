@@ -290,6 +290,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/mqtt/imported/PahoMQTTTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/xa/XaTimeoutTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/IncompatibleVersionTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/client/TemporaryQueueTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/LargeMessageRedistributionTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/ProducerFlowControlTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/NettyProducerFlowControlTest",
