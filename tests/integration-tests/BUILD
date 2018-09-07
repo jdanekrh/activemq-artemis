@@ -285,6 +285,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/ClusteredMessageCounterTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/management/ManagementWithPagingServerTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/JMSMessageConsumerTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/AmqpBrokerRequestedHearbeatsTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/ConcurrentCreateDeleteProduceTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/mqtt/imported/PahoMQTTTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/xa/XaTimeoutTest",
