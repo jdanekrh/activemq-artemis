@@ -375,9 +375,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_transport",
-      artifact = "io.netty:netty-transport:jar:4.1.24.Final",
+      artifact = "io.netty:netty-transport:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "d37292c94d3a4cba48d9b6cfb6e8e55282035d0d",
+      sha1 = "d2ef28f49d726737f0ffe84bf66529b3bf6e0c0d",
   )
   native.maven_jar(
       name = "org_apache_directory_server_apacheds_interceptors_subtree",
@@ -423,9 +423,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_all",
-      artifact = "io.netty:netty-all:jar:4.1.24.Final",
+      artifact = "io.netty:netty-all:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "391b1248b5c9776b5abdd882930c6ffcd71231e6",
+      sha1 = "33ae3d109e16b8c591bdf343f6b52ccd0ef75905",
   )
   native.maven_jar(
       name = "org_tukaani_xz",
@@ -513,9 +513,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_transport_native_unix_common",
-      artifact = "io.netty:netty-transport-native-unix-common:jar:4.1.24.Final",
+      artifact = "io.netty:netty-transport-native-unix-common:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "16a46eaa33853af1fdec5682fcebc3ca5f5d196b",
+      sha1 = "3412ace68f9ee298debc54e31c8b81cd88198854",
   )
   native.maven_jar(
       name = "org_ops4j_pax_exam_pax_exam_container_rbc",
@@ -579,9 +579,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_codec",
-      artifact = "io.netty:netty-codec:jar:4.1.24.Final",
+      artifact = "io.netty:netty-codec:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "290857e5103956bbda11836e33245f2439226b77",
+      sha1 = "a38361d893900947524f8a9da980555950e73d6a",
   )
   native.maven_jar(
       name = "org_jboss_logging_jboss_logging",
@@ -741,9 +741,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_tcnative_boringssl_static",
-      artifact = "io.netty:netty-tcnative-boringssl-static:jar:2.0.7.Final",
+      artifact = "io.netty:netty-tcnative-boringssl-static:jar:2.0.12.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "a8ec0f0ee612fa89c709bdd3881c3f79fa00431d",
+      sha1 = "b884be1450a7fd0854b98743836b8ccb0dfd75a4",
   )
   native.maven_jar(
       name = "org_postgresql_postgresql",
@@ -837,9 +837,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_apache_qpid_proton_j",
-      artifact = "org.apache.qpid:proton-j:jar:0.27.3",
+      artifact = "org.apache.qpid:proton-j:jar:0.29.0",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "eb7b79ff23496e7809a8d4485266484f03a0f1a6",
+      sha1 = "bec6b1c5af4a7071986c5346900efeacf2aa1a88",
   )
   native.maven_jar(
       name = "org_ops4j_pax_exam_pax_exam_container_karaf",
@@ -849,9 +849,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_common",
-      artifact = "io.netty:netty-common:jar:4.1.24.Final",
+      artifact = "io.netty:netty-common:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "7eeecd7906543214c3c1c984d275d3c6de10b99d",
+      sha1 = "df69ce8bb9b544a71e7bbee290253cf7c93e6bad",
   )
   native.maven_jar(
       name = "org_apache_directory_server_apacheds_ldif_partition",
@@ -975,15 +975,15 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_transport_native_epoll_linux_x86_64",
-      artifact = "io.netty:netty-transport-native-epoll:jar:linux-x86_64:4.1.24.Final",
+      artifact = "io.netty:netty-transport-native-epoll:jar:linux-x86_64:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "6c2569df1688ea1c6596cef9df8d1a47f8066e4a",
+      sha1 = "e819add4fe1e2f5ffaa8f6989e2a07a73fee9ae5",
   )
   native.maven_jar(
       name = "io_netty_netty_codec_http",
-      artifact = "io.netty:netty-codec-http:jar:4.1.24.Final",
+      artifact = "io.netty:netty-codec-http:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "08f20009953b2c7c3d860cef928007bc01aa58ac",
+      sha1 = "897100c1022c780b0a436b9349e507e8fa9800dc",
   )
   native.maven_jar(
       name = "io_hawt_hawtio_git",
@@ -1017,9 +1017,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_apache_qpid_qpid_jms_client",
-      artifact = "org.apache.qpid:qpid-jms-client:jar:0.33.0",
+      artifact = "org.apache.qpid:qpid-jms-client:jar:0.36.0",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "5420f5018462ea4cc35e6d83470defc42a1a8531",
+      sha1 = "fa59faae4ac7650939b8522768fb6831687ef21f",
   )
   native.maven_jar(
       name = "org_jgroups_jgroups",
@@ -1179,9 +1179,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_buffer",
-      artifact = "io.netty:netty-buffer:jar:4.1.24.Final",
+      artifact = "io.netty:netty-buffer:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "e354bed2e60b568307138e403f55ba241c1c16d2",
+      sha1 = "d6c2d13492778009d33f60e05ed90bcb535d1fd1",
   )
   native.maven_jar(
       name = "org_eclipse_jetty_websocket_javax_websocket_client_impl",
@@ -1323,9 +1323,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_transport_native_kqueue_osx_x86_64",
-      artifact = "io.netty:netty-transport-native-kqueue:jar:osx-x86_64:4.1.24.Final",
+      artifact = "io.netty:netty-transport-native-kqueue:jar:osx-x86_64:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "acdf0603d63bbfbc0c55f625e75e12408cd8395e",
+      sha1 = "64f8c3ba8375fd6a2dbbe4a685ba3e0365d2f28b",
   )
   native.maven_jar(
       name = "org_eclipse_jetty_http2_http2_hpack",
@@ -1347,15 +1347,15 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_handler",
-      artifact = "io.netty:netty-handler:jar:4.1.24.Final",
+      artifact = "io.netty:netty-handler:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "bad56e7da211c5ebe031ae155cb648b1065c7bb6",
+      sha1 = "a035784682da0126bc25f10713dac732b5082a6d",
   )
   native.maven_jar(
       name = "io_netty_netty_resolver",
-      artifact = "io.netty:netty-resolver:jar:4.1.24.Final",
+      artifact = "io.netty:netty-resolver:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "dbc1e5b50d31aed883ea3beeb6489e1977d0687f",
+      sha1 = "f33557dcb31fa20da075ac05e4808115e32ef9b7",
   )
   native.maven_jar(
       name = "org_eclipse_jetty_orbit_javax_mail_glassfish",
@@ -1611,9 +1611,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "io_netty_netty_codec_mqtt",
-      artifact = "io.netty:netty-codec-mqtt:jar:4.1.24.Final",
+      artifact = "io.netty:netty-codec-mqtt:jar:4.1.28.Final",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "c88603a5e64edb561129d382553fb1b193c261f7",
+      sha1 = "e19d59c5e8e60c448711ab07e3d16af2d6c74ea5",
   )
   native.maven_jar(
       name = "org_eclipse_jetty_websocket_websocket_server",
