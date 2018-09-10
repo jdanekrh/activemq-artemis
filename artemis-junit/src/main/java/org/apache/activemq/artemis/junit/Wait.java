@@ -109,7 +109,7 @@ public class Wait {
                                  final long durationMillis,
                                  final long sleepMillis) throws Exception {
 
-      if (durationMillis < sleepMillis) {
+      if (durationMillis > 0 && durationMillis < sleepMillis) {
          throw new IllegalArgumentException("durationMillis should not be less than sleepMillis");
       }
       final long expiry = System.currentTimeMillis() + durationMillis;
