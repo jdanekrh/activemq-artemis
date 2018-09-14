@@ -323,6 +323,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/stomp/v12/StompV12Test",
         "src/test/java/org/apache/activemq/artemis/tests/integration/xa/BasicXaTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/xa/BasicXaRecoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/DuplicateDetectionTest",
     ],
     tags = [
         "block-network",
