@@ -93,5 +93,6 @@ junit_tests(
         "//artemis-core-client",
         "//third_party:io_netty_netty_buffer",
         "//third_party:org_apache_geronimo_specs_geronimo_json_1_0_spec",
+        "//third_party:io_netty_netty_transport",
     ],
 )
