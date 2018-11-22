@@ -837,9 +837,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_apache_qpid_proton_j",
-      artifact = "org.apache.qpid:proton-j:jar:0.29.0",
+      artifact = "org.apache.qpid:proton-j:jar:0.30.0",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "bec6b1c5af4a7071986c5346900efeacf2aa1a88",
+      sha1 = "c9dbb081c2104c2a6422e74f471eddf742914e79",
   )
   native.maven_jar(
       name = "org_ops4j_pax_exam_pax_exam_container_karaf",
@@ -1017,9 +1017,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_apache_qpid_qpid_jms_client",
-      artifact = "org.apache.qpid:qpid-jms-client:jar:0.36.0",
+      artifact = "org.apache.qpid:qpid-jms-client:jar:0.37.0",
       repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "fa59faae4ac7650939b8522768fb6831687ef21f",
+      sha1 = "120d7721607ac69a5e9e02207109386140366faa",
   )
   native.maven_jar(
       name = "org_jgroups_jgroups",
@@ -1488,12 +1488,6 @@ def generated_maven_jars():
       artifact = "org.jboss.arquillian.core:arquillian-core-api:jar:1.1.11.Final",
       repository = "http://repo.apache.maven.org/maven2/",
       sha1 = "c3a8984dbd9b172e04c641db28f8b1a85695f9d4",
-  )
-  native.maven_jar(
-      name = "org_hdrhistogram_HdrHistogram",
-      artifact = "org.hdrhistogram:HdrHistogram:jar:2.1.10",
-      repository = "http://repo.apache.maven.org/maven2/",
-      sha1 = "9e1ac84eed220281841b75e72fb9de5a297fbf04",
   )
   native.maven_jar(
       name = "org_ops4j_pax_exam_pax_exam_junit4",
@@ -3378,11 +3372,6 @@ def generated_java_libraries():
       name = "org_jboss_arquillian_core_arquillian_core_api",
       visibility = ["//visibility:public"],
       exports = ["@org_jboss_arquillian_core_arquillian_core_api//jar"],
-  )
-  native.java_library(
-      name = "org_hdrhistogram_HdrHistogram",
-      visibility = ["//visibility:public"],
-      exports = ["@org_hdrhistogram_HdrHistogram//jar"],
   )
   native.java_library(
       name = "org_ops4j_pax_exam_pax_exam_junit4",
