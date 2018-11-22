@@ -18,7 +18,6 @@ java_library(
         #        #        "//third_party:io_netty_netty_handler",
         #        "//third_party:org_apache_commons_commons_configuration2",
         #        "//third_party:org_apache_commons_commons_lang3",
-        #        "//third_party:org_hdrhistogram_HdrHistogram",
         #        "//third_party:javax_inject_javax_inject",
         #        #        "//third_party:io_netty_netty_codec_http",
         #        #        "//third_party:io_netty_netty_common",

@@ -37,7 +37,6 @@ java_library(
         "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",  # lets not add 1.1
         "//third_party:org_apache_geronimo_specs_geronimo_json_1_0_spec",
         "//third_party:org_apache_qpid_qpid_jms_client",
-        "//third_party:org_hdrhistogram_HdrHistogram",
         "//third_party:org_jboss_logging_jboss_logging",
         "//third_party/ap:org_jboss_logging_jboss_logging_annotations",
     ],
