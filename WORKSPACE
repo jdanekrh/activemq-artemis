@@ -24,6 +24,20 @@ cc_library(
 )
 
 new_local_repository(
+    name = "libaio_redhat",
+    build_file_content = """
+cc_library(
+   name = "lib",
+   srcs = ["lib64/libaio.so"],
+   hdrs = ["include/libaio.h"],
+   includes = ["include"],
+   visibility = ["//visibility:public"],
+)
+    """,
+    path = "/usr",
+)
+
+new_local_repository(
     name = "libaio_nix",
     build_file_content = """
 cc_library(

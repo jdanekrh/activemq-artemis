@@ -24,6 +24,13 @@ config_setting(
     },
 )
 
+config_setting(
+    name = "redhat",
+    values = {
+        "define": "REDHAT=",
+    },
+)
+
 cc_binary(
     name = "libartemis-native-64.so",
     srcs = [
@@ -37,6 +44,7 @@ cc_binary(
         "//:jni_headers",  # workaround for https://github.com/bazelbuild/bazel/issues/5502
     ] + select({
         ":nix": ["@libaio_nix//:lib"],
+        ":redhat": ["@libaio_redhat//:lib"],
         "//conditions:default": ["@libaio//:lib"],
     }),
 )
