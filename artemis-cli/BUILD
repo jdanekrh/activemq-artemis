@@ -47,6 +47,7 @@ load("//third_party:junit.bzl", "junit_tests")
 testlib_srcs = [
     "src/test/java/org/apache/activemq/cli/test/TestActionContext.java",
     "src/test/java/org/apache/activemq/cli/test/CliTestBase.java",
+    "src/test/java/org/apache/activemq/cli/test/StringGenerator.java",
 ]
 
 java_library(
@@ -59,6 +60,10 @@ java_library(
         "//artemis-core-client",
         "//artemis-server",
         "//third_party:junit_junit",
+        "//artemis-jms-client",
+        "//artemis-native",
+        "//artemis-junit",
+        "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
     ],
 )
 
@@ -93,6 +98,7 @@ junit_tests(
         "//artemis-jms-server",
         "//artemis-native",
         "//artemis-server",
+        "//artemis-junit",
         "//third_party:io_airlift_airline",
         "//third_party:org_apache_commons_commons_configuration2",
         "//third_party:org_apache_geronimo_specs_geronimo_jms_2_0_spec",
