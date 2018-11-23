@@ -34,11 +34,16 @@ config_setting(
 cc_binary(
     name = "libartemis-native-64.so",
     srcs = [
+        "@bazel_tools//tools/jdk:jni_header",
+        "@bazel_tools//tools/jdk:jni_md_header-linux",
+
         "src/main/c/exception_helper.h",
         "src/main/c/org_apache_activemq_artemis_jlibaio_LibaioContext.c",
         ":org_apache_activemq_artemis_jlibaio_LibaioContext.h",
     ],
-    includes = ["."],  # For jni headers.
+    includes = [
+        ".",  # org_apache_activemq_artemis_jlibaio_LibaioContext.h
+    ],
     linkshared = 1,
     deps = [
         "//:jni_headers",  # workaround for https://github.com/bazelbuild/bazel/issues/5502

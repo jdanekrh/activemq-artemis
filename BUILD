@@ -2,12 +2,12 @@
 cc_library(
     name = "jni_headers",
     srcs = [
-        "@local_jdk//:jni_header",
-        "@local_jdk//:jni_md_header-linux",
+        "@bazel_tools//tools/jdk:jni_header",
+        "@bazel_tools//tools/jdk:jni_md_header-linux",
     ],
     includes = [
-        "external/local_jdk/include",
-        "external/local_jdk/include/linux",
+        "external/bazel_tools/tools/jdk/include",
+        "external/bazel_tools/tools/jdk/include/linux",
     ],
     linkstatic = 1,
     visibility = [
