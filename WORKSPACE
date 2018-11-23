@@ -28,7 +28,7 @@ new_local_repository(
     build_file_content = """
 cc_library(
    name = "lib",
-   srcs = ["lib64/libaio.so"],
+   srcs = ["lib64/libaio.so.1"],
    hdrs = ["include/libaio.h"],
    includes = ["include"],
    visibility = ["//visibility:public"],
