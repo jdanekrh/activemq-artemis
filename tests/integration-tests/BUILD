@@ -231,6 +231,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/paging/PagingTest",
     ],
     large_tests = [
+        "src/test/java/org/apache/activemq/artemis/tests/integration/amqp/AmqpLargeMessageTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/ReplicatedLargeMessageWithDelayFailoverTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/client/LargeMessageCompressTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/NettyFailoverTest",
@@ -323,6 +324,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/stomp/v12/StompV12Test",
         "src/test/java/org/apache/activemq/artemis/tests/integration/xa/BasicXaTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/xa/BasicXaRecoveryTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/ra/ActiveMQClusteredTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/DuplicateDetectionTest",
     ],
     tags = [
