@@ -1244,6 +1244,12 @@ def generated_maven_jars():
       sha1 = "7cef42cf989762fa8a05a51a79426a2bf84ad14f",
   )
   native.maven_jar(
+      name = "org_eclipse_jetty_toolchain_jetty_schemas",
+      artifact = "org.eclipse.jetty.toolchain:jetty-schemas:jar:4.0.3",
+      repository = "https://jcenter.bintray.com/",
+      sha1 = "409a06afdc9cbc11e5c057e9dd06f65fe6007f72",
+  )
+  native.maven_jar(
       name = "javax_annotation_javax_annotation_api",
       artifact = "javax.annotation:javax.annotation-api:jar:1.2",
       repository = "https://jcenter.bintray.com/",
@@ -3107,6 +3113,11 @@ def generated_java_libraries():
       runtime_deps = [
           ":org_apache_felix_org_apache_felix_utils",
       ],
+  )
+  native.java_library(
+      name = "org_eclipse_jetty_toolchain_jetty_schemas",
+      visibility = ["//visibility:public"],
+      exports = ["@org_eclipse_jetty_toolchain_jetty_schemas//jar"],
   )
   native.java_library(
       name = "javax_annotation_javax_annotation_api",

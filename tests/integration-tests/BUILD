@@ -64,6 +64,8 @@ runtime_deps = [
     "//third_party:org_jboss_resteasy_resteasy_jackson_provider",  # NoMessageBodyWriterFoundFailure: Could not find MessageBodyWriter for response object of type: org.apache.activemq.artemis.rest.test.TransformTest$Order of media type: application/json
     "//third_party:org_jboss_resteasy_resteasy_jaxb_provider",  # RESTEASY003215: could not find writer for content-type application/xml
     "//third_party:org_jboss_resteasy_tjws",  # CNF: Acme/Serve/Serve
+    # https://stackoverflow.com/questions/24123120/jetty-http-lookup-when-not-connected-to-internet
+    "//third_party:org_eclipse_jetty_toolchain_jetty_schemas",
 
     #    "//third_party:org_apache_directory_shared_shared_ldap_model",  # tests/integration/amqp/JMSSaslGssapiTest: Caused by: java.lang.ClassNotFoundException: org.apache.directory.shared.ldap.model.entry.Entry
     #    "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # tests/integration/amqp/JMSSaslGssapiTest:
