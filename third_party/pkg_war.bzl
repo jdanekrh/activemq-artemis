@@ -59,11 +59,18 @@ def _war_impl(ctx):
     ]
 
     transitive_lib_deps = depset()
-    for l in ctx.attr.libs:
-        if hasattr(l, "java"):
-            transitive_lib_deps = transitive_lib_deps + l.java.transitive_runtime_deps
-        elif hasattr(l, "files"):
-            transitive_lib_deps = transitive_lib_deps + l.files
+    if ctx.attr.transitive:
+        for l in ctx.attr.libs:
+            if hasattr(l, "java"):
+                transitive_lib_deps = transitive_lib_deps + l.java.transitive_runtime_deps
+            elif hasattr(l, "files"):
+                transitive_lib_deps = transitive_lib_deps + l.files
+    else:
+        for l in ctx.attr.libs:
+            if hasattr(l, "java"):
+                transitive_lib_deps = transitive_lib_deps + depset([jar.class_jar for jar in l.java.outputs.jars])
+            elif hasattr(l, "files"):
+                transitive_lib_deps = transitive_lib_deps + l.files
 
     for dep in transitive_lib_deps:
         cmd = cmd + _add_file(ctx.attr.name, dep, build_output + "/WEB-INF/lib/")
@@ -104,14 +111,16 @@ _pkg_war = rule(
         "context": attr.label_list(allow_files = True),
         "libs": attr.label_list(allow_files = jar_filetype),
         "web_xml": attr.label(allow_files = True),
+        "transitive": attr.bool()
     },
     outputs = {"war": "%{name}.war"},
     implementation = _war_impl,
 )
 
-def pkg_war(name, context = [], **kwargs):
+def pkg_war(name, context = [], transitive=True, **kwargs):
     _pkg_war(
         name = name,
         context = context,
+        transitive = transitive,
         **kwargs
     )

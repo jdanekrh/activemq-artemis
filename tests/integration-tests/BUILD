@@ -58,11 +58,37 @@ moar_test_deps = []
 runtime_deps = [
     "//third_party:org_eclipse_jetty_aggregate_jetty_all_uber",  # todo: probably be consistent in this, either singly, or all uber
     "//third_party:org_apache_derby_derby",  # integration/xa/XaTimeoutTesT: java.lang.RuntimeException: Could not find class: org.apache.derby.jdbc.EmbeddedDriver
+
+    # bloody resteasy
+    # these are in artemis-rest already, I cannot put them into war easily
+    "//third_party:org_jboss_resteasy_resteasy_jackson_provider",  # NoMessageBodyWriterFoundFailure: Could not find MessageBodyWriter for response object of type: org.apache.activemq.artemis.rest.test.TransformTest$Order of media type: application/json
+    "//third_party:org_jboss_resteasy_resteasy_jaxb_provider",  # RESTEASY003215: could not find writer for content-type application/xml
+    "//third_party:org_jboss_resteasy_tjws",  # CNF: Acme/Serve/Serve
+
     #    "//third_party:org_apache_directory_shared_shared_ldap_model",  # tests/integration/amqp/JMSSaslGssapiTest: Caused by: java.lang.ClassNotFoundException: org.apache.directory.shared.ldap.model.entry.Entry
     #    "//third_party:org_apache_directory_shared_shared_ldap_codec_core",  # tests/integration/amqp/JMSSaslGssapiTest:
     #    "//third_party:test-agent",
     #    "//",
 ]
+
+load("//third_party:pkg_war.bzl", "pkg_war")
+
+# this embeds jars and does transitive deps
+pkg_war(
+    name = "src/java/resources/rest/rest-test",
+    # context = "",
+    libs = ["//artemis-rest"],
+    web_xml="src/test/resources/rest/rest-test/webapp/WEB-INF/web.xml",
+    transitive = False,
+)
+
+pkg_war(
+    name = "src/java/resources/rest/rest-test-bwlist",
+    # context = "",
+    libs = ["//artemis-rest"],
+    web_xml="src/test/resources/rest/rest-test-bwlist/webapp/WEB-INF/web.xml",
+    transitive = False,
+)
 
 java_library(
     name = "testslib",
@@ -73,6 +99,7 @@ java_library(
             "src/test/java/**/package-info.java",
         ],
     ),
+    resources = [":src/java/resources/rest/rest-test", ":src/java/resources/rest/rest-test-bwlist"] + glob(["src/test/resources/**"]),
     data = glob(["src/test/resources/**"]) + ["//tests/unit-tests:resources"],
     #    [
     #        "//tests/unit-tests:src/test/resources/openssl-client-side-keystore.jks",
