@@ -85,6 +85,9 @@ junit_tests(
         "-Djava.system.class.loader=ResourceJavaAgent",
         "-Dextra.class.path=target/test-classes/",  # btw, the trailing / is important, as per URLClassLoader doc
     ],
+    medium_tests = [
+        "src/test/java/org/apache/activemq/cli/test/OptionsValidationTest"
+    ],
     tags = [
         "block-network",  # org.apache.activemq.cli.test ArtemisTest.testQstat: (and many more) org.junit.ComparisonFailure: Consumer count expected:<[2]> but was:<[4]>
     ],
