@@ -38,6 +38,7 @@ cc_binary(
         "src/main/c/org_apache_activemq_artemis_jlibaio_LibaioContext.c",
         ":org_apache_activemq_artemis_jlibaio_LibaioContext.h",
     ],
+    defines = ["DEBUG=1"],
     includes = ["."],  # For jni headers.
     linkshared = 1,
     deps = [
