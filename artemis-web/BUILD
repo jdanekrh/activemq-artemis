@@ -43,6 +43,8 @@ junit_tests(
         "//artemis-commons",
         "//artemis-core-client",
         "//artemis-dto",
+        "//artemis-server",
+        "//artemis-native",
         "//third_party:io_netty_netty_codec_http",
         "//third_party:io_netty_netty_common",
         "//third_party:io_netty_netty_handler",
