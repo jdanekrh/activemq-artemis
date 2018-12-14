@@ -40,7 +40,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
    @Before
    public void setUp() throws Exception {
       super.setUp();
-      recordLength = Math.max(1024, 2*getAlignment());
+      recordLength = Math.max(1024, 2 * getAlignment());
    }
 
    @Override
