@@ -337,6 +337,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/management/QueueControlUsingCoreTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/mqtt/imported/MQTTTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/mqtt/imported/PahoMQTTTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/jms/client/GroupingTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/jms/client/ReceiveNoWaitTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/jms/cluster/MultipleThreadsOpeningTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/amq/JmsTopicTransactionTest",
