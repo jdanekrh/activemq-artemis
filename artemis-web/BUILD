@@ -46,6 +46,7 @@ junit_tests(
         "//artemis-server",
         "//artemis-junit",
         "//artemis-native",
+        "//artemis-commons:artemis-commons_testlib",
         "//third_party:io_netty_netty_codec_http",
         "//third_party:io_netty_netty_common",
         "//third_party:io_netty_netty_handler",
