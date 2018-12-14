@@ -293,6 +293,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/scheduling/MultipliedDelayedMessageTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/amq/JmsTopicTransactionTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/amq/JmsDurableTopicTransactionTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/openwire/amq/JMSConsumer2Test",
         "src/test/java/org/apache/activemq/artemis/tests/integration/jms/cluster/MultipleThreadsOpeningTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/failover/ReplicatedManyMultipleServerFailoverNoNodeGroupNameTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/cluster/distribution/ExpireWhileLoadBalanceTest",
