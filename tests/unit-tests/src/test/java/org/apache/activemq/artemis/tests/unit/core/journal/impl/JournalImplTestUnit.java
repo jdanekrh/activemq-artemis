@@ -1634,8 +1634,10 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testPrepareNoReclaim() throws Exception {
-      setup(2, calculateRecordSize(JournalImpl.SIZE_HEADER, getAlignment()) + calculateRecordSize(recordLength, getAlignment()) +
-         512, true);
+      final int fileSize = calculateRecordSize(JournalImpl.SIZE_HEADER, getAlignment())
+              + calculateRecordSize(recordLength, getAlignment())
+              + Math.max(512, getAlignment());
+      setup(2, fileSize, true);
       createJournal();
       startJournal();
       load();
@@ -2846,7 +2848,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionOnDifferentFiles() throws Exception {
-      setup(2, 512 + 2 * 1024, true);
+      setup(2, Math.max(512, getAlignment()) + 2 * recordLength, true);
 
       createJournal();
       startJournal();
@@ -3005,7 +3007,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testLoadTruncatedFile() throws Exception {
-      setup(2, 2 * 1024, true);
+      setup(2, 2 * recordLength, true);
       createJournal();
       startJournal();
 
