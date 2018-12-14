@@ -71,7 +71,7 @@ junit_tests(
             "src/test/java/org/apache/activemq/artemis/tests/unit/jms/misc/ManifestTest.java",  # checks dist
         ],
     ),
-    size = "medium",
+    size = "large",
     data = glob(["src/test/resources/**"]) + ["//artemis-server:src/test/resources/ConfigurationTest-full-config.xml"],
     jvm_flags = [
         "-Djava.system.class.loader=ResourceJavaAgent",
