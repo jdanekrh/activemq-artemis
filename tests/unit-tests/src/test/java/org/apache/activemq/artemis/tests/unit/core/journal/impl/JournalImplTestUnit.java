@@ -32,9 +32,16 @@ import org.apache.activemq.artemis.tests.unit.core.journal.impl.fakes.SimpleEnco
 import org.apache.activemq.artemis.utils.RandomUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public abstract class JournalImplTestUnit extends JournalImplTestBase {
+   @Override
+   @Before
+   public void setUp() throws Exception {
+      super.setUp();
+      recordLength = Math.max(1024, 2*getAlignment());
+   }
 
    @Override
    @After
@@ -57,7 +64,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testState() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       try {
          load();
@@ -92,7 +99,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testRestartJournal() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -122,7 +129,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
       }
 
       try {
-         new JournalImpl(10 * 1024, 1, 0, 0, 0, fileFactory, filePrefix, fileExtension, 1);
+         new JournalImpl(10 * recordLength, 1, 0, 0, 0, fileFactory, filePrefix, fileExtension, 1);
 
          Assert.fail("Should throw exception");
       } catch (IllegalArgumentException e) {
@@ -130,7 +137,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
       }
 
       try {
-         new JournalImpl(10 * 1024, 10, 0, 0, 0, null, filePrefix, fileExtension, 1);
+         new JournalImpl(10 * recordLength, 10, 0, 0, 0, null, filePrefix, fileExtension, 1);
 
          Assert.fail("Should throw exception");
       } catch (NullPointerException e) {
@@ -138,7 +145,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
       }
 
       try {
-         new JournalImpl(10 * 1024, 10, 0, 0, 0, fileFactory, null, fileExtension, 1);
+         new JournalImpl(10 * recordLength, 10, 0, 0, 0, fileFactory, null, fileExtension, 1);
 
          Assert.fail("Should throw exception");
       } catch (IllegalArgumentException e) {
@@ -146,7 +153,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
       }
 
       try {
-         new JournalImpl(10 * 1024, 10, 0, 0, 0, fileFactory, filePrefix, null, 1);
+         new JournalImpl(10 * recordLength, 10, 0, 0, 0, fileFactory, filePrefix, null, 1);
 
          Assert.fail("Should throw exception");
       } catch (IllegalArgumentException e) {
@@ -154,7 +161,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
       }
 
       try {
-         new JournalImpl(10 * 1024, 10, 0, 0, 0, fileFactory, filePrefix, null, 0);
+         new JournalImpl(10 * recordLength, 10, 0, 0, 0, fileFactory, filePrefix, null, 0);
 
          Assert.fail("Should throw exception");
       } catch (IllegalArgumentException e) {
@@ -165,7 +172,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testVersionCheck() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -218,7 +225,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
    // Validates the if the journal will work when the IDs are over MaxInt
    @Test
    public void testMaxInt() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -263,7 +270,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
    @Test
    public void testFilesImmediatelyAfterload() throws Exception {
       try {
-         setup(10, 10 * 1024, true);
+         setup(10, 10 * recordLength, true);
          createJournal();
          startJournal();
          load();
@@ -280,7 +287,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
          resetFileFactory();
 
-         setup(20, 10 * 1024, true);
+         setup(20, 10 * recordLength, true);
          createJournal();
          startJournal();
          load();
@@ -299,7 +306,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
          resetFileFactory();
 
-         setup(17, 10 * 1024, true);
+         setup(17, 10 * recordLength, true);
          createJournal();
          startJournal();
          load();
@@ -318,7 +325,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
          resetFileFactory();
 
-         setup(11, 10 * 1024, true);
+         setup(11, 10 * recordLength, true);
          createJournal();
          startJournal();
          load();
@@ -341,7 +348,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testEmptyReopen() throws Exception {
-      setup(2, 10 * 1024, true);
+      setup(2, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -352,7 +359,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
       stopJournal();
 
-      setup(2, 10 * 1024, true);
+      setup(2, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -370,7 +377,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testCreateFilesOnLoad() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -383,7 +390,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
       // Now restart with different number of minFiles - should create 10 more
 
-      setup(20, 10 * 1024, true);
+      setup(20, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -401,7 +408,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testReduceFreeFiles() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -412,7 +419,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
       stopJournal();
 
-      setup(5, 10 * 1024, true);
+      setup(5, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -470,7 +477,9 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testCheckCreateMoreFiles() throws Exception {
-      setup(2, 10 * 1024, true);
+      final int fileSize = 10 * recordLength;
+
+      setup(2, fileSize, true);
       createJournal();
       startJournal();
       load();
@@ -490,7 +499,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
          add(i);
       }
 
-      int numberOfFiles = calculateNumberOfFiles(journal, 10 * 1024, journal.getAlignment(), 91, JournalImpl.SIZE_ADD_RECORD + recordLength);
+      int numberOfFiles = calculateNumberOfFiles(journal, fileSize, journal.getAlignment(), 91, JournalImpl.SIZE_ADD_RECORD + recordLength);
 
       Assert.assertEquals(numberOfFiles, journal.getDataFilesCount());
       Assert.assertEquals(0, journal.getFreeFilesCount());
@@ -513,7 +522,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
          add(i);
       }
 
-      numberOfFiles = calculateNumberOfFiles(journal, 10 * 1024, journal.getAlignment(), 95, JournalImpl.SIZE_ADD_RECORD + recordLength);
+      numberOfFiles = calculateNumberOfFiles(journal, fileSize, journal.getAlignment(), 95, JournalImpl.SIZE_ADD_RECORD + recordLength);
 
       Assert.assertEquals(numberOfFiles, journal.getDataFilesCount());
       Assert.assertEquals(0, journal.getFreeFilesCount());
@@ -534,7 +543,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
          add(i);
       }
 
-      numberOfFiles = calculateNumberOfFiles(journal, 10 * 1024, journal.getAlignment(), 200, JournalImpl.SIZE_ADD_RECORD + recordLength);
+      numberOfFiles = calculateNumberOfFiles(journal, fileSize, journal.getAlignment(), 200, JournalImpl.SIZE_ADD_RECORD + recordLength);
 
       Assert.assertEquals(numberOfFiles, journal.getDataFilesCount());
       Assert.assertEquals(0, journal.getFreeFilesCount());
@@ -554,7 +563,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testOrganicallyGrowNoLimit() throws Exception {
-      setup(2, -1, 10 * 1024, true, 50);
+      setup(2, -1, 10 * recordLength, true, 50);
       createJournal();
       journal.setAutoReclaim(true);
       startJournal();
@@ -602,7 +611,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testOrganicallyWithALimit() throws Exception {
-      setup(2, 5, 10 * 1024, true, 50);
+      setup(2, 5, 10 * recordLength, true, 50);
       createJournal();
       journal.setAutoReclaim(true);
       startJournal();
@@ -655,7 +664,8 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testReclaim() throws Exception {
-      setup(10, 10 * 1024, true);
+      final int fileSize = 10 * recordLength;
+      setup(10, fileSize, true);
       createJournal();
       startJournal();
       load();
@@ -669,7 +679,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
       Assert.assertEquals(1, journal.getOpenedFilesCount());
       Assert.assertEquals(0, journal.getIDMapSize());
 
-      int addRecordsPerFile = calculateRecordsPerFile(10 * 1024, journal.getAlignment(), JournalImpl.SIZE_ADD_RECORD + 1 + recordLength);
+      int addRecordsPerFile = calculateRecordsPerFile(fileSize, journal.getAlignment(), JournalImpl.SIZE_ADD_RECORD + 1 + recordLength);
 
       System.out.println(JournalImpl.SIZE_ADD_RECORD + 1 + recordLength);
 
@@ -841,7 +851,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
    // TODO commit and rollback, also transactional deletes
 
    private void testReclaimTransactionalAdd(final boolean commit) throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1096,7 +1106,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddDeleteCommitTXIDMap1() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1134,7 +1144,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddCommitTXIDMap1() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1165,7 +1175,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddDeleteCommitTXIDMap2() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1203,7 +1213,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddDeleteRollbackTXIDMap1() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1241,7 +1251,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddRollbackTXIDMap1() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1272,7 +1282,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddDeleteRollbackTXIDMap2() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1310,7 +1320,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddDeleteIDMap() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1414,7 +1424,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
    @Test
    public void testCommitRecordsInFileNoReclaim() throws Exception {
       setup(2, calculateRecordSize(JournalImpl.SIZE_HEADER, getAlignment()) + calculateRecordSize(recordLength, getAlignment()) +
-         512, true);
+         Math.max(512, getAlignment()), true);
       createJournal();
       startJournal();
       load();
@@ -1498,7 +1508,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
    @Test
    public void testRollbackRecordsInFileNoReclaim() throws Exception {
       setup(2, calculateRecordSize(JournalImpl.SIZE_HEADER, getAlignment()) + calculateRecordSize(recordLength, getAlignment()) +
-         512, true);
+         Math.max(512, getAlignment()), true);
       createJournal();
       startJournal();
       load();
@@ -1590,7 +1600,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
    @Test
    public void testEmptyPrepare() throws Exception {
       setup(2, calculateRecordSize(JournalImpl.SIZE_HEADER, getAlignment()) + calculateRecordSize(recordLength, getAlignment()) +
-         512, true);
+         Math.max(512, getAlignment()), true);
       createJournal();
       startJournal();
       load();
@@ -1643,7 +1653,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
       // Make sure we move on to the next file
 
-      addWithSize(1024 - JournalImpl.SIZE_ADD_RECORD, 2); // in file 1
+      addWithSize(recordLength - JournalImpl.SIZE_ADD_RECORD, 2); // in file 1
 
       List<String> files2 = fileFactory.listFiles(fileExtension);
 
@@ -1931,7 +1941,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testSimpleAdd() throws Exception {
-      setup(2, 10 * 1024, true);
+      setup(2, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1945,7 +1955,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAdd() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1958,7 +1968,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddNonContiguous() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1972,7 +1982,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testSimpleAddUpdate() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -1986,7 +1996,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdate() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2000,7 +2010,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateAll() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2014,7 +2024,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateNonContiguous() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2028,7 +2038,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateAllNonContiguous() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2042,7 +2052,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testSimpleAddUpdateDelete() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2057,7 +2067,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testSimpleAddUpdateDeleteTransactional() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2075,7 +2085,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateDelete() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2090,7 +2100,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateDeleteAll() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2105,7 +2115,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateDeleteNonContiguous() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2120,7 +2130,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateDeleteAllNonContiguous() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2135,7 +2145,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateDeleteDifferentOrder() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2150,7 +2160,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleAddUpdateDeleteDifferentRecordLengths() throws Exception {
-      setup(10, 20480, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2186,7 +2196,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddUpdateDeleteRestartAndContinue() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2214,7 +2224,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testSimpleAddTXReload() throws Exception {
-      setup(2, 10 * 1024, true);
+      setup(2, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2230,7 +2240,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testSimpleAddTXXAReload() throws Exception {
-      setup(2, 10 * 1024, true);
+      setup(2, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2249,7 +2259,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddUpdateDeleteTransactionalRestartAndContinue() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2326,7 +2336,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testSimpleTransaction() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2342,7 +2352,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionDontDeleteAll() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2358,7 +2368,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionDeleteAll() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2374,7 +2384,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionUpdateFromBeforeTx() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2390,7 +2400,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionDeleteFromBeforeTx() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2406,7 +2416,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionChangesNotVisibleOutsideTXtestTransactionChangesNotVisibleOutsideTX() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2422,7 +2432,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleTransactionsDifferentIDs() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2450,7 +2460,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleInterleavedTransactionsDifferentIDs() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2477,7 +2487,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testMultipleInterleavedTransactionsSameIDs() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2503,7 +2513,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionMixed() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2522,7 +2532,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testTransactionAddDeleteDifferentOrder() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2537,7 +2547,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddOutsideTXThenUpdateInsideTX() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2552,7 +2562,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testAddOutsideTXThenDeleteInsideTX() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2567,7 +2577,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testRollback() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2582,7 +2592,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testRollbackMultiple() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2599,7 +2609,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testIsolation1() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2614,7 +2624,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testIsolation2() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2634,7 +2644,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testIsolation3() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2657,7 +2667,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXASimpleNotPrepared() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2672,7 +2682,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXASimplePrepared() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2691,7 +2701,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXASimpleCommit() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2711,7 +2721,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXASimpleRollback() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2731,7 +2741,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXAChangesNotVisibleNotPrepared() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2747,7 +2757,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXAChangesNotVisiblePrepared() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2767,7 +2777,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXAChangesNotVisibleRollback() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2788,7 +2798,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXAChangesisibleCommit() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
@@ -2809,7 +2819,7 @@ public abstract class JournalImplTestUnit extends JournalImplTestBase {
 
    @Test
    public void testXAMultiple() throws Exception {
-      setup(10, 10 * 1024, true);
+      setup(10, 10 * recordLength, true);
       createJournal();
       startJournal();
       load();
