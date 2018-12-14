@@ -131,12 +131,9 @@ public abstract class SequentialFileFactoryTestBase extends ActiveMQTestBase {
       sf.open();
 
       try {
+         checkFill(factory, sf, factory.getAlignment());
 
-         checkFill(factory, sf, 2048);
-
-         checkFill(factory, sf, 512);
-
-         checkFill(factory, sf, 512 * 4);
+         checkFill(factory, sf, factory.getAlignment() * 4);
       } finally {
          sf.close();
       }
@@ -277,7 +274,7 @@ public abstract class SequentialFileFactoryTestBase extends ActiveMQTestBase {
 
       try {
 
-         sf.fill(3 * 512);
+         sf.fill(3 * factory.getAlignment());
 
          String s1 = "orange";
          byte[] bytes1 = s1.getBytes(StandardCharsets.UTF_8);
@@ -352,7 +349,7 @@ public abstract class SequentialFileFactoryTestBase extends ActiveMQTestBase {
 
       sf.open();
 
-      sf.fill(512);
+      sf.fill(factory.getAlignment());
 
       String s1 = "cheesecake";
       byte[] bytes1 = s1.getBytes(StandardCharsets.UTF_8);
