@@ -59,6 +59,10 @@ runtime_deps = [
     "//third_party:org_eclipse_jetty_aggregate_jetty_all_uber",  # todo: probably be consistent in this, either singly, or all uber
     "//third_party:org_apache_derby_derby",  # integration/xa/XaTimeoutTesT: java.lang.RuntimeException: Could not find class: org.apache.derby.jdbc.EmbeddedDriver
 
+    # without this, xerces/xalan in jre is used, and artemis msg dumps have empty CDATA,  https://issues.apache.org/jira/browse/XERCESJ-1033
+    # also see https://stackoverflow.com/questions/28028174/indexoutofboundsexception-when-processing-empty-cdata-with-transformer
+    "//third_party:org_codehaus_woodstox_woodstox_core_asl",
+
     # bloody resteasy
     # these are in artemis-rest already, I cannot put them into war easily
     "//third_party:org_jboss_resteasy_resteasy_jackson_provider",  # NoMessageBodyWriterFoundFailure: Could not find MessageBodyWriter for response object of type: org.apache.activemq.artemis.rest.test.TransformTest$Order of media type: application/json
