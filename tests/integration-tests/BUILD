@@ -349,6 +349,7 @@ GenTestRules(
         "src/test/java/org/apache/activemq/artemis/tests/integration/persistence/RolesConfigurationStorageTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/persistence/XmlImportExportTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/ra/ActiveMQClusteredTest",
+        "src/test/java/org/apache/activemq/artemis/tests/integration/ra/ActiveMQMessageHandlerTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/remoting/PingTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/scheduling/MultipliedDelayedMessageTest",
         "src/test/java/org/apache/activemq/artemis/tests/integration/scheduling/ScheduledMessageTest",
