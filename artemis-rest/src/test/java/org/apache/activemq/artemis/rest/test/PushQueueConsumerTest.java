@@ -157,7 +157,7 @@ public class PushQueueConsumerTest extends MessageTestBase {
    @Path("/my")
    public static class MyResource {
 
-      volatile static String got_it;
+      static volatile String got_it;
 
       @PUT
       public void put(String str) {
