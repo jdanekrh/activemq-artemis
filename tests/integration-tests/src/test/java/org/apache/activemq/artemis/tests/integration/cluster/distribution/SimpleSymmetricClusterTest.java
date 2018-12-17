@@ -284,8 +284,8 @@ public class SimpleSymmetricClusterTest extends ClusterTestBase {
    }
 
    @Test
-   @Ignore("Not implemented yet")
-   public void _testSimpleRoundRobbinNoFailure() throws Exception {
+   @Ignore("Test not implemented yet")
+   public void testSimpleRoundRobbinNoFailure() throws Exception {
       //TODO make this test to crash a node
       setupServer(0, true, isNetty());
       setupServer(1, true, isNetty());
