@@ -102,8 +102,12 @@ public class JMSConsumer2Test extends BasicOpenWireTest {
       });
 
       assertTrue(closeDone.await(20, TimeUnit.SECONDS));
+
       // await possible exceptions
-      Thread.sleep(1000);
+      executor.shutdown();
+      executor.awaitTermination(5, TimeUnit.SECONDS);
+      assertTrue("executor has terminated", executor.isTerminated());
+
       assertTrue("no exceptions: " + exceptions, exceptions.isEmpty());
    }
 
