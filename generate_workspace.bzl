@@ -1,22 +1,3 @@
-#
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-#
-
 load("@bazel_tools//tools/build_defs/repo:maven_rules.bzl", "maven_jar", "maven_dependency_plugin")
 def generated_maven_jars():
   maven_dependency_plugin()
@@ -856,9 +837,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_apache_qpid_proton_j",
-      artifact = "org.apache.qpid:proton-j:jar:0.30.0",
+      artifact = "org.apache.qpid:proton-j:jar:0.31.0",
       repository = "https://jcenter.bintray.com/",
-      sha1 = "c9dbb081c2104c2a6422e74f471eddf742914e79",
+      sha1 = "2716896d77d7be83d35b471069c90356ea450167",
   )
   native.maven_jar(
       name = "org_ops4j_pax_exam_pax_exam_container_karaf",
@@ -1036,9 +1017,9 @@ def generated_maven_jars():
   )
   native.maven_jar(
       name = "org_apache_qpid_qpid_jms_client",
-      artifact = "org.apache.qpid:qpid-jms-client:jar:0.37.0",
+      artifact = "org.apache.qpid:qpid-jms-client:jar:0.39.0",
       repository = "https://jcenter.bintray.com/",
-      sha1 = "120d7721607ac69a5e9e02207109386140366faa",
+      sha1 = "a5583dbbcae0970afee8d72e1b895729434cba7d",
   )
   native.maven_jar(
       name = "org_jgroups_jgroups",
@@ -2066,7 +2047,6 @@ def generated_java_libraries():
           ":javax_websocket_javax_websocket_api",
           ":javax_servlet_javax_servlet_api",
           ":org_eclipse_jetty_orbit_javax_mail_glassfish",
-          ":org_slf4j_slf4j_api",
       ],
   )
   native.java_library(
