@@ -22,7 +22,7 @@ import java.io.OutputStream;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.URL;
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -183,7 +183,7 @@ public class NetworkHealthTest {
       // using two addresses for URI and localhost
       check.parseAddressList("localhost, , 127.0.0.2");
       Assert.assertEquals(2, check.getAddresses().size());
-      Assert.assertEquals(0, check.getUrls().size());
+      Assert.assertEquals(0, check.getUris().size());
    }
 
    @Test
@@ -234,22 +234,22 @@ public class NetworkHealthTest {
 
       NetworkHealthCheck check = addCheck(new NetworkHealthCheck(null, 100, 1000));
 
-      Assert.assertTrue(check.check(new URL("http://localhost:8787")));
+      Assert.assertTrue(check.check(new URI("http://localhost:8787")));
 
       stopHTTPServer();
 
-      Assert.assertFalse(check.check(new URL("http://localhost:8787")));
+      Assert.assertFalse(check.check(new URI("http://localhost:8787")));
 
       check.addComponent(component);
 
-      URL url = new URL("http://localhost:8787");
-      Assert.assertFalse(check.check(url));
+      URI uri = new URI("http://localhost:8787");
+      Assert.assertFalse(check.check(uri));
 
       startHTTPServer();
 
-      Assert.assertTrue(check.check(url));
+      Assert.assertTrue(check.check(uri));
 
-      check.addURL(url);
+      check.addURI(uri);
 
       Assert.assertFalse(latch.await(500, TimeUnit.MILLISECONDS));
       Assert.assertTrue(component.isStarted());

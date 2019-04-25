@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.AccessController;
@@ -46,7 +47,7 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
 
    private final Set<ActiveMQComponent> componentList = new ConcurrentHashSet<>();
    private final Set<InetAddress> addresses = new ConcurrentHashSet<>();
-   private final Set<URL> urls = new ConcurrentHashSet<>();
+   private final Set<URI> uris = new ConcurrentHashSet<>();
    private NetworkInterface networkInterface;
 
    public static final String IPV6_DEFAULT_COMMAND = "ping6 -c 1 %2$s";
@@ -107,8 +108,8 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
       return addresses;
    }
 
-   public Set<URL> getUrls() {
-      return urls;
+   public Set<URI> getUris() {
+      return uris;
    }
 
    public String getNICName() {
@@ -144,7 +145,8 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
          for (String address : addresses) {
             if (!address.trim().isEmpty()) {
                try {
-                  this.addURL(new URL(address.trim()));
+                  final URL url = new URL(address.trim()); // check valid URL
+                  this.addURI(url.toURI());
                } catch (Exception e) {
                   ActiveMQUtilLogger.LOGGER.failedToParseUrlList(e, addressList);
                }
@@ -227,22 +229,22 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
       return this;
    }
 
-   public NetworkHealthCheck addURL(URL url) {
-      if (!check(url)) {
-         ActiveMQUtilLogger.LOGGER.urlWasntReacheable(url.toString());
+   public NetworkHealthCheck addURI(URI uri) {
+      if (!check(uri)) {
+         ActiveMQUtilLogger.LOGGER.urlWasntReacheable(uri.toString());
       }
-      urls.add(url);
+      uris.add(uri);
       checkStart();
       return this;
    }
 
-   public NetworkHealthCheck removeURL(URL url) {
-      urls.remove(url);
+   public NetworkHealthCheck removeURL(URI uri) {
+      uris.remove(uri);
       return this;
    }
 
-   public NetworkHealthCheck clearURL() {
-      urls.clear();
+   public NetworkHealthCheck clearURI() {
+      uris.clear();
       return this;
    }
 
@@ -265,7 +267,7 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
    }
 
    private void checkStart() {
-      if (!isStarted() && (!addresses.isEmpty() || !urls.isEmpty()) && !componentList.isEmpty()) {
+      if (!isStarted() && (!addresses.isEmpty() || !uris.isEmpty()) && !componentList.isEmpty()) {
          start();
       }
    }
@@ -303,7 +305,7 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
    }
 
    /**
-    * @return true if no checks were done or if one address/url responds; false if all addresses/urls fail
+    * @return true if no checks were done or if one address/url responds; false if all addresses/uris fail
     */
    public boolean check() {
       if (isEmpty()) {
@@ -316,8 +318,8 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
          }
       }
 
-      for (URL url : urls) {
-         if (check(url)) {
+      for (URI uri : uris) {
+         if (check(uri)) {
             return true;
          }
       }
@@ -395,24 +397,24 @@ public class NetworkHealthCheck extends ActiveMQScheduledComponent {
       reader.close();
    }
 
-   public boolean check(URL url) {
-      if (url == null) {
+   public boolean check(URI uri) {
+      if (uri == null) {
          return false;
       }
 
       try {
-         URLConnection connection = url.openConnection();
+         URLConnection connection = uri.toURL().openConnection();
          connection.setReadTimeout(networkTimeout);
          InputStream is = connection.getInputStream();
          is.close();
          return true;
       } catch (Exception e) {
-         ActiveMQUtilLogger.LOGGER.failedToCheckURL(e, url.toString());
+         ActiveMQUtilLogger.LOGGER.failedToCheckURL(e, uri.toString());
          return false;
       }
    }
 
    public boolean isEmpty() {
-      return addresses.isEmpty() && urls.isEmpty();
+      return addresses.isEmpty() && uris.isEmpty();
    }
 }
