@@ -16,6 +16,9 @@
  */
 package org.apache.activemq.artemis.api.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ActiveMQException is the root exception for the ActiveMQ Artemis API.
  */
@@ -36,6 +39,8 @@ public class ActiveMQException extends Exception {
 
    public ActiveMQException(String msg, ActiveMQExceptionType t) {
       super(msg);
+      List<String> myList = new ArrayList<>();
+      myList.addAll(myList);
       type = t;
    }
 
