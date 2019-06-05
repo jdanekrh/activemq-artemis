@@ -18,6 +18,7 @@
 package org.apache.activemq.artemis.tests.util;
 
 import javax.jms.ConnectionFactory;
+import javax.jms.TopicConnectionFactory;
 
 import org.apache.qpid.jms.JmsConnectionFactory;
 
@@ -36,8 +37,20 @@ public class CFUtil {
       } else if (protocol.toUpperCase().equals("CORE") || protocol.toUpperCase().equals("ARTEMIS")) {
          return new org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory(uri);
       } else {
-         throw new IllegalStateException("Unkown:" + protocol);
+         throw new IllegalStateException("Unknown:" + protocol);
       }
    }
 
+   public static TopicConnectionFactory createTopicConnectionFactory(String protocol, String uri) {
+      switch (protocol.toUpperCase()) {
+         case "OPENWIRE":
+         case "AMQP":
+            return (TopicConnectionFactory) createConnectionFactory(protocol, uri);
+         case "CORE":
+         case "ARTEMIS":
+            return new org.apache.activemq.artemis.jms.client.ActiveMQTopicConnectionFactory(uri);
+         default:
+            throw new IllegalStateException("Unknown:" + protocol);
+      }
+   }
 }
